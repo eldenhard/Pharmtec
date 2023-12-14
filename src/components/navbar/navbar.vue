@@ -15,14 +15,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Меню 1</a>
+
+            <li class="nav-item dws">
+              <a class="nav-link butt" aria-current="page" href="#"  @click="addElement($event)">Меню 1</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Меню 2</a>
+            <li class="nav-item dws">
+              <a class="nav-link butt" aria-current="page" href="#">Меню 2</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Меню 3</a>
+            <li class="nav-item dws">
+              <a class="nav-link butt" aria-current="page" href="#">Меню 3</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -36,3 +37,28 @@
 <style  scoped>
 @import './style/style-navbar.scss';
 </style>
+
+
+<script>
+var buttons = document.getElementsByClassName('butt'),
+    forEach = Array.prototype.forEach;
+
+forEach.call(buttons, function (b) {
+    b.addEventListener('click', addElement);
+});
+
+function addElement(e) {
+    var addDiv  = document.createElement('div'),
+        mValue  = Math.max(this.clientWidth, this.clientHeight),
+        rect    = this.getBoundingClientRect();
+        sDiv    = addDiv.style,
+        px      = 'px';
+
+    sDiv.width  = sDiv.height = mValue + px;
+    sDiv.left  = e.clientX - rect.left - (mValue / 2) + px;
+    sDiv.top   = e.clientY - rect.top - (mValue / 2) + px;
+
+    addDiv.classList.add('pulse');
+    this.appendChild(addDiv);
+}
+</script>

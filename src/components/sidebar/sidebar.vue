@@ -3,7 +3,7 @@
         <div class="sidebar_block">
             <div class="sidebar_block__list">
                 <ul>
-                    <li @click="selectTab('companyStructure', $event.target)">Структура компании</li>
+                    <li @click="selectTab('companyStructure', $event.target)" class="first">Структура компании</li>
                     <li @click="selectTab('Applications', $event.target)">Заявки</li>
                     <li @click="selectTab('FinReport', $event.target)">Финансовый отчет</li>
                     <li @click="selectTab('booking', $event.target)">Бронирование переговорной</li>
@@ -34,7 +34,10 @@ export default {
             el.classList.add('activeItem');
             context.emit('someEvent', data);
         };
-
+        onMounted(() => {
+           document.querySelector('.first').classList.add('activeItem')
+           context.emit('someEvent', companyStructure);
+        })
         return {
             selectTab
         };
