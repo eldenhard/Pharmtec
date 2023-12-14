@@ -1,0 +1,5 @@
+.workspace_grid{
+    width: 100%;
+    display: grid;
+    grid-template-columns: max(250px, 18%) 1fr;
+}
