@@ -11,4 +11,8 @@ button{
     &:hover{
         background: var(--bgColorHoverBlueButton);
     }
+    &:disabled{
+        background: var(--bgColorDisabled);
+        color: var(--ColorDisabled)
+    }
 }

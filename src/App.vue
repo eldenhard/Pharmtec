@@ -8,12 +8,17 @@
 <script>
 import MainPage from './pages/mainpage/MainPage.vue';
 import AutorizationPage from './pages/autorization/autorizationPage.vue';
-
-
+import { onMounted } from 'vue'
 export default {
   components: { MainPage, AutorizationPage },
   setup() {
 
+ 
+    // onMounted(() => {
+    //   if (!localStorage.getItem('token')) {
+    //     window.location.href = '/login'
+    //   }
+    // })
   },
 };
 </script>

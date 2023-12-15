@@ -17,6 +17,11 @@ import workspace from '../../components/workspace/workspace.vue';
 export default {
   components: { navbar, sidebar, workspace },
   setup() {
+    onMounted(() => {
+      if(!localStorage.getItem('token')){
+        window.location.href = '/login'
+      }
+    })
     const receivedData = ref('');
 
     const handleSomeEvent = (data) => {

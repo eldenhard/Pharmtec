@@ -1,10 +1,14 @@
 :root {
     --bgColorNavbar: #0069A7;
     --bgColorHoverBlueButton: #005E96;
+    --bgColorDisabled: #E0E0E0;
+
     --colorWhite: #EFFDFF;
     --colorBorder: #E0E0E0;
     --colorHoverList: #fafafa;
     --colorActiveItemList: #EBF3F8;
+    --ColorDisabled: #A6A6A6;
+
     --zIndexNavbar: 1;
     --zIndexModal: 2;
 }
