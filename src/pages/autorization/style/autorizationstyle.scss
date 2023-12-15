@@ -24,3 +24,21 @@
     justify-content: left;
     padding: 4%;
 }
+
+@media screen and (max-width: 900px) {
+    .autorization_block{
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.5fr 1fr;
+        .autorization_block_icons{
+            padding: 0;
+            justify-content: center;
+        }
+        .autorization_block__form{
+            width: 100%;
+            justify-content: center;
+            margin: 0;
+            height: auto;
+            display: block;
+        }
+    }
+}

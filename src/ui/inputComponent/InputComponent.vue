@@ -1,6 +1,6 @@
 <template>
     <div class="col-3 input-effect">
-      <input class="effect-20" :type="typeInput" v-model="inputValue" @input="handleInput">
+      <input class="effect-20" :type="typeInput" v-model="inputValue" @input="handleInput"  autocomplete="on">
       <label>{{ labelValue }}</label>
       <span class="focus-border"><i></i></span>
     </div>
