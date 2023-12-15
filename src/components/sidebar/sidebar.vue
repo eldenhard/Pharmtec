@@ -36,7 +36,7 @@ export default {
         };
         onMounted(() => {
            document.querySelector('.first').classList.add('activeItem')
-           context.emit('someEvent', companyStructure);
+           context.emit('someEvent', 'companyStructure');
         })
         return {
             selectTab

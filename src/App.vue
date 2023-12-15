@@ -1,10 +1,21 @@
 <template>
+  <router-view />
 
-  <HelloWorld msg="Vite + Vue" />
+  <!-- <AutorizationPage />
+  <MainPage /> -->
 </template>
 
-<script setup>
-import HelloWorld from './pages/mainpage/MainPage.vue'
+<script>
+import MainPage from './pages/mainpage/MainPage.vue';
+import AutorizationPage from './pages/autorization/autorizationPage.vue';
+
+
+export default {
+  components: { MainPage, AutorizationPage },
+  setup() {
+
+  },
+};
 </script>
 
 <style scoped>
@@ -14,9 +25,11 @@ import HelloWorld from './pages/mainpage/MainPage.vue'
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }

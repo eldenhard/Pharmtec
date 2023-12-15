@@ -1,0 +1,14 @@
+button{
+    background: var(--bgColorNavbar);
+    border-radius: 6px;
+    text-transform: uppercase;
+    color: white;
+    width: 100%;
+    padding: 5px;
+    margin-top: 6%;
+    outline: none;
+    border: none;
+    &:hover{
+        background: var(--bgColorHoverBlueButton);
+    }
+}

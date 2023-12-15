@@ -17,16 +17,21 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
             <li class="nav-item dws">
-              <a class="nav-link butt" aria-current="page" href="#"  @click="addElement($event)">Меню 1</a>
+              <a class="nav-link" aria-current="page" href="#"  @click="addElement($event)">Меню 1</a>
             </li>
             <li class="nav-item dws">
-              <a class="nav-link butt" aria-current="page" href="#">Меню 2</a>
+              <a class="nav-link" aria-current="page" href="#">Меню 2</a>
             </li>
             <li class="nav-item dws">
-              <a class="nav-link butt" aria-current="page" href="#">Меню 3</a>
+              <a class="nav-link" aria-current="page" href="#">Меню 3</a>
+            </li>
+            <li class="nav-item dws">
+              <router-link to="/login"  class="nav-link">Выход</router-link>
+              <!-- <a class="nav-link butt" aria-current="page" href="#">Выход</a> -->
             </li>
           </ul>
           <form class="d-flex">
+             
             <div class="icon_block"></div>
           </form>
         </div>
