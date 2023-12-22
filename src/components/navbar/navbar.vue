@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg" >
     <div class="container-fluid mx-3"> <!-- Горизонтальные отступы -->
       <a class="navbar-brand" href="#">
         <svg xmlns="http://www.w3.org/2000/svg" width="45px" height="45px" viewBox="0 0 116.22 116.22">
@@ -30,7 +30,7 @@
             <a class="nav-link" aria-current="page" href="#">Меню 3</a>
           </li>
           <li class="nav-item dws">
-            <router-link to="/login" class="nav-link">Выход</router-link>
+            <router-link to="/login" class="nav-link" @click="deleteTokenUser">Выход</router-link>
             <!-- <a class="nav-link butt" aria-current="page" href="#">Выход</a> -->
           </li>
         </ul>
@@ -51,25 +51,14 @@
 
 
 <script>
-var buttons = document.getElementsByClassName('butt'),
-  forEach = Array.prototype.forEach;
-
-forEach.call(buttons, function (b) {
-  b.addEventListener('click', addElement);
-});
-
-function addElement(e) {
-  var addDiv = document.createElement('div'),
-    mValue = Math.max(this.clientWidth, this.clientHeight),
-    rect = this.getBoundingClientRect();
-  sDiv = addDiv.style,
-    px = 'px';
-
-  sDiv.width = sDiv.height = mValue + px;
-  sDiv.left = e.clientX - rect.left - (mValue / 2) + px;
-  sDiv.top = e.clientY - rect.top - (mValue / 2) + px;
-
-  addDiv.classList.add('pulse');
-  this.appendChild(addDiv);
+export default{
+  setup(){
+    const deleteTokenUser = () => {
+      localStorage.removeItem('token')
+    }
+    return {
+      deleteTokenUser
+    }
+  }
 }
 </script>

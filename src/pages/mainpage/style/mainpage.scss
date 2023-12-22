@@ -3,3 +3,11 @@
     display: grid;
     grid-template-columns: max(250px, 18%) 1fr;
 }
+.fade-enter-active, .fade-leave-active, .fade-appear-active {
+    transition: opacity 0.3s;
+  }
+  .fade-enter, .fade-leave-to, .fade-appear {
+    opacity: 0;
+  }
+
+

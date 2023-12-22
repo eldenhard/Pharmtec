@@ -3,7 +3,7 @@
         <p class="enter">Войти</p>
         <InputComponent v-model="emailInput" :labelValue="'Email / логин'" :typeInput="'text'" />
         <InputComponent v-model="passwordInput" :labelValue="'Пароль'" :typeInput="'password'" />
-        <buttonComponent :disabledButton="disabledButton">Войти</buttonComponent>
+        <buttonComponent :disabledButton="disabledButton" @click="setTokenUser">Войти</buttonComponent>
     </form>
 </template>
   
@@ -18,21 +18,26 @@ export default {
         const disabledButton = ref(true);
         const emailInput = ref('');
         const passwordInput = ref('');
-
+        // Обработка активности кнопки
         watch([emailInput, passwordInput], () => {
             disabledButton.value = emailInput.value.trim() === '' || passwordInput.value.trim() === '';
         });
-
+        const setTokenUser = (event) => {
+            event.preventDefault()
+            localStorage.setItem('token', passwordInput)
+            window.location.href = '/'
+        }
         return {
             disabledButton,
             emailInput,
             passwordInput,
+            setTokenUser,
         };
     },
 };
 </script>
 
-<style>
+<style scoped>
 @import './style/form_autorization_style.scss';
 </style>
 

@@ -2,21 +2,23 @@
     <div>
         <div class="sidebar_block">
             <div class="sidebar_block__list">
-                <ul>
-                    <li @click="selectTab('companyStructure', $event.target)" class="first">Структура компании</li>
-                    <li @click="selectTab('Applications', $event.target)">Заявки</li>
-                    <li @click="selectTab('FinReport', $event.target)">Финансовый отчет</li>
-                    <li @click="selectTab('booking', $event.target)">Бронирование переговорной</li>
-                    <li @click="selectTab('forManagment', $event.target)">Для руководителя</li>
-                    <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li>
-                    <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
-                </ul>
+               
+                    <ul>
+                        <li @click="selectTab('companyStructure', $event.target)" class="first">Структура компании</li>
+                        <li @click="selectTab('Applications', $event.target)">Заявки</li>
+                        <li @click="selectTab('FinReport', $event.target)">Финансовый отчет</li>
+                        <li @click="selectTab('booking', $event.target)">Бронирование переговорной</li>
+                        <li @click="selectTab('forManagment', $event.target)">Для руководителя</li>
+                        <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li>
+                        <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
+                    </ul>
+              
             </div>
-            <div class="sidebar_block__news">
+            <!-- <div class="sidebar_block__news">
                 <ul>
                     <li>Новости</li>
                 </ul>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -26,7 +28,7 @@ import { ref, onMounted, defineEmits } from 'vue';
 
 export default {
     setup(props, context) {
-      
+
         const selectTab = (data, el) => {
             document.querySelectorAll('.sidebar_block__list li').forEach(item => {
                 item.classList.remove('activeItem');
@@ -35,8 +37,8 @@ export default {
             context.emit('someEvent', data);
         };
         onMounted(() => {
-           document.querySelector('.first').classList.add('activeItem')
-           context.emit('someEvent', 'companyStructure');
+            document.querySelector('.first').classList.add('activeItem')
+            context.emit('someEvent', 'companyStructure');
         })
         return {
             selectTab
