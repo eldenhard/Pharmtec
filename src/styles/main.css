@@ -2,13 +2,15 @@
     --bgColorNavbar: #0069A7;
     --bgColorHoverBlueButton: #005E96;
     --bgColorDisabled: #E0E0E0;
+    --bgColorCollapseElement: #f1f1f1;
 
-    --colorWhite: #EFFDFF;
+    --colorWhite: #ffffff;
     --colorBorder: #E0E0E0;
     --colorHoverList: #fafafa;
     --colorActiveItemList: #EBF3F8;
     --ColorDisabled: #A6A6A6;
     --colorBlack: #0c0c0c;
+    --colorBlue: #005E96;
     --zIndexNavbar: 1;
     --zIndexModal: 2;
 }

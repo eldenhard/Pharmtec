@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
       <div class="group">
-        <input required="required" :type="typeInput" v-model="inputValue" @input="handleInput"  autocomplete="on"/>
+        <input required="required" :type="typeInput" v-model="inputValue" @input="handleInput"  autocomplete="on" @click="specDate"/>
         <span class="highlight"></span>
         <span class="bar"></span>
         <label>{{ labelValue }}</label>
@@ -29,7 +29,9 @@ export default {
     const handleInput = () => {
       emit('update:modelValue', inputValue.value);
     };
-
+    let specDate = () => {
+      inputValue.value = `${new Date().getFullYear()}-${("0" + ((new Date()).getMonth())+1).slice(-2)}-${("0" + ((new Date()).getDate())).slice(-2)}`
+    }
     watch(() => props.modelValue, (newValue) => {
       inputValue.value = newValue;
     });
@@ -37,6 +39,7 @@ export default {
     return {
       inputValue,
       handleInput,
+      specDate
     };
   },
 };

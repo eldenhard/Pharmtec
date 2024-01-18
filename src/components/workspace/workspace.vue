@@ -1,5 +1,5 @@
-<template style="height: 100%">
-    <div style="width: 250px; height: 100px; background: lightgrey; margin: 0 auto;">
+<template>
+    <div style="width: 100%;">
         <slot></slot>
     </div>
 </template>

@@ -145,6 +145,7 @@ input{
   border: none;
   border-radius: 0;
   border-bottom: 1px solid #c6c6c6;
+  cursor: pointer;
 }
 input:focus {
   outline: none;
@@ -187,5 +188,12 @@ label {
   background: var(--bgColorHoverBlueButton);
   transition: 300ms ease all;
   left: 0%;
+}
+
+input[type=date]:required:invalid::-webkit-datetime-edit {
+  color: transparent !important;
+}
+input[type=date]:focus::-webkit-datetime-edit {
+  color: black !important;
 }
 
