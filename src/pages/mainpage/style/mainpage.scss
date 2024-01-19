@@ -11,3 +11,8 @@
   }
 
 
+@media screen and (max-width: 950px){
+  .workspace_grid{
+    grid-template-columns:1px auto;
+  }
+}
