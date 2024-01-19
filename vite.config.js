@@ -8,11 +8,11 @@ export default defineConfig({
         Vue(),
         ViteSassPlugin(),
       ],
-      resolve: {
-        alias: {
-          "@": fileURLToPath(new URL("./src", import.meta.url)),
-        },
-      },
+      // resolve: {
+      //   alias: {
+      //     "@": fileURLToPath(new URL("./src", import.meta.url)),
+      //   },
+      // },
 })
 
 // import { defineConfig } from 'vite'

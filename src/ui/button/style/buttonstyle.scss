@@ -8,6 +8,8 @@ button{
     margin-top: 6%;
     outline: none;
     border: none;
+    box-shadow: 1px 1px 4px grey;
+    letter-spacing: 1px;
     &:hover{
         background: var(--bgColorHoverBlueButton);
     }

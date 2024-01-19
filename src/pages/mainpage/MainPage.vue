@@ -3,23 +3,29 @@
     <navbar />
     <div class="workspace_grid">
       <sidebar @someEvent="handleSomeEvent" />
-      <Transition name="fade" mode="out-in" appear>
-        <workspace :key="receivedData">
-          <br>
-          <Transition name='fade'>
-            <div v-if="receivedData == 'Applications'">
-              
-              <order :type="'Заявка на отпуск'" :idItem="'flush-collapseOne'" :list_category="['Очередной', 'За свой счет', 'Декретный']"/>
-              <order :type="'Заявка на больничный'" :idItem="'flush-collapseTwo'"  :list_category="['Больничный', 'Декрет']"/>
-              <order :type="'Заявка на командировку'" :idItem="'flush-collapseThree'" :list_category="['На самолете', 'На поезде', 'На машине']"/>
-              <order :type="'Заявка на служебную поездку'" :idItem="'flush-collapseFour'" :list_category="['На самолете', 'На поезде', 'На машине']"/>
-              <order :type="'Изменение личных данных'" :idItem="'flush-collapseFive'" :list_category="['Арес', 'Паспортные данные', 'Контакты']"/>
-              <order :type="'Увольнение'" :idItem="'flush-collapseSix'" :list_category="['Увольнение']"/>
-            </div>
-          </Transition>
-        </workspace>
-      </Transition>
-    </div>
+     
+        <Transition name="fade" mode="out-in" appear>
+          <workspace :key="receivedData">
+            <br>
+            <Transition name='fade'>
+              <div v-if="receivedData == 'Applications'">
+
+                <order :type="'Заявка на отпуск'" :idItem="'flush-collapseOne'"
+                  :list_category="['Очередной', 'За свой счет', 'Декретный']" />
+                <order :type="'Заявка на больничный'" :idItem="'flush-collapseTwo'"
+                  :list_category="['Больничный', 'Декрет']" />
+                <order :type="'Заявка на командировку'" :idItem="'flush-collapseThree'"
+                  :list_category="['На самолете', 'На поезде', 'На машине']" />
+                <order :type="'Заявка на служебную поездку'" :idItem="'flush-collapseFour'"
+                  :list_category="['На самолете', 'На поезде', 'На машине']" />
+                <order :type="'Изменение личных данных'" :idItem="'flush-collapseFive'"
+                  :list_category="['Арес', 'Паспортные данные', 'Контакты']" />
+                <order :type="'Увольнение'" :idItem="'flush-collapseSix'" :list_category="['Увольнение']" />
+              </div>
+            </Transition>
+          </workspace>
+        </Transition>
+      </div>
   </div>
 </template>
 
@@ -53,7 +59,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-@import '../mainpage/style/mainpage.scss';
-
-</style>
+<style scoped>@import '../mainpage/style/mainpage.scss';</style>

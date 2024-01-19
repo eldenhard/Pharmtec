@@ -5,9 +5,7 @@
 </template>
 
 
-<style scoped>
-@import './style/buttonstyle.scss'
-</style>
+
 <script>
 export default {
     props: {
@@ -20,3 +18,8 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+
+@import './style/buttonstyle.scss';
+</style>

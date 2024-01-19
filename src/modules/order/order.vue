@@ -32,6 +32,7 @@
                             <div class="comment_block">
                                 <textarea name="" id=""  rows="10" placeholder="Комментарий"></textarea>
                             </div>
+                            <buttonComponent >Отправить</buttonComponent>
                             {{ item }}
                         </div>
 
@@ -47,9 +48,9 @@
 <script>
 import { ref } from 'vue'
 import InputComponent from '../../ui/inputComponent/InputComponent.vue'
-
+import buttonComponent from '../../ui/button/buttonComponent.vue'
 export default {
-    components: {InputComponent},
+    components: {InputComponent,buttonComponent},
     props: {
         type: {
             type: String,

@@ -2,13 +2,15 @@
     border-right: 1px solid var(--colorBorder);
     padding-top: 6%;
     position: relative;
+    top: 0;
     box-sizing: border-box;
     white-space: wrap;
-    height: 100vh; /* Занимает 100% высоты экрана */
+    height: 90vh; /* Занимает 100% высоты экрана */
+    overflow-y: hidden;
     display: grid;
     grid-template-rows: 1fr auto;
     flex: 0 0 auto;
-    overflow-y: auto; /* Добавьте полосу прокрутки, если контент не помещается */
+    // overflow-y: auto; /* Добавьте полосу прокрутки, если контент не помещается */
 
     ul {
         list-style-type: none;
