@@ -30,10 +30,10 @@
                                 <InputComponent :labelValue="'Дата окончания'" :typeInput="'date'" v-model="end_date"/>
                             </div>
                             <div class="comment_block">
-                                <textarea name="" id=""  rows="10" placeholder="Комментарий"></textarea>
+                                <textarea name="" id=""  rows="6" placeholder="Комментарий"></textarea>
                             </div>
+                            <drop_zone />
                             <buttonComponent >Отправить</buttonComponent>
-                            {{ item }}
                         </div>
 
                     </div>
@@ -49,8 +49,9 @@
 import { ref } from 'vue'
 import InputComponent from '../../ui/inputComponent/InputComponent.vue'
 import buttonComponent from '../../ui/button/buttonComponent.vue'
+import drop_zone from '../drop_zone/drop_zone.vue'
 export default {
-    components: {InputComponent,buttonComponent},
+    components: {InputComponent,buttonComponent, drop_zone},
     props: {
         type: {
             type: String,
