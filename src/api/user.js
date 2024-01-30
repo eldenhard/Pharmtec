@@ -2,8 +2,13 @@ import { api } from '../helpers/axios'
 
 export const resourse = 'auth'
 
-const getUserJWTToken = (username, password) => {
-    return api.post(`${resourse}/auth/token/?username=${username}&password=${password}`)
+const getUserJWTToken = (data) => {
+    return api.post(`${resourse}/token/`, data,
+    {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+ })
 }
 
 export default{

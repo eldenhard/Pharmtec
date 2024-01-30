@@ -42,9 +42,9 @@ export default {
   components: { navbar, sidebar, workspace, Transition, order },
   setup() {
     onMounted(() => {
-      if (!localStorage.getItem('token')) {
-        window.location.href = '/login'
-      }
+      // if (!localStorage.getItem('token')) {
+      //   window.location.href = '/login'
+      // }
     })
     const receivedData = ref('');
 

@@ -52,7 +52,7 @@ import axios from 'axios';
 
 
 const config = {
-    baseURL: 'http://10.0.1.11/docs/',
+    baseURL: 'http://10.0.1.11:8000/',
   };
   
   const _axios = axios.create(config);

@@ -9,7 +9,6 @@
                 <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                     type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Регистрация</button>
             </li>
-
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -32,7 +31,10 @@
         </div>
 
 
-
+<notificationElementUI :isVisibleNotification="isVisibleNotification"
+:typeNotification="typeNotification" :classTypeNotification="classTypeNotification"
+:typeSvgNotification="typeSvgNotification" 
+/>
     </div>
 </template>
   
@@ -41,9 +43,15 @@ import buttonComponent from '../../ui/button/buttonComponent.vue';
 import InputComponent from '../../ui/inputComponent/InputComponent.vue';
 import { ref, watch } from 'vue';
 import api from '../../api/user'
+import notificationElementUI from '../../ui/notificationElement/notificationElementUI.vue'
 export default {
-    components: { buttonComponent, InputComponent },
+    components: { buttonComponent, InputComponent, notificationElementUI },
     setup() {
+        const  isVisibleNotification = false
+        const  typeNotification = ref("")
+        const  classTypeNotification= ref("")
+        const  typeSvgNotification= ref("")
+
         const disabledButton = ref(true);
         const emailInput = ref('');
         const passwordInput = ref('');
@@ -53,23 +61,32 @@ export default {
         watch([emailInput, passwordInput], () => {
             disabledButton.value = emailInput.value.trim() === '' || passwordInput.value.trim() === '';
         });
-        const setTokenUser = (event) => {
+        let setTokenUser = (event) => {
             event.preventDefault()
-            api.getUserJWTToken(emailInput.value, passwordInput.value)
-                .then(response => {
-                    console.log(response)
-                    localStorage.setItem('token', passwordInput)
-                    window.location.href = '/'
-                }).catch((err) => {
-                    console.err(err)
-                    localStorage.setItem('token', passwordInput)
-                    window.location.href = '/'
-                })
+            let objEnter = {
+                username: emailInput.value,
+                password: passwordInput.value
+            }
+            // console.log(objEnter)
+            // window.location.href = '/'
+            // api.getUserJWTToken(objEnter)
+            //     .then(response => {
+            //         localStorage.setItem('accessToken', JSON.stringify(response.data.access))
+            //         window.location.href = '/'
+            //     }).catch((err) => {
+            //         console.log(err)
+            //         localStorage.setItem('token', passwordInput)
+            //         window.location.href = '/'
+            //     })
 
 
 
         }
         return {
+            isVisibleNotification,
+            typeNotification,
+            classTypeNotification,
+            typeSvgNotification,
             disabledButton,
             emailInput,
             passwordInput,

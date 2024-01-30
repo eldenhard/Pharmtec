@@ -13,6 +13,7 @@
     --colorBlue: #005E96;
     --zIndexNavbar: 1;
     --zIndexModal: 2;
+    --zIndexNotif: 3
 }
 a, li, button{
     cursor: pointer;

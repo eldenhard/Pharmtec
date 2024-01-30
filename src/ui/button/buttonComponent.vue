@@ -1,5 +1,5 @@
 <template>
-    <button :disabled="disabledButton">
+    <button :disabled="disabledButton" :type="typeButton">
         <slot></slot>
     </button>
 </template>
@@ -11,6 +11,10 @@ export default {
     props: {
         disabledButton: {
             type: Boolean
+        },
+        typeButton: {
+            type: String,
+            default: 'button'
         }
     },
     setup() {
