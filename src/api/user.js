@@ -10,7 +10,16 @@ const getUserJWTToken = (data) => {
     }
  })
 }
+const refreshUserJWTToken = (data) => {
+    return api.post(`${resourse}/token/refresh/`, data,
+    {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+ })
+}
 
 export default{
-    getUserJWTToken
+    getUserJWTToken,
+    refreshUserJWTToken
 }

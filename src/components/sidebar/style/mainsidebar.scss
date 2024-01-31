@@ -33,12 +33,36 @@
 
     .activeItem {
         background: var(--colorActiveItemList);
-
         &:hover {
             background: var(--colorActiveItemList) !important;
         }
     }
 }
 
+.sidebar_block__news{
+    height: 15vh;
+    border-top: 1px solid var(--colorBorder);
+    ul{
+        li{
+            font-weight: bold;
+        }
+    }
+}
+.mobile_settings{
+    display: none;
+}
 
+
+@media screen and (max-width: 950px) {
+    .mobile_settings{
+        display: block;
+        &:hover {
+            background:none;
+        }
+
+    }
+    ul:not(.mobile_settings){
+        display: none;
+    }
+}
 

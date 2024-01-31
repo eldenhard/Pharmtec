@@ -31,10 +31,7 @@
         </div>
 
 
-<notificationElementUI :isVisibleNotification="isVisibleNotification"
-:typeNotification="typeNotification" :classTypeNotification="classTypeNotification"
-:typeSvgNotification="typeSvgNotification" 
-/>
+
     </div>
 </template>
   
@@ -43,15 +40,13 @@ import buttonComponent from '../../ui/button/buttonComponent.vue';
 import InputComponent from '../../ui/inputComponent/InputComponent.vue';
 import { ref, watch } from 'vue';
 import api from '../../api/user'
-import notificationElementUI from '../../ui/notificationElement/notificationElementUI.vue'
-export default {
-    components: { buttonComponent, InputComponent, notificationElementUI },
-    setup() {
-        const  isVisibleNotification = false
-        const  typeNotification = ref("")
-        const  classTypeNotification= ref("")
-        const  typeSvgNotification= ref("")
+import { useToast } from "vue-toastification";
 
+export default {
+    components: { buttonComponent, InputComponent },
+    setup() {
+
+        const toast = useToast();
         const disabledButton = ref(true);
         const emailInput = ref('');
         const passwordInput = ref('');
@@ -69,24 +64,22 @@ export default {
             }
             // console.log(objEnter)
             // window.location.href = '/'
-            // api.getUserJWTToken(objEnter)
-            //     .then(response => {
-            //         localStorage.setItem('accessToken', JSON.stringify(response.data.access))
-            //         window.location.href = '/'
-            //     }).catch((err) => {
-            //         console.log(err)
-            //         localStorage.setItem('token', passwordInput)
-            //         window.location.href = '/'
-            //     })
+            api.getUserJWTToken(objEnter)
+                .then((response) => {
+                    localStorage.setItem('accessToken', JSON.stringify(response.data.access))
+                    window.location.href = '/'
+                }).catch((err) => {
+                    console.log(err)
+                    toast.error(`Ошибка! Пользователь не найден`, {
+                        timeout: 3000
+                    })
+                })
 
 
 
         }
         return {
-            isVisibleNotification,
-            typeNotification,
-            classTypeNotification,
-            typeSvgNotification,
+
             disabledButton,
             emailInput,
             passwordInput,
