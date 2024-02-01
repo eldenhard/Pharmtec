@@ -41,6 +41,7 @@ import InputComponent from '../../ui/inputComponent/InputComponent.vue';
 import { ref, watch } from 'vue';
 import api from '../../api/user'
 import { useToast } from "vue-toastification";
+import { useLoaderStore } from '../../store/LoaderStore'
 
 export default {
     components: { buttonComponent, InputComponent },
@@ -57,6 +58,7 @@ export default {
             disabledButton.value = emailInput.value.trim() === '' || passwordInput.value.trim() === '';
         });
         let setTokenUser = (event) => {
+            useLoaderStore().setLoader(true)
             event.preventDefault()
             let objEnter = {
                 username: emailInput.value,
@@ -68,8 +70,10 @@ export default {
                 .then((response) => {
                     localStorage.setItem('accessToken', JSON.stringify(response.data.access))
                     window.location.href = '/'
+                    useLoaderStore().setLoader(false)
                 }).catch((err) => {
                     console.log(err)
+                    useLoaderStore().setLoader(false)
                     toast.error(`Ошибка! Пользователь не найден`, {
                         timeout: 3000
                     })

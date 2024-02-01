@@ -3,31 +3,34 @@
     <navbar />
     <div class="workspace_grid">
       <sidebar @someEvent="handleSomeEvent" />
-     
-        <Transition name="fade" mode="out-in" appear>
-          <workspace :key="receivedData">
-            <br>
-            <Transition name='fade'>
-              <div v-if="receivedData == 'Applications'">
-                <order :type="'Заявка на отпуск'" :idItem="'flush-collapseOne'"
-                  :list_category="['Очередной', 'За свой счет', 'Декретный']" />
-                <order :type="'Заявка на больничный'" :idItem="'flush-collapseTwo'"
-                  :list_category="['Больничный', 'Декрет']" />
-                <order :type="'Заявка на командировку'" :idItem="'flush-collapseThree'"
-                  :list_category="['На самолете', 'На поезде', 'На машине']" />
-                <order :type="'Заявка на служебную поездку'" :idItem="'flush-collapseFour'"
-                  :list_category="['На самолете', 'На поезде', 'На машине']" />
-                <order :type="'Изменение личных данных'" :idItem="'flush-collapseFive'"
-                  :list_category="['Арес', 'Паспортные данные', 'Контакты']" />
-                <order :type="'Увольнение'" :idItem="'flush-collapseSix'" :list_category="['Увольнение']" />
-              </div>
-            </Transition>
-            <div v-if="receivedData == 'forManagment'">
-              <for_manager />
+
+      <Transition name="fade" mode="out-in" appear>
+        <workspace :key="receivedData">
+          <br>
+          <Transition name='fade'>
+            <div v-if="receivedData == 'Applications'">
+              <order :type="'Заявка на отпуск'" :idItem="'flush-collapseOne'"
+                :list_category="['Очередной', 'За свой счет', 'Декретный']" />
+              <order :type="'Заявка на больничный'" :idItem="'flush-collapseTwo'"
+                :list_category="['Больничный', 'Декрет']" />
+              <order :type="'Заявка на командировку'" :idItem="'flush-collapseThree'"
+                :list_category="['На самолете', 'На поезде', 'На машине']" />
+              <order :type="'Заявка на служебную поездку'" :idItem="'flush-collapseFour'"
+                :list_category="['На самолете', 'На поезде', 'На машине']" />
+              <order :type="'Изменение личных данных'" :idItem="'flush-collapseFive'"
+                :list_category="['Арес', 'Паспортные данные', 'Контакты']" />
+              <order :type="'Увольнение'" :idItem="'flush-collapseSix'" :list_category="['Увольнение']" />
             </div>
-          </workspace>
-        </Transition>
-      </div>
+          </Transition>
+          <div v-if="receivedData == 'forManagment'">
+            <for_manager />
+          </div>
+          <div v-if="receivedData == 'ForAdmin'">
+            <for_admin />
+          </div>
+        </workspace>
+      </Transition>
+    </div>
   </div>
 </template>
 
@@ -41,10 +44,13 @@ import sidebar from '../../components/sidebar/sidebar.vue';
 import workspace from '../../components/workspace/workspace.vue';
 import order from '../../modules/order/order.vue';
 import for_manager from '../../modules/for_manager/for_manager.vue'
+import for_admin from '../../modules/for_admin/for_admin.vue'
+import { useActiveTabStore } from '../../store/ActiveTabStore'
 export default {
-  components: { navbar, sidebar, workspace, Transition, order,for_manager },
+  components: { navbar, sidebar, workspace, Transition, order, for_manager, for_admin },
   setup() {
     onMounted(() => {
+
       // if (!localStorage.getItem('token')) {
       //   window.location.href = '/login'
       // }
@@ -63,4 +69,6 @@ export default {
   }
 };
 </script>
-<style scoped>@import '../mainpage/style/mainpage.scss';</style>
+<style scoped>
+@import '../mainpage/style/mainpage.scss';
+</style>

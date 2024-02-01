@@ -1,5 +1,6 @@
 <template>
     <div>
+       
         <div class="autorization_block">
             <div class="autorization_block_icons">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 116.22 116.22">
@@ -22,10 +23,15 @@
 
 <script>
 import form_autorization from '../../modules/form-autorization/form_autorization.vue';
+import { ref } from 'vue'
 export default {
     components: { form_autorization },
     setup() {
+        const loader = ref(false)
 
+        return{
+            loader
+        }
     },
 }
 </script>

@@ -48,12 +48,14 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import api from '../../api/orders'
 import InputComponent from '../../ui/inputComponent/InputComponent.vue'
 import buttonComponent from '../../ui/button/buttonComponent.vue'
 import drop_zone from '../drop_zone/drop_zone.vue'
 import { useToast } from "vue-toastification";
+import { useLoaderStore } from '../../store/LoaderStore'
+
 export default {
     components: { InputComponent, buttonComponent, drop_zone },
     props: {
@@ -84,6 +86,8 @@ export default {
         let checkData = function (data) {
             start_date.value = data
         }
+
+        
         let sendOrderToServer = function (subTab) {
             if(!start_date.value || !end_date.value){
                 toast.warning('Поля выбора дат обязательны к заполнению', {
@@ -91,10 +95,11 @@ export default {
                 })
                 return
             }
+            useLoaderStore().setLoader(true)
             let activeMainTab = Object.keys(objDataConversation).find((key) => objDataConversation[key] == props.type)
             let dataObject = {
-                start_date: start_date.value,
-                end_date: end_date.value,
+                date_begin: start_date.value,
+                date_end: end_date.value,
                 comment: comment.value,
                 kind: activeMainTab,
                 sub_kind: subTab,
@@ -108,12 +113,13 @@ export default {
                 .then((response) => {
                     toast.success("Заявка отправлена", {
                         timeout: 3000,
-
                     });
+                    useLoaderStore().setLoader(false)
                 }).catch((err) => {
                     toast.error(`${err}`, {
                         timeout: 3000,
                     });
+                    useLoaderStore().setLoader(false)
                 })
         }
 

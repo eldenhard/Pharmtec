@@ -1,5 +1,8 @@
 <template>
-  <router-view />
+  <div>
+    <router-view />
+    <loaderComponent />
+  </div>
 
   <!-- <AutorizationPage />
   <MainPage /> -->
@@ -10,38 +13,38 @@ import MainPage from './pages/mainpage/MainPage.vue';
 import AutorizationPage from './pages/autorization/autorizationPage.vue';
 import { onMounted } from 'vue'
 import api from './api/user'
-
+import loaderComponent from './ui/loader/loaderComponent.vue';
 export default {
-  components: { MainPage, AutorizationPage },
+  components: { MainPage, AutorizationPage, loaderComponent },
   setup() {
-    // onMounted(() => {
-    //   let token = {
-    //     refresh: JSON.parse(localStorage.getItem('accessToken'))
-    //   }
-    //   fetch('http://10.0.1.11:8000/auth/token/refresh/', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(token)
-    //   }).then(response => {
-    //     console.log(response)
-    //     // localStorage.setItem('accessToken', response)
-    //   })
-    // })
+    onMounted(() => {
+      // let token = {
+      //   refresh: JSON.parse(localStorage.getItem('accessToken'))
+      // }
+      // fetch('http://10.0.1.11:8000/auth/token/refresh/', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(token)
+      // }).then(response => {
+      //   console.log(response)
+      //   // localStorage.setItem('accessToken', response)
+      // })
+    })
 
     // api.refreshUserJWTToken(token)
     //   .then(response => {
     //     localStorage.setItem('accessToken', response)
     //   })
-  // })
+    // })
 
-  // onMounted(() => {
-  //   if (!localStorage.getItem('token')) {
-  //     window.location.href = '/login'
-  //   }
-  // })
-},
+    // onMounted(() => {
+    //   if (!localStorage.getItem('token')) {
+    //     window.location.href = '/login'
+    //   }
+    // })
+  },
 };
 </script>
 

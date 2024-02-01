@@ -45,6 +45,7 @@ export default {
             });
             el.classList.add('activeItem');
             context.emit('someEvent', data);
+            
         };
         onMounted(() => {
             document.querySelector('.first').classList.add('activeItem')

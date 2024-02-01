@@ -13,7 +13,12 @@
     --colorBlue: #005E96;
     --zIndexNavbar: 1;
     --zIndexModal: 2;
-    --zIndexNotif: 3
+    --zIndexNotif: 3;
+
+    /* for loader */
+    --b: #262626;
+	--w: #dcdcd2;
+	--s: 2s; /* change speed */
 }
 a, li, button{
     cursor: pointer;

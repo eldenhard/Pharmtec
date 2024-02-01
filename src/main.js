@@ -1,6 +1,9 @@
 import './styles/main.css';
 import { createApp } from 'vue';
+import { createPinia } from 'pinia'
 import App from './App.vue';
+
+const pinia = createPinia()
 
 // Bootstrap 5
 import 'bootstrap/dist/css/bootstrap.css';
@@ -23,6 +26,7 @@ import router from './router';
 
 const app = createApp(App)
     .use(router)
+    .use(pinia)
     .use(axiosPlugin)
     .use(Toast, {
         position: "top-right",
