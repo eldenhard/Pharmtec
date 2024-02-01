@@ -10,9 +10,14 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 // axios
 import axiosPlugin from './helpers/axios'
 
+// Notifications
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 
+// Select
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
+// import { VueSelect } from "vue-select";
 // Vue-router
 import router from './router';
 
@@ -32,4 +37,5 @@ const app = createApp(App)
         icon: true,
         rtl: false
     })
-    .mount('#app') 
+    .component("v-select", vSelect)
+.mount('#app') 

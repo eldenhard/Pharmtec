@@ -21,7 +21,7 @@ a, li, button{
 * {
     margin: 0;
     padding: 0;
-    font-family: Roboto, Helvetica, Arial, sans-serif;;
+    font-family: Montserrat, Roboto, Helvetica, Arial, sans-serif;;
 }
 body{
     max-height: 100vh;
@@ -29,4 +29,14 @@ body{
 img {
     width: 100%;
     height: auto;
+}
+label{
+    color: rgb(46, 46, 46);
+}
+.header_element{
+    font-weight: bold;
+    font-size: 2.2vh;
+}
+.vs__dropdown-toggle{
+    border: black ;
 }

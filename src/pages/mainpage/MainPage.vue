@@ -9,7 +9,6 @@
             <br>
             <Transition name='fade'>
               <div v-if="receivedData == 'Applications'">
-
                 <order :type="'Заявка на отпуск'" :idItem="'flush-collapseOne'"
                   :list_category="['Очередной', 'За свой счет', 'Декретный']" />
                 <order :type="'Заявка на больничный'" :idItem="'flush-collapseTwo'"
@@ -23,6 +22,9 @@
                 <order :type="'Увольнение'" :idItem="'flush-collapseSix'" :list_category="['Увольнение']" />
               </div>
             </Transition>
+            <div v-if="receivedData == 'forManagment'">
+              <for_manager />
+            </div>
           </workspace>
         </Transition>
       </div>
@@ -38,8 +40,9 @@ import navbar from '../../components/navbar/navbar.vue';
 import sidebar from '../../components/sidebar/sidebar.vue';
 import workspace from '../../components/workspace/workspace.vue';
 import order from '../../modules/order/order.vue';
+import for_manager from '../../modules/for_manager/for_manager.vue'
 export default {
-  components: { navbar, sidebar, workspace, Transition, order },
+  components: { navbar, sidebar, workspace, Transition, order,for_manager },
   setup() {
     onMounted(() => {
       // if (!localStorage.getItem('token')) {
@@ -49,6 +52,7 @@ export default {
     const receivedData = ref('');
 
     const handleSomeEvent = (data) => {
+      console.log(data)
       receivedData.value = data;
     };
 

@@ -1,0 +1,40 @@
+.air_block {
+  width: 85%;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 3px 4px 6px grey;
+  padding: 4%;
+}
+.first_line {
+  display: grid;
+  column-gap: 4vw;
+  row-gap: 2vh;
+  grid-template-areas:
+    "date_start  manager "
+    "department department"
+    "position position"
+    "region region ";
+  align-items: center;
+}
+.date_start {
+  grid-area: date_start;
+}
+.manager {
+  grid-area: manager;
+  width: 100%;
+}
+.department {
+  grid-area: department;
+}
+.position {
+  grid-area: position;
+}
+.region {
+  grid-area: region;
+  width: 100%;
+}
+
+// .date_start , .manager , .department, .position, .region{
+//     display: flex;
+//     align-items: end;
+// }
