@@ -1,3 +1,87 @@
-.fc-col-header-cell-cushion{
-    color: black !important;
+.close-icon{
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    color: red;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.block_info{
+    position: relative;
+}
+.input-box {
+    /* родительский блок относительно которого будем формировать положение
+    тега label */
+    position: relative;
+  }
+  
+  input, select {
+    background: #fff;
+    padding: 2%;
+    /* закруглим края у поля ввода */
+    border-radius: 6px;
+    border: 1.2px solid var(--ColorDisabled);
+    width: 100%;
+    min-width: 5vw;
+    min-height: 4vh;
+    transition: border .2s ease;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
+    &:focus{
+        border: 1.2px solid var(--colorBlue);
+        outline: none;
+        text-decoration: none;
+    
+    }
+  }
+  
+  label {
+    position: absolute;
+    /* смещение относительно родительского элемента 10px вверх от верхнего края и   10px влево */
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    color: rgb(155, 155, 155);
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0 5px;
+
+  }
+
+.time{
+    display: flex;
+    margin-top: 8%;
+    justify-content: space-between;
+    gap: 15px;
+    .start_date, .end_date{
+        display: flex;
+        gap: 5px;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+}
+.textarea{
+    border: 1.2px solid var(--ColorDisabled);
+    width: 100%;
+    border-radius: 6px;
+    margin-top: 4%;
+    resize: none;
+    transition: border .2s ease;
+    padding: 3%;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:focus{
+        border: 1.2px solid var(--colorBlue);
+        outline: none;
+        text-decoration: none;
+    
+    }
+}
+option{
+    cursor: pointer;
 }

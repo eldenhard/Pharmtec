@@ -31,6 +31,16 @@
           <div v-if="receivedData == 'booking'">
             <sheduleElement />
           </div>
+          <div v-if="receivedData == 'FinReport'">
+            <fin_report />
+          </div>
+          <div v-if="receivedData == 'ApproveApplication'">
+            <check_application />
+          </div>
+          <div v-if="receivedData == 'companyStructure'">
+            <company_structure />
+          </div>
+
           <div v-if="receivedData == 'News'">
             <news />
           </div>
@@ -53,9 +63,12 @@ import for_manager from '../../modules/for_manager/for_manager.vue'
 import for_admin from '../../modules/for_admin/for_admin.vue'
 import news from '../../modules/news/news.vue';
 import sheduleElement from '../../modules/shedule_module/sheduleElement.vue';
+import fin_report from '../../modules/fin_report/fin_report.vue'
+import check_application from '../../modules/check_application/check_application.vue';
+import company_structure from '../../modules/company_structure/company_structure.vue'
 import { useActiveTabStore } from '../../store/ActiveTabStore'
 export default {
-  components: { navbar, sidebar, workspace, Transition, order, for_manager, for_admin, news,sheduleElement },
+  components: { navbar, sidebar, workspace, Transition, order, for_manager, for_admin, news, sheduleElement, fin_report, check_application, company_structure },
   setup() {
     onMounted(() => {
 
