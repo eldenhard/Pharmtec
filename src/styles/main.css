@@ -19,6 +19,8 @@
     --b: #262626;
 	--w: #dcdcd2;
 	--s: 2s; /* change speed */
+
+    --fc-border-color: rgb(199, 199, 199);
 }
 a, li, button{
     cursor: pointer;
@@ -38,10 +40,18 @@ img {
 label{
     color: rgb(46, 46, 46);
 }
-.header_element{
-    font-weight: bold;
-    font-size: 2.2vh;
-}
+
 .vs__dropdown-toggle{
     border: black ;
+}
+.air_block {
+    width: 85%;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 3px 4px 6px grey;
+    padding: 4%;
+  }
+  .header_element{
+    font-weight: bold;
+    font-size: 2.2vh;
 }

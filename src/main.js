@@ -24,10 +24,27 @@ import "vue-select/dist/vue-select.css";
 // Vue-router
 import router from './router';
 
+
+// MArkdown
+import VMdEditor from '@kangc/v-md-editor';
+import '@kangc/v-md-editor/lib/style/base-editor.css';
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
+import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+import ruRU from '@kangc/v-md-editor/lib/lang/ru-RU';
+// Prism
+import Prism from 'prismjs';
+// highlight code
+import 'prismjs/components/prism-json';
+
+VMdEditor.use(vuepressTheme, {
+  Prism,
+});
+VMdEditor.lang.use('ru-RU', ruRU);
 const app = createApp(App)
     .use(router)
     .use(pinia)
     .use(axiosPlugin)
+    .use(VMdEditor)
     .use(Toast, {
         position: "top-right",
         closeOnClick: true,

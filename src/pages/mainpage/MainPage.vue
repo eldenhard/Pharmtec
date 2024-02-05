@@ -28,6 +28,12 @@
           <div v-if="receivedData == 'ForAdmin'">
             <for_admin />
           </div>
+          <div v-if="receivedData == 'booking'">
+            <sheduleElement />
+          </div>
+          <div v-if="receivedData == 'News'">
+            <news />
+          </div>
         </workspace>
       </Transition>
     </div>
@@ -45,9 +51,11 @@ import workspace from '../../components/workspace/workspace.vue';
 import order from '../../modules/order/order.vue';
 import for_manager from '../../modules/for_manager/for_manager.vue'
 import for_admin from '../../modules/for_admin/for_admin.vue'
+import news from '../../modules/news/news.vue';
+import sheduleElement from '../../modules/shedule_module/sheduleElement.vue';
 import { useActiveTabStore } from '../../store/ActiveTabStore'
 export default {
-  components: { navbar, sidebar, workspace, Transition, order, for_manager, for_admin },
+  components: { navbar, sidebar, workspace, Transition, order, for_manager, for_admin, news,sheduleElement },
   setup() {
     onMounted(() => {
 

@@ -12,7 +12,7 @@
             <!-- Note: Only add the code block below -->
             <div class="preview-container mt-4" v-if="files.length">
                 <div v-for="file in files" :key="file.name" class="preview-card">
-                    <div>
+                    <div style="display: flex; flex-wrap: wrap;">
                         <img class="preview-img" :src="generateURL(file)" />
                         <p >
                             {{ file.name }} -
@@ -64,6 +64,7 @@ export default {
             e.preventDefault();
             this.$refs.file.files = e.dataTransfer.files;
             this.onChange();
+            this.$emit('downloadFile', this.$refs.file.files)
             this.isDragging = false;
         },
         generateURL(file) {

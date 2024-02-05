@@ -41,7 +41,7 @@ export default {
     };
     let specDate = (ev) => {
       if (ev.type != 'date') return
-      inputValue.value = `${new Date().getFullYear()}-${("0" + ((new Date()).getMonth()) + 1).slice(-2)}-${("0" + ((new Date()).getDate())).slice(-2)}`
+      inputValue.value = new Date().toLocaleDateString().split('.').reverse().join('-')
       emit('update:modelValue', inputValue.value);
     }
     watch(() => props.modelValue, (newValue) => {

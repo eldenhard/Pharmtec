@@ -34,7 +34,7 @@
                             <div class="comment_block">
                                 <textarea v-model="comment" rows="6" placeholder="Комментарий"></textarea>
                             </div>
-                            <drop_zone />
+                            <drop_zone @downloadFile="downloadFile()"/>
                             <buttonComponent @click="sendOrderToServer(item)" type="submit">Отправить</buttonComponent>
                         </div>
 
@@ -69,12 +69,17 @@ export default {
             type: Array
         }
     },
-    setup(props) {
+    setup(props, context) {
         const activeTab = ref(0)
         const start_date = ref("")
         const end_date = ref("")
         const comment = ref("")
         const toast = useToast();
+        const files = ref(null)
+        const downloadFile = (data) => {
+            files.value  = data
+            console.log(context)
+        }
         let objDataConversation = {
             order_vacation: 'Заявка на отпуск',
             order_medical: 'Заявка на больничный',
@@ -103,24 +108,26 @@ export default {
                 comment: comment.value,
                 kind: activeMainTab,
                 sub_kind: subTab,
-                user: 1
+                user: 1,
+                files: files.value
             }
-            let formData = new FormData()
-            for (let i in dataObject) {
-                formData.append(i, dataObject[i])
-            }
-            api.createNewOrder(formData)
-                .then((response) => {
-                    toast.success("Заявка отправлена", {
-                        timeout: 3000,
-                    });
-                    useLoaderStore().setLoader(false)
-                }).catch((err) => {
-                    toast.error(`${err}`, {
-                        timeout: 3000,
-                    });
-                    useLoaderStore().setLoader(false)
-                })
+            // console.log(files.value)
+            // let formData = new FormData()
+            // for (let i in dataObject) {
+            //     formData.append(i, dataObject[i])
+            // }
+            // api.createNewOrder(formData)
+            //     .then((response) => {
+            //         toast.success("Заявка отправлена", {
+            //             timeout: 3000,
+            //         });
+            //         useLoaderStore().setLoader(false)
+            //     }).catch((err) => {
+            //         toast.error(`${err}`, {
+            //             timeout: 3000,
+            //         });
+            //         useLoaderStore().setLoader(false)
+            //     })
         }
 
         return {
@@ -129,9 +136,11 @@ export default {
             end_date,
             comment,
             toast,
+            files,
             // funcstion`s
             sendOrderToServer,
-            checkData
+            checkData,
+            downloadFile,
         }
     },
 }
