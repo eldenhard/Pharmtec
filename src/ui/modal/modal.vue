@@ -10,7 +10,7 @@
                     <slot></slot>
                 </div>
                 <div class="modal-footer">
-                    <buttonComponent>Сохранить</buttonComponent>
+                    <buttonComponent >Сохранить</buttonComponent>
                     <!-- <button type="button" class="btn btn-primary">Сохранить</button> -->
                 </div>
             </div>

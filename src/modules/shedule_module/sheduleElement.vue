@@ -2,7 +2,6 @@
     <div>
         <modal :modalTitle="modalTitle" :isModal="isModal">
             <div class="block_info">
-                {{ data_by_field }}
                 <div class="input-box">
                     <label>Дата</label>
                     <input type="date" v-model="newStartDate">
@@ -46,21 +45,7 @@
                     </div>
                 </div>
                 <textarea rows="5" class="textarea" placeholder="Комментарий"></textarea>
-                <!-- <label for="">Дата <br>
-                    <input type="text" :value="data_by_field !== null ? data_by_field.start.split('T')[0].slice(0, 10) : ''"  ><br>
-                </label>
-                <div class="time">
-                    <label for="">Часы
-                        <br>
-                        <input type="text" :value="data_by_field !== null ?data_by_field.start.split('T')[1].slice(0, 5): ''" >
-                    </label>
-                    <label for="">Минуты
-                        <br>
-                        <input type="text" :value="data_by_field !== null ?data_by_field.end.split('T')[1].slice(0,5): ''" >
-                    </label> -->
 
-
-                <!-- </div> -->
             </div>
         </modal>
         <div class="air_block" style="max-height: 90vh; overflow: hidden;">
