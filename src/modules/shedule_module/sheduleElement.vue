@@ -133,6 +133,7 @@ export default {
                     buttonText: '4 дня',
                 },
             },
+            eventOverlap: false,
             resources: [{ id: '1a', title: 'Переговорная комната' }],
             dateClick: (info) => {
                 if(!info.event){
@@ -166,6 +167,7 @@ export default {
                     addInfo.event.setProp('title', title);
                 }
             },
+      
             //   Обработчик перетаскивания события
             eventDrop: (eventDropInfo) => {
                 const movedEventIndex = events.value.findIndex((event) => event.id === movedEvent);
