@@ -1,6 +1,6 @@
 <template>
     <div>
-        <modal :modalTitle="modalTitle" :isModal="isModal">
+        <modal :modalTitle="modalTitle" :isModal="isModal" @saveData="saveDataHandle">
             <div class="block_info">
                 <div class="input-box">
                     <label>Дата</label>
@@ -13,7 +13,8 @@
                             <label>Часы</label>
                             <select v-model="start_hour">
                                 <template v-for="i, index in 19">
-                                    <option :value="i" v-if="i > 7" :key="index">{{ i == 8 || i == 9 ? '0' + i : i}}</option>
+                                    <option :value="i" v-if="i > 7" :key="index">{{ i == 8 || i == 9 ? '0' + i : i }}
+                                    </option>
                                 </template>
                             </select>
                         </div>
@@ -31,7 +32,7 @@
                             <label>Часы</label>
                             <select v-model="end_hour">
                                 <template v-for="i, index in 19">
-                                    <option :value="i" v-if="i > 7" >{{ i == 8 || i == 9 ? '0' + i : i }}</option>
+                                    <option :value="i" v-if="i > 7">{{ i == 8 || i == 9 ? '0' + i : i }}</option>
                                 </template>
                             </select>
                         </div>
@@ -44,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-                <textarea rows="5" class="textarea" placeholder="Комментарий"></textarea>
+                <textarea rows="5" class="textarea" placeholder="Комментарий" v-model="title"></textarea>
 
             </div>
         </modal>
@@ -86,10 +87,29 @@ export default {
         const start_minute = ref("")
         const end_hour = ref("")
         const end_minute = ref("")
+        const title = ref("")
+        const isSaveValueFromModal = ref("")
         let movedEvent = null // Флаг перемещенного события
         // Хранение данных
         const events = ref([]);
-
+        const saveDataHandle = (data) => {
+            if(start_hour.value < 10){
+                start_hour.value = `0${start_hour.value}`
+            }
+            if(end_hour.value < 10){
+                end_hour.value = `0${end_hour.value}`
+            }
+            const newEvent = {
+                title: title.value,
+                start: `${newStartDate.value}T${start_hour.value}:${start_minute.value}:00+03:00`,
+                end: `${newStartDate.value}T${end_hour.value}:${end_minute.value}:00+03:00`,
+                resourceId: '1a',
+            };
+            console.log(newEvent)
+            events.value.push(newEvent);
+            console.log(events.value)
+            isModal.value = false
+        }
         // Конфигурация
         const calendarOptions = reactive({
             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -126,19 +146,9 @@ export default {
                 start_minute.value = start.getMinutes().toString().padStart(2, '0')
                 end_hour.value = new Date(selectInfo.endStr).getHours()
                 end_minute.value = end.getMinutes().toString().padStart(2, '0')
-                console.log(start_hour.value, end_hour.value)
                 modalTitle.value = 'Создание нового события'
                 isModal.value = true
-                // const title = prompt('Введите название события 1');
-                // if (title) {
-                //     const newEvent = {
-                //         title: title,
-                //         start: selectInfo.startStr,
-                //         end: selectInfo.endStr,
-                //         resourceId: '1a',
-                //     };
-                //     events.value.push(newEvent);
-                // }
+
             },
             eventAdd: (addInfo) => {
                 const title = prompt('Введите название события 2');
@@ -203,7 +213,7 @@ export default {
                     movedEvent = null;
                 }
             },
-        
+
             slotMinTime: '08:00',
             slotMaxTime: '20:00',
 
@@ -229,6 +239,9 @@ export default {
             start_minute,
             end_hour,
             end_minute,
+            title,
+            isSaveValueFromModal,
+            saveDataHandle,
         };
     },
 };

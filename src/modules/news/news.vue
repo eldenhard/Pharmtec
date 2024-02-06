@@ -14,17 +14,21 @@
 <script>
 import { ref } from 'vue'
 import buttonComponentVue from '../../ui/button/buttonComponent.vue'
-
+import { useToast } from "vue-toastification";
 export default {
     components: { buttonComponentVue },
     setup() {
         const text = ref("")
+        const toast = useToast()
         const createNewNews = () => {
+            toast.info('Раздел в разработке. Создание невозможно', {
+                timeout: 3000
+            })
             console.log(text.value)
         }
         return {
             text,
-
+            toast,
             // function
             createNewNews
         }
