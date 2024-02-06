@@ -40,6 +40,9 @@ VMdEditor.use(vuepressTheme, {
   Prism,
 });
 VMdEditor.lang.use('ru-RU', ruRU);
+
+
+
 const app = createApp(App)
     .use(router)
     .use(pinia)
