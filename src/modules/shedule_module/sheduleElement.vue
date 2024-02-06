@@ -1,12 +1,57 @@
 <template>
     <div>
-        <!-- <modal :modalTitle="modalTitle" :isModal="isModal" @saveData="saveDataHandle">
+        <modal :modalTitle="modalTitle" :isModal="isModal" @saveData="saveDataHandle">
+            <div class="block_info">
+                <div class="input-box">
+                    <label>Дата</label>
+                    <input type="date" v-model="newStartDate">
+                </div>
+                <div class="time">
+                    <div class="start_date">
+                        <span>c</span>
+                        <div class="input-box">
+                            <label>Часы</label>
+                            <select v-model="start_hour">
+                                <template v-for="i, index in 19">
+                                    <option :value="i" v-if="i > 7" :key="index">{{ i == 8 || i == 9 ? '0' + i : i }}
+                                    </option>
+                                </template>
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <label>Минуты</label>
+                            <select v-model="start_minute">
+                                <option value="00">00</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="end_date">
+                        <span>по</span>
+                        <div class="input-box">
+                            <label>Часы</label>
+                            <select v-model="end_hour">
+                                <template v-for="i, index in 19">
+                                    <option :value="i" v-if="i > 7">{{ i == 8 || i == 9 ? '0' + i : i }}</option>
+                                </template>
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <label>Минуты</label>
+                            <select v-model="end_minute">
+                                <option value="00">00</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <textarea rows="5" class="textarea" placeholder="Комментарий" v-model="title"></textarea>
 
-        </modal> -->
-
-  
+            </div>
+        </modal>
         <div class="air_block" style="max-height: 90vh; overflow: hidden;">
-            <FullCalendar :options="calendarOptions" style="max-height: 70vh;" />
+            <FullCalendar :options="calendarOptions" style="max-height: 70vh;" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" />
             <buttonComponent @click="saveCurrentShedule()">Сохранить</buttonComponent>
         </div>
     </div>
@@ -25,10 +70,12 @@ import listPlugin from '../../../node_modules/@fullcalendar/list';
 import localeRu from '../../../node_modules/@fullcalendar/core/locales/ru';
 import { ref, reactive, watch } from 'vue';
 import { useToast } from "vue-toastification";
+import modal from '../../ui/modal/modal.vue';
 export default {
     components: {
         FullCalendar,
         buttonComponent,
+        modal,
     },
     setup() {
         const toast = useToast();
@@ -42,16 +89,14 @@ export default {
         const end_minute = ref("")
         const title = ref("")
         const isSaveValueFromModal = ref("")
-        
-     
         let movedEvent = null // Флаг перемещенного события
         // Хранение данных
         const events = ref([]);
         const saveDataHandle = (data) => {
-            if (start_hour.value < 10) {
+            if(start_hour.value < 10){
                 start_hour.value = `0${start_hour.value}`
             }
-            if (end_hour.value < 10) {
+            if(end_hour.value < 10){
                 end_hour.value = `0${end_hour.value}`
             }
             console.log('end_hour.value:', end_hour.value)
@@ -90,7 +135,7 @@ export default {
             },
             resources: [{ id: '1a', title: 'Переговорная комната' }],
             dateClick: (info) => {
-                if (!info.event) {
+                if(!info.event){
                     modalTitle.value = 'Создание нового события'
                     isModal.value = true
                 }
@@ -110,7 +155,8 @@ export default {
                 end_minute.value = end.getMinutes().toString().padStart(2, '0')
                 modalTitle.value = 'Создание нового события'
                 title.value = ""
-               
+                isModal.value = true
+
             },
             eventAdd: (addInfo) => {
                 const title = prompt('Введите название события 2');
@@ -204,7 +250,6 @@ export default {
             title,
             isSaveValueFromModal,
             saveDataHandle,
-         
         };
     },
 };
