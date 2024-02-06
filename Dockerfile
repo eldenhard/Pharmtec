@@ -12,7 +12,8 @@ RUN npm install --save @fullcalendar/list
 RUN npm install --save @fullcalendar/resource-timeline
 RUN npm install --save @fullcalendar/interaction
 RUN npm install @fullcalendar/core @fullcalendar/resource @fullcalendar/resource-timegrid
-RUN npm install
+RUN npm install modal__close
+RUN npm install vue-final-modal@3
 COPY ./ .
 RUN npm run build
 

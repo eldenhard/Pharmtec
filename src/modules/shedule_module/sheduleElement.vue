@@ -1,6 +1,10 @@
 <template>
     <div>
-        <modal :modalTitle="modalTitle" :isModal="isModal" @saveData="saveDataHandle">
+        <vue-final-modal v-model="isModal"  classes="modal-container" content-class="modal-content">
+            <button class="modal__close" @click="isModal = false">
+                <i class="bi bi-x-lg"></i>
+      </button>
+            <span class="modal__title">Подтверждение заявки</span>
             <div class="block_info">
                 <div class="input-box">
                     <label>Дата</label>
@@ -46,9 +50,9 @@
                     </div>
                 </div>
                 <textarea rows="5" class="textarea" placeholder="Комментарий" v-model="title"></textarea>
-
-            </div>
-        </modal>
+                <buttonComponent @click="saveDataHandle()">Сохранить</buttonComponent>
+                </div>
+        </vue-final-modal>
         <div class="air_block" style="max-height: 90vh; overflow: hidden;">
             <FullCalendar :options="calendarOptions" style="max-height: 70vh;" data-bs-toggle="modal"
                 data-bs-target="#exampleModal" />
@@ -71,11 +75,14 @@ import localeRu from '../../../node_modules/@fullcalendar/core/locales/ru';
 import { ref, reactive, watch } from 'vue';
 import { useToast } from "vue-toastification";
 import modal from '../../ui/modal/modal.vue';
+import { $vfm, VueFinalModal, ModalsContainer } from 'vue-final-modal'
 export default {
     components: {
         FullCalendar,
         buttonComponent,
         modal,
+        VueFinalModal,
+        ModalsContainer
     },
     setup() {
         const toast = useToast();
@@ -93,10 +100,10 @@ export default {
         // Хранение данных
         const events = ref([]);
         const saveDataHandle = (data) => {
-            if(start_hour.value < 10){
+            if (start_hour.value < 10) {
                 start_hour.value = `0${start_hour.value}`
             }
-            if(end_hour.value < 10){
+            if (end_hour.value < 10) {
                 end_hour.value = `0${end_hour.value}`
             }
             console.log('end_hour.value:', end_hour.value)
@@ -136,7 +143,7 @@ export default {
             eventOverlap: false,
             resources: [{ id: '1a', title: 'Переговорная комната' }],
             dateClick: (info) => {
-                if(!info.event){
+                if (!info.event) {
                     modalTitle.value = 'Создание нового события'
                     isModal.value = true
                 }
@@ -167,7 +174,7 @@ export default {
                     addInfo.event.setProp('title', title);
                 }
             },
-      
+
             //   Обработчик перетаскивания события
             eventDrop: (eventDropInfo) => {
                 const movedEventIndex = events.value.findIndex((event) => event.id === movedEvent);
