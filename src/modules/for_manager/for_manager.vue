@@ -10,17 +10,20 @@
 
             <label for="" class="manager">
                 Руководитель <br>
-                <v-select :options="books" label="title" />
+                <v-select :options="manager" label="title" dir="ltr">
+                    <slot name="no-options">Извините, данные не найдены</slot>
+                </v-select>
+       
             </label>
 
             <label for="" class="department">
                 Должность <br>
-                <v-select :options="books" label="title" />
+                <v-select :options="department" label="title" />
             </label>
 
             <label for="" class="position">
                 Подраздление <br>
-                <v-select :options="books" label="title" />
+                <v-select :options="position" label="title" />
             </label>
 
 
@@ -31,9 +34,9 @@
                 </select>
             </label>
 
-          
+
         </div>
-        <buttonComponent style="width: 100%;">Создать</buttonComponent>
+        <buttonComponent style="width: 100%;" @click="createApplicationForManager()">Создать</buttonComponent>
     </section>
 </template>
 
@@ -44,23 +47,58 @@
 import { reactive, ref } from 'vue'
 import InputComponent from '../../ui/inputComponent/InputComponent.vue';
 import buttonComponent from '../../ui/button/buttonComponent.vue';
+import { useToast } from "vue-toastification";
 export default {
     components: { InputComponent, buttonComponent },
     setup() {
-        let books = reactive([
-            { title: "Old Man's War" },
-            { title: "The Lock Artist" },
-            { title: "HTML5" },
-            { title: "Right Ho Jeeves" },
-            { title: "The Code of the Wooster" },
-            { title: "Thank You Jeeves" }
+        let manager = reactive([])
+        let department = reactive([
+            { title: "Медицинский представитель" },
+            { title: "Менеджер по работе с ключевыми клиентами" },
+            { title: "Супервайзер" },
+            { title: "Старший медицинский представитель" },
+            { title: "Менеджер по продвижению продуктов" },
+            { title: "Медицинский советник" },
+            { title: "Менеджер по эффективности" },
+            { title: "Менеджер-координатор" },
+            { title: "Бухгалтер" },
+            { title: "Кладовщик" },
+            { title: "WEB-программист" },
+            { title: "Торговый представитель" },
+            { title: "Младший менеджер по продвижению продуктов" },
+            { title: "Водитель" },
+            { title: "Менеджер по маркетинговым коммуникациям" },
+            { title: "Менеджер по проектам" },
+            { title: "Старший менеджер по работе с аптечными сетями" },
+            { title: "Ассистент отдела маркетинга" },
+            { title: "Генеральный директор" },
+            { title: "Директор по продажам" },
+            { title: "Заместитель генерального директора" },
+            { title: "Директор по персоналу" },
+            { title: "Региональный менеджер" },
+            { title: "Коммерческий директор" },
+            { title: "Медицинский директор" },
+            { title: "Директор по развитию" },
+            { title: "Руководитель отдела по работе с аптечными сетями" },
+            { title: "Директор по работе с аптечными сетями" },
+            { title: "Консультант" },
         ])
         const start_date = ref("")
-
+        const position = reactive([])
+        const toast = useToast()
+        const createApplicationForManager = () => {
+            toast.info('Раздел в разработке. Создание невозможно!', {
+                timeout: 3000
+            })
+        }
 
         return {
-            books,
-            start_date
+            position,
+            department,
+            manager,
+            start_date,
+            toast,
+            createApplicationForManager
         }
     },
 }

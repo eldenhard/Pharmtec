@@ -19,7 +19,12 @@ const refreshUserJWTToken = (data) => {
  })
 }
 
+const getDepartments = () => {
+    return api.get(`${resourse}/departments/`)
+}
+
 export default{
     getUserJWTToken,
-    refreshUserJWTToken
+    refreshUserJWTToken,
+    getDepartments
 }

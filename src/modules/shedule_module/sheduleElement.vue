@@ -3,7 +3,7 @@
         <vue-final-modal v-model="isModal"  classes="modal-container" content-class="modal-content">
             <button class="modal__close" @click="isModal = false">
                 <i class="bi bi-x-lg"></i>
-      </button>
+        </button>
             <span class="modal__title">Подтверждение заявки</span>
             <div class="block_info">
                 <div class="input-box">
@@ -54,8 +54,7 @@
                 </div>
         </vue-final-modal>
         <div class="air_block" style="max-height: 90vh; overflow: hidden;">
-            <FullCalendar :options="calendarOptions" style="max-height: 70vh;" data-bs-toggle="modal"
-                data-bs-target="#exampleModal" />
+            <FullCalendar :options="calendarOptions" style="max-height: 70vh;"/>
             <buttonComponent @click="saveCurrentShedule()">Сохранить</buttonComponent>
         </div>
     </div>

@@ -112,22 +112,22 @@ export default {
                 files: files.value
             }
             // console.log(files.value)
-            // let formData = new FormData()
-            // for (let i in dataObject) {
-            //     formData.append(i, dataObject[i])
-            // }
-            // api.createNewOrder(formData)
-            //     .then((response) => {
-            //         toast.success("Заявка отправлена", {
-            //             timeout: 3000,
-            //         });
-            //         useLoaderStore().setLoader(false)
-            //     }).catch((err) => {
-            //         toast.error(`${err}`, {
-            //             timeout: 3000,
-            //         });
-            //         useLoaderStore().setLoader(false)
-            //     })
+            let formData = new FormData()
+            for (let i in dataObject) {
+                formData.append(i, dataObject[i])
+            }
+            api.createNewOrder(formData)
+                .then((response) => {
+                    toast.success("Заявка отправлена", {
+                        timeout: 3000,
+                    });
+                    useLoaderStore().setLoader(false)
+                }).catch((err) => {
+                    toast.error(`${err}`, {
+                        timeout: 3000,
+                    });
+                    useLoaderStore().setLoader(false)
+                })
         }
 
         return {

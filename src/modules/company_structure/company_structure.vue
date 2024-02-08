@@ -4,3 +4,13 @@
         <p>Раздел находится в разработке</p>
     </div>
 </template>
+
+
+<script>
+
+export default {
+    setup() {
+        
+    },
+}
+</script>
