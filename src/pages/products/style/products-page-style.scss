@@ -1,0 +1,32 @@
+.air_body{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1vw;
+    row-gap: 3vh;
+}
+.air_element{
+    width: 100%;
+    min-height: 15vh;
+    border-radius: 8px ;
+    box-shadow: 2px 2px 5px lightgray;
+    display: grid;
+    grid-template-columns: .3fr 1fr;
+    gap: 25px;
+    padding: 1%;
+    transition: transform .5s ease;
+ 
+    &:hover{
+        transform: translateY(-7px);
+      
+    }
+}
+.blue{
+    color: #189AE0;
+}
+.orange{
+    color: #BF4F41;
+}
+.yellow{
+    color: #F6933E;
+}

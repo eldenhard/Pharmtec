@@ -1,6 +1,6 @@
 import { api } from '../helpers/axios'
 
-export const resourse = 'auth'
+export const resourse = 'auth2'
 
 const getUserJWTToken = (data) => {
     return api.post(`${resourse}/token/`, data,

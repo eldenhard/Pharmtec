@@ -1,6 +1,11 @@
 <template>
   <div>
-    <router-view />
+    <Navbar ></Navbar>
+    <router-view v-slot="{ Component }">
+      <transition name="moveUp">
+        <component :is="Component" :key="$route.path" />
+      </transition>
+    </router-view>
     <loaderComponent />
   </div>
 
@@ -14,8 +19,9 @@ import AutorizationPage from './pages/autorization/autorizationPage.vue';
 import { onMounted } from 'vue'
 import api from './api/user'
 import loaderComponent from './ui/loader/loaderComponent.vue';
+import Navbar from './components/navbar/navbar.vue';
 export default {
-  components: { MainPage, AutorizationPage, loaderComponent },
+  components: { MainPage, AutorizationPage, loaderComponent, Navbar },
   setup() {
     onMounted(() => {
       // let token = {
@@ -49,6 +55,17 @@ export default {
 </script>
 
 <style scoped>
+.moveUp-enter-active,
+.moveUp-leave-active {
+  transition: opacity 0.5s;
+}
+
+.moveUp-enter-from,
+.moveUp-leave-to {
+  opacity: 0;
+}
+
+
 .logo {
   height: 6em;
   padding: 1.5em;

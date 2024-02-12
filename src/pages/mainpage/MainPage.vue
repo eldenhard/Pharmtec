@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar />
+    <!-- <navbar /> -->
     <div class="workspace_grid">
       <sidebar @someEvent="handleSomeEvent" />
 

@@ -1,5 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg" >
+
+
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid mx-3"> <!-- Горизонтальные отступы -->
       <a class="navbar-brand" href="#">
         <svg xmlns="http://www.w3.org/2000/svg" width="45px" height="45px" viewBox="0 0 116.22 116.22">
@@ -21,19 +23,20 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
           <li class="nav-item dws">
-            <a class="nav-link" aria-current="page" href="#" @click="addElement($event)">Меню 1</a>
+            <router-link to="/about-company" class="nav-link">О компании</router-link>
           </li>
           <li class="nav-item dws">
-            <a class="nav-link" aria-current="page" href="#">Меню 2</a>
+            <router-link to="/products" class="nav-link">Продукция</router-link>
           </li>
           <li class="nav-item dws">
-            <a class="nav-link" aria-current="page" href="#">Меню 3</a>
+            <router-link to="/workspace" class="nav-link">Рабочая среда</router-link>
           </li>
+      
           <li class="nav-item dws">
             <router-link to="/login" class="nav-link" @click="deleteTokenUser">Выход</router-link>
-            <!-- <a class="nav-link butt" aria-current="page" href="#">Выход</a> -->
           </li>
         </ul>
+
         <!-- <form class="d-flex"> -->
 
         <router-link to="/login" class="nav-link">
@@ -43,6 +46,8 @@
       </div>
     </div>
   </nav>
+      
+
 </template>
 
 <style  scoped>
@@ -51,8 +56,8 @@
 
 
 <script>
-export default{
-  setup(){
+export default {
+  setup() {
     const deleteTokenUser = () => {
       localStorage.removeItem('accessToken')
     }

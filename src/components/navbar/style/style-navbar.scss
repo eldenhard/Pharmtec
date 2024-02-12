@@ -14,6 +14,7 @@ nav {
     z-index: var(--zIndexNavbar);
     background: var(--bgColorNavbar);
 
+
 }
 
 .icon_block {
@@ -21,4 +22,17 @@ nav {
     height: 45px;
     border-radius: 50%;
     background: lightblue;
+}
+.router-link-active, .router-link-exact-active{
+    border-bottom: white 2px solid ;
+    &:hover{
+        border-bottom: lightblue 2px solid ;
+    }
+}
+.nav-link{
+    font-size: 14px;
+    // font-weight: 500;
+    &:hover{
+        color: lightgrey;
+    }
 }

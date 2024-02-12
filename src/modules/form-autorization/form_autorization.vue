@@ -42,10 +42,11 @@ import { ref, watch } from 'vue';
 import api from '../../api/user'
 import { useToast } from "vue-toastification";
 import { useLoaderStore } from '../../store/LoaderStore'
-
+import { useRouter } from 'vue-router'
 export default {
     components: { buttonComponent, InputComponent },
     setup() {
+        const router = useRouter()
 
         const toast = useToast();
         const disabledButton = ref(true);
@@ -69,7 +70,8 @@ export default {
             api.getUserJWTToken(objEnter)
                 .then((response) => {
                     localStorage.setItem('accessToken', JSON.stringify(response.data.access))
-                    window.location.href = '/'
+                    // перейти по пути /about-company из vue-router
+                    router.push({ path: 'about-company' })
                     useLoaderStore().setLoader(false)
                 }).catch((err) => {
                     console.log(err)
@@ -83,7 +85,7 @@ export default {
 
         }
         return {
-
+            router,
             disabledButton,
             emailInput,
             passwordInput,
