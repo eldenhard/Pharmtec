@@ -1,0 +1,39 @@
+.input-box {
+    /* родительский блок относительно которого будем формировать положение
+    тега label */
+    position: relative;
+  }
+  
+  input, select {
+    background: #fff;
+    padding: 2%;
+    /* закруглим края у поля ввода */
+    border-radius: 6px;
+    border: 1.2px solid var(--ColorDisabled);
+    width: 100%;
+    min-width: 5vw;
+    min-height: 4vh;
+    transition: border .2s ease;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
+    &:focus{
+        border: 1.2px solid var(--colorBlue);
+        outline: none;
+        text-decoration: none;
+    
+    }
+  }
+.enterdata {
+    display: flex;
+    justify-content: space-between;
+}
+
+.air_block_body{
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--colorBorder);
+    border-radius: 4px;
+    padding: 2%;
+    margin-top: 2%;
+}

@@ -63,25 +63,7 @@
         align-items: baseline;
     }
 }
-.textarea{
-    border: 1.2px solid var(--ColorDisabled);
-    width: 100%;
-    border-radius: 6px;
-    margin-top: 4%;
-    resize: none;
-    transition: border .2s ease;
-    padding: 3%;
-    outline: none;
-    text-decoration: none;
-    cursor: pointer;
 
-    &:focus{
-        border: 1.2px solid var(--colorBlue);
-        outline: none;
-        text-decoration: none;
-    
-    }
-}
 option{
     cursor: pointer;
 }
