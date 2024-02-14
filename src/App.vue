@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Navbar ></Navbar>
+    <!-- показать компонент navbar везде кроме страницы autorization -->
+    <Navbar v-if="route.path !== '/login'" />
     <router-view v-slot="{ Component }">
       <transition name="moveUp">
         <component :is="Component" :key="$route.path" />
@@ -17,12 +18,14 @@
 import MainPage from './pages/mainpage/MainPage.vue';
 import AutorizationPage from './pages/autorization/autorizationPage.vue';
 import { onMounted } from 'vue'
+import { useRoute } from 'vue-router';
 import api from './api/user'
 import loaderComponent from './ui/loader/loaderComponent.vue';
 import Navbar from './components/navbar/navbar.vue';
 export default {
   components: { MainPage, AutorizationPage, loaderComponent, Navbar },
   setup() {
+    const route = useRoute()
     onMounted(() => {
       // let token = {
       //   refresh: JSON.parse(localStorage.getItem('accessToken'))
@@ -50,7 +53,11 @@ export default {
     //     window.location.href = '/login'
     //   }
     // })
+    return {
+      route
+    }
   },
+
 };
 </script>
 

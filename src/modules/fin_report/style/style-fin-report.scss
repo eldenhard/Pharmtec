@@ -6,12 +6,12 @@
   
   input, select {
     background: #fff;
-    padding: 2%;
+    padding: 2% 4%;
     /* закруглим края у поля ввода */
     border-radius: 6px;
     border: 1.2px solid var(--ColorDisabled);
     width: 100%;
-    min-width: 5vw;
+    min-width: 3vw;
     min-height: 4vh;
     transition: border .2s ease;
     outline: none;
@@ -27,6 +27,8 @@
 .enterdata {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    white-space: wrap;
 }
 
 .air_block_body{
@@ -36,4 +38,12 @@
     border-radius: 4px;
     padding: 2%;
     margin-top: 2%;
+}
+.button_block{
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.mini_fin_report{
+  margin-top: 2%;
 }

@@ -20,6 +20,9 @@
         transform: translateY(-7px);
       
     }
+    img{
+        max-height: 350px;
+    }
 }
 .blue{
     color: #189AE0;
@@ -29,4 +32,10 @@
 }
 .yellow{
     color: #F6933E;
+}
+.red{
+    color: #F1555B;
+}
+.turquoise{
+    color: #49B6D6;
 }

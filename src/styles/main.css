@@ -59,10 +59,10 @@ label{
     border: 1.2px solid var(--ColorDisabled);
     width: 100%;
     border-radius: 6px;
-    margin-top: 4%;
+    margin-top: 3%;
     resize: none;
     transition: border .2s ease;
-    padding: 3%;
+    padding: 1.5%;
     outline: none;
     text-decoration: none;
     cursor: pointer;
