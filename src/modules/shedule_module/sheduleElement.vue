@@ -94,6 +94,7 @@ export default {
         const end_hour = ref("")
         const end_minute = ref("")
         const title = ref("")
+        const resourceIdForCreateEvent = ref("")
         const isSaveValueFromModal = ref("")
         let movedEvent = null // Флаг перемещенного события
         // Хранение данных
@@ -105,16 +106,14 @@ export default {
             if (end_hour.value < 10) {
                 end_hour.value = `0${end_hour.value}`
             }
-            console.log('end_hour.value:', end_hour.value)
             const newEvent = {
                 title: title.value,
                 start: `${newStartDate.value}T${start_hour.value}:${start_minute.value}:00+03:00`,
                 end: `${newStartDate.value}T${end_hour.value}:${end_minute.value}:00+03:00`,
-                resourceId: '1a',
+                resourceId: resourceIdForCreateEvent.value,
             };
-            console.log(newEvent)
+          
             events.value.push(newEvent);
-            console.log(events.value)
             isModal.value = false
         }
         // Конфигурация
@@ -126,6 +125,7 @@ export default {
             selectable: true,
             //   Начальный вид - график на 4 дня
             initialView: 'resourceTimeGridFourDay',
+  
             //   Верхняя панель инструментов
             headerToolbar: {
                 left: 'prev,next',
@@ -140,7 +140,8 @@ export default {
                 },
             },
             eventOverlap: false,
-            resources: [{ id: '1a', title: 'Переговорная комната' }],
+            resources: [{ id: '1a', title: 'Переговорная комната 2 этаж' },
+            { id: '2a', title: 'Переговорная комната 5 этаж' }],
             dateClick: (info) => {
                 if (!info.event) {
                     modalTitle.value = 'Создание нового события'
@@ -148,10 +149,11 @@ export default {
                 }
             },
             select: (selectInfo) => {
+                const resourceId = selectInfo.resource.id
                 data_by_field.value = {
                     start: selectInfo.startStr,
                     end: selectInfo.endStr,
-                    resourceId: '1a',
+                    resourceId:resourceId,
                 }
                 const start = new Date(data_by_field.value.start);
                 const end = new Date(data_by_field.value.end);
@@ -160,6 +162,7 @@ export default {
                 start_minute.value = start.getMinutes().toString().padStart(2, '0')
                 end_hour.value = new Date(selectInfo.endStr).getHours()
                 end_minute.value = end.getMinutes().toString().padStart(2, '0')
+                resourceIdForCreateEvent.value = resourceId
                 modalTitle.value = 'Создание нового события'
                 title.value = ""
                 isModal.value = true
@@ -214,14 +217,15 @@ export default {
             droppable: true, // Включаем возможность перетаскивания событий
             //   Обработчик доабвления события при перетаскивании на календарь
             eventReceive: (eventReceiveInfo) => {
-
+                const resourceId = eventReceiveInfo.resource.id
+                console.log(resourceId)
                 const title = prompt('Введите название события 3');
                 if (title) {
                     const newEvent = {
                         title: title,
                         start: eventReceiveInfo.dateStr,
                         end: eventReceiveInfo.dateStr,
-                        resourceId: '1a',
+                        resourceId: resourceId,
                         removable: true, // Добавим свойство removable
                     };
                     events.value.push(newEvent);

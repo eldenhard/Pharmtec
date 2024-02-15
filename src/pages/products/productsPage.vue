@@ -1,5 +1,18 @@
 <template>
     <div>
+        <vue-final-modal v-model="isModal" classes="modal-container" content-class="modal-content">
+            <button class="modal__close" @click="isModal = false">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            <span class="modal__title" :class="classModalTitle">{{ modalTitle }}</span>
+            <div class="block_info">
+                <img :src="modalImg" alt="Фото товара">
+                <div class="text" v-html="modalText">
+                  
+                </div>
+            </div>
+        </vue-final-modal>
+
         <!-- <navbar /> -->
         <div class="air_block">
             <div class="air_block_header">
@@ -7,7 +20,7 @@
                 <hr>
             </div>
             <div class="air_body">
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'aqua1.jpg')">
                     <img src="./assets/aqua1.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -21,7 +34,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'aqua2.jpg')">
                     <img src="./assets/aqua2.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -38,7 +51,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a4.jpg')">
                     <img src="./assets/a4.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -52,7 +65,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a5.jpg')">
                     <img src="./assets/a5.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -65,7 +78,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a6.jpg')">
                     <img src="./assets/a6.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -79,7 +92,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a7.jpg')">
                     <img src="./assets/a7.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -94,7 +107,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a8.jpg')">
                     <img src="./assets/a8.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -110,7 +123,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a9.jpg')">
                     <img src="./assets/a9.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -127,7 +140,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a10.jpg')">
                     <img src="./assets/a10.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -142,7 +155,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a11.jpg')">
                     <img src="./assets/a11.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -155,7 +168,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a12.jpg')">
                     <img src="./assets/a12.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -171,7 +184,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a13.jpg')">
                     <img src="./assets/a13.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -188,7 +201,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a14.jpg')">
                     <img src="./assets/a14.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -208,7 +221,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a15.jpg')">
                     <img src="./assets/a15.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -224,7 +237,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a16.jpg')">
                     <img src="./assets/a16.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -241,7 +254,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a17.jpg')">
                     <img src="./assets/a17.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -255,7 +268,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a18.jpg')">
                     <img src="./assets/a18.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -275,7 +288,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a19.jpg')">
                     <img src="./assets/a19.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -292,7 +305,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a20.jpg')">
                     <img src="./assets/a20.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -307,7 +320,7 @@
                     </div>
                 </div>
 
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a21.jpg')">
                     <img src="./assets/a21.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -328,7 +341,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a22.jpg')">
                     <img src="./assets/a22.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -345,7 +358,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a23.jpg')">
                     <img src="./assets/a23.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -366,7 +379,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a24.jpg')">
                     <img src="./assets/a24.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -388,7 +401,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a25.jpg')">
                     <img src="./assets/a25.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -408,7 +421,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a26.jpg')">
                     <img src="./assets/a26.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -426,7 +439,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a27.jpg')">
                     <img src="./assets/a27.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -446,7 +459,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a28.jpg')">
                     <img src="./assets/a28.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -463,7 +476,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a29.jpg')">
                     <img src="./assets/a29.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -482,7 +495,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a30.jpg')">
                     <img src="./assets/a30.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -500,7 +513,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a31.jpg')">
                     <img src="./assets/a31.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -517,7 +530,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a32.jpg')">
                     <img src="./assets/a32.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -532,7 +545,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a33.jpg')">
                     <img src="./assets/a33.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -553,7 +566,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a34.jpg')">
                     <img src="./assets/a34.jpg" alt="">
                     <div class="air_element_text">
                         <p>
@@ -571,8 +584,9 @@
                         </p>
                     </div>
                 </div>
-                <div class="air_element">
+                <div class="air_element" @click="openModalWithCurrentData($event.target, 'a35.jpg')">
                     <img src="./assets/a35.jpg" alt="">
+
                     <div class="air_element_text">
                         <p>
                             <span class="orange"><b>ЛИПОБЕЙЗ baby шампунь увлажняющий 150 мл</b><br>
@@ -595,15 +609,48 @@
 
 
 
-<style scoped>
-@import './style/products-page-style.scss';
-</style>
 <script>
+import { $vfm, VueFinalModal, ModalsContainer } from 'vue-final-modal'
+import { ref } from 'vue';
 import navbar from '../../components/navbar/navbar.vue';
 export default {
-    components: { navbar },
+    components: { navbar, VueFinalModal, ModalsContainer },
     setup() {
-
+        const isModal = ref(false)
+        const modalTitle = ref("")
+        const classModalTitle = ref("")
+        const modalText = ref("")
+        const modalImg = ref("")
+        // const openModalWithCurrentData = (data, img) => {
+        //     modalTitle.value = data.getElementsByTagName("b")[0].innerText
+        //     modalImg.value = new URL(`./assets/${img}`, import.meta.url).href
+        //     modalText.value = data.innerText
+        //     classModalTitle.value = data.getElementsByTagName("span")[0]?.classList[0]
+        //     isModal.value = true
+        // }
+        const openModalWithCurrentData = (data, img) => {
+            const bElement = data.querySelector("b");
+            modalTitle.value = bElement.innerText;
+            modalImg.value = new URL(`./assets/${img}`, import.meta.url).href;
+            modalText.value = data.innerHTML;
+            const spanElement = data.querySelector("span");
+            classModalTitle.value = spanElement?.classList[0];
+            isModal.value = true;
+        }
+        return {
+            isModal,
+            modalTitle,
+            modalText,
+            modalImg,
+            classModalTitle,
+            openModalWithCurrentData
+        }
     },
 }
 </script>
+
+
+
+<style scoped>
+@import './style/products-page-style.scss';
+</style>

@@ -1,16 +1,25 @@
-.air_block{
-    margin: 1% auto;
+.air_block {
+  margin: 1% auto;
 }
-.logo{
-    display: flex;
-    justify-content: space-between;
-    height: 8vh;
-    width: 100%;
-    position: relative;
-    align-items: center;
-    margin: 4% 0 2%;
+.logo {
+  display: flex;
+  justify-content: center;
+  height: 8vh;
+  width: 100%;
+  position: relative;
+  align-items: center;
+  margin: 4% auto;
+  box-sizing: border-box;
 
 }
-p{
-    text-indent: 20px;
+p {
+  text-indent: 20px;
+}
+.about_company {
+  display: flex;
+    justify-content: space-between;
+    gap: 4vw;
+    .ph, .intelbio{
+        width: 100vw;
+      }
 }
