@@ -1,0 +1,35 @@
+.search_on_table {
+  width: 100%;
+  border-radius: 8px;
+  padding: 1% 2%;
+  border: 2px solid var(--colorBorder);
+  margin-bottom: 2%;
+  transition: border 0.2s ease-in;
+  &:focus {
+    outline: none;
+    text-decoration: none;
+    border: 2px solid var(--blue);
+  }
+}
+.air_block {
+  margin-top: -1%;
+}
+tr {
+  cursor: pointer;
+}
+.air_block__table {
+  height: 58vh;
+  overflow-y: scroll;
+}
+thead {
+  tr {
+    // position: -webkit-sticky;
+    // position: sticky;
+    top: -1px;
+    right: 0;
+    text-align: center;
+    th {
+      background: lightgrey;
+    }
+  }
+}

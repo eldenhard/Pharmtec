@@ -15,12 +15,14 @@
                 </ul>
                 <ul>
                     <li @click="selectTab('companyStructure', $event.target)" class="first">Структура компании</li>
+                    <li @click="selectTab('staff', $event.target)">Сотрудники</li>
                     <li @click="selectTab('Applications', $event.target)">Заявки</li>
                     <li @click="selectTab('FinReport', $event.target)">Финансовый отчет</li>
                     <li @click="selectTab('booking', $event.target)">Бронирование переговорной</li>
                     <li @click="selectTab('forManagment', $event.target)">Для руководителя</li>
                     <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li>
                     <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
+             
                 </ul>
 
             </div>
