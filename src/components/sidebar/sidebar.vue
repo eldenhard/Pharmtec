@@ -22,7 +22,6 @@
                     <li @click="selectTab('forManagment', $event.target)">Для руководителя</li>
                     <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li>
                     <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
-             
                 </ul>
 
             </div>

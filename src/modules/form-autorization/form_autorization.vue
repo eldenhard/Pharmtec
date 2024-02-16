@@ -70,6 +70,7 @@ export default {
             api.getUserJWTToken(objEnter)
                 .then((response) => {
                     localStorage.setItem('accessToken', JSON.stringify(response.data.access))
+                    localStorage.setItem('refreshToken', JSON.stringify(response.data.refresh))
                     // перейти по пути /about-company из vue-router
                     router.push({ path: 'about-company' })
                     useLoaderStore().setLoader(false)

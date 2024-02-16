@@ -23,13 +23,61 @@ tr {
 }
 thead {
   tr {
-    // position: -webkit-sticky;
-    // position: sticky;
+    position: -webkit-sticky;
+    position: sticky;
     top: -1px;
     right: 0;
     text-align: center;
     th {
       background: lightgrey;
+    }
+  }
+}
+
+.email{
+    &:hover{
+        background: rgb(214, 245, 255);
+    }
+}
+.display_option{
+  display: flex;
+  justify-content: flex-end;
+  gap: .1%;
+  outline: none;
+&:focus{
+    outline: none;
+    text-decoration: none;
+    border: none;
+}
+}
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.grid_air_block{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1vw;
+
+  .grid_element{
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 2px 2px 4px rgb(207, 207, 207);
+    padding: 1%;
+    display: flex;
+    justify-content: space-between;
+    .img_block{
+      width: 30%;
+    }
+    .text_block{
+      width: 50%;
+ 
     }
   }
 }
