@@ -58,7 +58,7 @@
                             <td>{{ user.last_name }}</td>
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.middle_name }}</td>
-                            <td>{{ user.job_info.name }}</td>
+                            <td>{{ user.job_info.name ?? 'Нет должности'}}</td>
                             <td @click="copyEmail(user.email)" class="email">{{ user.email }}</td>
                             <td>{{ user.company }}</td>
                         </tr>
@@ -73,8 +73,7 @@
                                 <div class="text_block">
                                     <div style="width: 30%; margin-left: auto; ">
                                         <!-- Сделать логотип фартек, если user.company ФАРМТЕК, в противном случае intelbio -->
-                                        <img
-                                            :src="user.company == 'ФАРМТЕК' ? './assets/farmtek.png' : './assets/intel.png'">
+                                        <img :src="getCurrentPicture(user.company )">
                                     </div>
                                     <p style="margin-top: 10%;">{{ user.last_name }} {{ user.first_name }} {{
                                         user.middle_name }}</p>
@@ -134,6 +133,13 @@ export default {
             filteredUsersList.value = users.value.filter(user => user.last_name.toLowerCase().includes(query))
             filteredUsersGrid.value = users.value.filter(user => user.last_name.toLowerCase().includes(query))
         }
+        const getCurrentPicture= (pic) => {
+            if(pic == 'ФАРМТЕК'){
+                return new URL(`./assets/farmtec.png`, import.meta.url).href
+            } else if(pic == 'ИНТЕЛБИО') {
+                return new URL(`./assets/intelbio.png`, import.meta.url).href
+            }
+        }   
         // Слушатель изменения поиск, с параметром для немедленного выполнения обработчика
         watch(search, heandleSearch, { immediate: true })
 
@@ -155,6 +161,7 @@ export default {
             currentColor,
             copyEmail,
             changeCurrentDisplayGrid,
+            getCurrentPicture,
 
         }
     },

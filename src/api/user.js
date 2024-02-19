@@ -26,9 +26,18 @@ const getDepartments = () => {
 const getAllUsers = () => {
     return api.get(`${users}/`)
 }
+// смена пароля
+const changePassword = (data) => {
+    return api.post(`${resourse}/signup/password/confirm-change`, data)
+}
+const sendEmailForGetNewPassword = (data) => {
+    return api.post(`${resourse}/signup/password/init-change`, data)
+}
 export default{
     getUserJWTToken,
     refreshUserJWTToken,
     getDepartments,
     getAllUsers,
+    changePassword,
+    sendEmailForGetNewPassword,
 }

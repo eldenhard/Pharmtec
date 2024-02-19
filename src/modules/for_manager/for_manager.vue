@@ -14,11 +14,11 @@
                 </div>
                 <div class="input-box">
                     <label>Отчество</label>
-                    <input type="text" v-model="formData.middle_name" name="middle_name" >
+                    <input type="text" v-model="formData.middle_name" name="middle_name">
                 </div>
                 <div class="input-box">
-                    <label>Регион</label>
-                    <input type="text" v-model="formData.region" name="region" required>
+                    <label style="background: white !important; position: absolute; z-index:1 ;">Регион</label>
+                    <v-select v-model="formData.region_pre" :options="allRegion" label="value" required />
                 </div>
                 <div class="input-box">
                     <label>Почта</label>
@@ -29,11 +29,12 @@
                     <input v-mask="'+7 (###) ###-##-##'" v-model="formData.phone" name="phone" required />
                 </div>
             </section>
-            <label>Руководитель</label>  
-            <div  style="margin-top: 2%; ">
-                <v-select v-model="formData.manager" :options="allUsers" label="full_name" placeholder="Руководитель" required/>
-               
+
+            <div class="input-box" style="margin-top: 2vh;">
+                <label style="background: white !important; position: absolute; z-index:1;">Руководитель</label>
+                <v-select v-model="formData.manager_pre" :options="allUsers" label="full_name" required />
             </div>
+
 
             <!-- <label for="" class="department">
                 Должность <br>
@@ -48,15 +49,16 @@
 
 
 <script>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, watch } from 'vue'
 import InputComponent from '../../ui/inputComponent/InputComponent.vue';
 import buttonComponent from '../../ui/button/buttonComponent.vue';
 import { useToast } from "vue-toastification";
 import api from '@/api/user'
+import apiInvite from '@/api/invites'
 import { mask } from 'vue-the-mask'
 import { useLoaderStore } from '../../store/LoaderStore';
 import { refreshToken } from '@/mixins/refreshToken'
- 
+
 export default {
     components: { InputComponent, buttonComponent },
     directives: { mask },
@@ -67,18 +69,29 @@ export default {
             middle_name: '',
             email: '',
             phone: '',
-            manager: '',
-            region: '',
+            manager_pre: '',
+            region_pre: '',
         })
-
         const toast = useToast()
         const allUsers = ref([])
-        const createApplicationForManager = (e) => {
-            console.log(formData.value.last)
-            toast.info('Письмо авторизации отправлено на указанную вами почту', {
-                timeout: 3000
-            })
+        const allRegion = reactive([{ value: 'Москва' }, { value: 'Дальний Восток' }, { value: "Смоленск +" }, { value: "Центр" }, { value: "Юг" }, { value: 'Западная Сибирь' }, { value: 'Северо-Запад' }, { value: 'Волга' }, { value: 'Урал' }].sort((a, b) => a.value.localeCompare(b.value)))
+        const createApplicationForManager = async (e) => {
+            formData.value.manager = formData.value.manager_pre.id
+            formData.value.region = formData.value.region_pre.value
+            try {
+                let response = await apiInvite.createNewInvite(formData.value)
+                toast.success('Успешно! По указанному адресу отправлено письмо для входа', {
+                    timeout: 3000
+                })
+            } catch (err) {
+                console.log(err)
+  
+            } finally {
+
+            }
+
         }
+   
         onMounted(async () => {
             useLoaderStore().setLoader(true)
             await refreshToken()
@@ -87,7 +100,7 @@ export default {
                 allUsers.value = response.data.reduce((acc, el) => {
                     let full_name = `${el.last_name} ${el.first_name} ${el.middle_name}`
                     return [...acc, { ...el, full_name }]
-                }, [])
+                }, []).sort((a, b) => a.full_name.localeCompare(b.full_name))
             } catch (err) {
                 console.log(err)
             } finally {
@@ -100,6 +113,7 @@ export default {
             toast,
             formData,
             allUsers,
+            allRegion,
             createApplicationForManager
         }
     },

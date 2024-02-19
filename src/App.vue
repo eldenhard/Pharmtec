@@ -29,7 +29,10 @@ export default {
   setup() {
     const route = useRoute()
     onMounted(async() => {
-      await refreshToken()
+      if(localStorage.getItem('accessToken')) {
+        await refreshToken()   
+      }
+     
     })
 
     // api.refreshUserJWTToken(token)

@@ -70,6 +70,7 @@ export default {
   setup() {
     const deleteTokenUser = () => {
       localStorage.removeItem('accessToken')
+      localStorage.removeItem('refreshToken')
     }
     return {
       deleteTokenUser

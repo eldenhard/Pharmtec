@@ -7,13 +7,15 @@
     bottom: 0;
     right: 0;
     position: absolute;
-    z-index: var(--zIndexNotif);
+    z-index: 99999999999999 !important;
+
     background: rgb(37, 37, 37, .7);
    
 }
 
 .loader {
     position: relative;
+    z-index: 9999999999999999 !important;
     display: grid;
     grid-template-columns: 33% 33% 33%;
     grid-gap: 5px;
