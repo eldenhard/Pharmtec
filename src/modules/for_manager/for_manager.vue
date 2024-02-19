@@ -2,41 +2,45 @@
     <section class="air_block">
         <p class="header_element">Заявка на регистрацию</p>
         <hr>
-        <div class="first_line">
-            <div class="date_start">
-                <InputComponent :labelValue="'Дата начала'" :typeInput="'date'" @update:modelValue="start_date = $event"
-                    reqired />
+        <form @submit.prevent="createApplicationForManager($event.target)">
+            <section class="first_line">
+                <div class="input-box">
+                    <label>Фамилия</label>
+                    <input type="text" v-model="formData.last_name" name="last_name" required>
+                </div>
+                <div class="input-box">
+                    <label>Имя</label>
+                    <input v-model="formData.first_name" type="text" name="first_name" required>
+                </div>
+                <div class="input-box">
+                    <label>Отчество</label>
+                    <input type="text" v-model="formData.middle_name" name="middle_name" >
+                </div>
+                <div class="input-box">
+                    <label>Регион</label>
+                    <input type="text" v-model="formData.region" name="region" required>
+                </div>
+                <div class="input-box">
+                    <label>Почта</label>
+                    <input type="email" v-model="formData.email" name="email" required>
+                </div>
+                <div class="input-box">
+                    <label>Телефон</label>
+                    <input v-mask="'+7 (###) ###-##-##'" v-model="formData.phone" name="phone" required />
+                </div>
+            </section>
+            <label>Руководитель</label>  
+            <div  style="margin-top: 2%; ">
+                <v-select v-model="formData.manager" :options="allUsers" label="full_name" placeholder="Руководитель" required/>
+               
             </div>
 
-            <label for="" class="manager">
-                Руководитель <br>
-                <v-select :options="manager" label="title" dir="ltr">
-                    <slot name="no-options">Извините, данные не найдены</slot>
-                </v-select>
-       
-            </label>
-
-            <label for="" class="department">
+            <!-- <label for="" class="department">
                 Должность <br>
                 <v-select :options="department" label="title" />
-            </label>
-
-            <label for="" class="position">
-                Подраздление <br>
-                <v-select :options="position" label="title" />
-            </label>
-
-
-            <label for="" class="region">Регион <br>
-                <select style="width: 100%;">
-                    <option value="">1</option>
-                    <option value="">2</option>
-                </select>
-            </label>
-
-
-        </div>
-        <buttonComponent style="width: 100%;" @click="createApplicationForManager()">Создать</buttonComponent>
+            </label> -->
+            <buttonComponent type="submit" style="width: 100%;">Зарегистрировать</buttonComponent>
+        </form>
     </section>
 </template>
 
@@ -44,60 +48,58 @@
 
 
 <script>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import InputComponent from '../../ui/inputComponent/InputComponent.vue';
 import buttonComponent from '../../ui/button/buttonComponent.vue';
 import { useToast } from "vue-toastification";
+import api from '@/api/user'
+import { mask } from 'vue-the-mask'
+import { useLoaderStore } from '../../store/LoaderStore';
+import { refreshToken } from '@/mixins/refreshToken'
+ 
 export default {
     components: { InputComponent, buttonComponent },
+    directives: { mask },
     setup() {
-        let manager = reactive([])
-        let department = reactive([
-            { title: "Медицинский представитель" },
-            { title: "Менеджер по работе с ключевыми клиентами" },
-            { title: "Супервайзер" },
-            { title: "Старший медицинский представитель" },
-            { title: "Менеджер по продвижению продуктов" },
-            { title: "Медицинский советник" },
-            { title: "Менеджер по эффективности" },
-            { title: "Менеджер-координатор" },
-            { title: "Бухгалтер" },
-            { title: "Кладовщик" },
-            { title: "WEB-программист" },
-            { title: "Торговый представитель" },
-            { title: "Младший менеджер по продвижению продуктов" },
-            { title: "Водитель" },
-            { title: "Менеджер по маркетинговым коммуникациям" },
-            { title: "Менеджер по проектам" },
-            { title: "Старший менеджер по работе с аптечными сетями" },
-            { title: "Ассистент отдела маркетинга" },
-            { title: "Генеральный директор" },
-            { title: "Директор по продажам" },
-            { title: "Заместитель генерального директора" },
-            { title: "Директор по персоналу" },
-            { title: "Региональный менеджер" },
-            { title: "Коммерческий директор" },
-            { title: "Медицинский директор" },
-            { title: "Директор по развитию" },
-            { title: "Руководитель отдела по работе с аптечными сетями" },
-            { title: "Директор по работе с аптечными сетями" },
-            { title: "Консультант" },
-        ])
-        const start_date = ref("")
-        const position = reactive([])
+        const formData = ref({
+            last_name: '',
+            first_name: '',
+            middle_name: '',
+            email: '',
+            phone: '',
+            manager: '',
+            region: '',
+        })
+
         const toast = useToast()
-        const createApplicationForManager = () => {
-            toast.info('Раздел в разработке. Создание невозможно!', {
+        const allUsers = ref([])
+        const createApplicationForManager = (e) => {
+            console.log(formData.value.last)
+            toast.info('Письмо авторизации отправлено на указанную вами почту', {
                 timeout: 3000
             })
         }
+        onMounted(async () => {
+            useLoaderStore().setLoader(true)
+            await refreshToken()
+            try {
+                let response = await api.getAllUsers()
+                allUsers.value = response.data.reduce((acc, el) => {
+                    let full_name = `${el.last_name} ${el.first_name} ${el.middle_name}`
+                    return [...acc, { ...el, full_name }]
+                }, [])
+            } catch (err) {
+                console.log(err)
+            } finally {
+                useLoaderStore().setLoader(false)
+            }
+        })
+
 
         return {
-            position,
-            department,
-            manager,
-            start_date,
             toast,
+            formData,
+            allUsers,
             createApplicationForManager
         }
     },

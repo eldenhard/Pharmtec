@@ -22,24 +22,14 @@ import { useRoute } from 'vue-router';
 import api from './api/user'
 import loaderComponent from './ui/loader/loaderComponent.vue';
 import Navbar from './components/navbar/navbar.vue';
+import { refreshToken } from './mixins/refreshToken';
+
 export default {
   components: { MainPage, AutorizationPage, loaderComponent, Navbar },
   setup() {
     const route = useRoute()
-    onMounted(() => {
-      // let token = {
-      //   refresh: JSON.parse(localStorage.getItem('accessToken'))
-      // }
-      // fetch('http://10.0.1.11:8000/auth/token/refresh/', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(token)
-      // }).then(response => {
-      //   console.log(response)
-      //   // localStorage.setItem('accessToken', response)
-      // })
+    onMounted(async() => {
+      await refreshToken()
     })
 
     // api.refreshUserJWTToken(token)

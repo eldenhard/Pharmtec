@@ -54,7 +54,7 @@
                 <tbody>
 
                     <template v-if="currentColor == 'list'">
-                        <tr v-for="user in filteredUsers" :key="user.id">
+                        <tr v-for="user in filteredUsersList" :key="user.id">
                             <td>{{ user.last_name }}</td>
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.middle_name }}</td>
@@ -66,16 +66,22 @@
 
                     <template v-else>
                         <div class="grid_air_block">
-                            <div class="grid_element" v-for="user in filteredUsers" :key="user.id">
+                            <div class="grid_element" v-for="user in filteredUsersGrid" :key="user.id">
                                 <div class="img_block">
                                     <img src="./assets/user.png" alt="">
                                 </div>
                                 <div class="text_block">
-                                    <p>{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</p>
+                                    <div style="width: 30%; margin-left: auto; ">
+                                        <!-- Сделать логотип фартек, если user.company ФАРМТЕК, в противном случае intelbio -->
+                                        <img
+                                            :src="user.company == 'ФАРМТЕК' ? './assets/farmtek.png' : './assets/intel.png'">
+                                    </div>
+                                    <p style="margin-top: 10%;">{{ user.last_name }} {{ user.first_name }} {{
+                                        user.middle_name }}</p>
                                     <p>{{ user.job_info.name }}</p>
-                                    <p>{{ user.company }}</p>
                                     <a @click="copyEmail(user.email)" style="color: var(--blue)">Почта: {{ user.email }}</a>
                                     <p>Тел: {{ user.phone }}</p>
+
                                 </div>
 
                             </div>
@@ -99,7 +105,8 @@ export default {
         const users = ref([]);
         const toast = useToast();
         const search = ref("")
-        const filteredUsers = ref([])
+        const filteredUsersList = ref([])
+        const filteredUsersGrid = ref([])
         const currentColor = ref("list")
         onMounted(async () => {
             try {
@@ -110,7 +117,9 @@ export default {
                 users.value = users.value.sort((a, b) => {
                     return a.last_name.localeCompare(b.last_name)
                 })
-                filteredUsers.value = [...users.value]
+                filteredUsersList.value = [...users.value]
+                filteredUsersGrid.value = [...users.value]
+
             } catch (err) {
                 console.log(err)
                 toast.error(`Ошибка! Данные не получены`, {
@@ -120,13 +129,14 @@ export default {
                 useLoaderStore().setLoader(false)
             }
         })
-        watch(search, () => {
-            // поиск по users.value
-            if (search.value == "") {
-                return filteredUsers.value = [...users.value]
-            }
-            filteredUsers.value = filteredUsers.value.filter(user => user.last_name.toLowerCase().includes(search.value.toLowerCase()))
-        })
+        const heandleSearch = () => {
+            const query = search.value.toLowerCase()
+            filteredUsersList.value = users.value.filter(user => user.last_name.toLowerCase().includes(query))
+            filteredUsersGrid.value = users.value.filter(user => user.last_name.toLowerCase().includes(query))
+        }
+        // Слушатель изменения поиск, с параметром для немедленного выполнения обработчика
+        watch(search, heandleSearch, { immediate: true })
+
         const changeCurrentDisplayGrid = (color) => {
             currentColor.value = color
         }
@@ -139,7 +149,8 @@ export default {
         return {
             users,
             search,
-            filteredUsers,
+            filteredUsersList,
+            filteredUsersGrid,
             toast,
             currentColor,
             copyEmail,

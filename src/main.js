@@ -41,13 +41,13 @@ VMdEditor.use(vuepressTheme, {
 });
 VMdEditor.lang.use('ru-RU', ruRU);
 
-
-
+import VueTheMask from 'vue-the-mask'
 const app = createApp(App)
     .use(router)
     .use(pinia)
     .use(axiosPlugin)
     .use(VMdEditor)
+    .use(VueTheMask)
     .use(Toast, {
         position: "top-right",
         closeOnClick: true,

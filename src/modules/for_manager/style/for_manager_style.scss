@@ -1,13 +1,10 @@
+@import '@/styles/commonMixins';
 
 .first_line {
   display: grid;
   column-gap: 4vw;
   row-gap: 2vh;
-  grid-template-areas:
-    "date_start  manager "
-    "department department"
-    "position position"
-    "region region ";
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
 }
 .date_start {

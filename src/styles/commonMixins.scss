@@ -1,0 +1,39 @@
+.input-box {
+    /* родительский блок относительно которого будем формировать положение
+    тега label */
+    position: relative;
+  }
+  
+  input, select {
+    background: #fff;
+    padding: 2%;
+    /* закруглим края у поля ввода */
+    border-radius: 6px;
+    border: 1.2px solid var(--ColorDisabled);
+    width: 100%;
+    min-width: 5vw;
+    min-height: 4vh;
+    transition: border .2s ease;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
+    &:focus{
+        border: 1.2px solid var(--colorBlue);
+        outline: none;
+        text-decoration: none;
+    
+    }
+  }
+  
+  label {
+    position: absolute;
+    /* смещение относительно родительского элемента 10px вверх от верхнего края и   10px влево */
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    color: rgb(155, 155, 155);
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0 5px;
+
+  }

@@ -11,11 +11,10 @@ const config = {
     (config) => {
       const token = JSON.parse(localStorage.getItem('accessToken'));
       config.headers.Authorization = token ? `Bearer ${token}` : '';
-      console.log(config.headers.Authorization)
       return config;
     },
     (error) => {
-      return Promise.reject(error);
+      return Promise.reject(error, 'ОШИБКА');
     }
   );
   
