@@ -83,15 +83,22 @@ export default {
                 toast.success('Успешно! По указанному адресу отправлено письмо для входа', {
                     timeout: 3000
                 })
+                // Очистить значение formData.value после отправки
+                for(let i in formData.value){
+                    formData.value[i] = ''
+                }
+
             } catch (err) {
-                console.log(err)
-  
+                toast.error('Приглашение с таким Email уже существует.', {
+                    timeout: 3000
+                })
+
             } finally {
 
             }
 
         }
-   
+
         onMounted(async () => {
             useLoaderStore().setLoader(true)
             await refreshToken()

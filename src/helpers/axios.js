@@ -14,7 +14,7 @@ const config = {
       return config;
     },
     (error) => {
-      return Promise.reject(error, 'ОШИБКА');
+      return Promise.reject(error);
     }
   );
   
