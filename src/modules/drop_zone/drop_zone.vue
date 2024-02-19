@@ -2,7 +2,7 @@
     <div class="main">
         <div class="dropzone-container" :style="isDragging && 'border-color: green;'" @dragover="dragover"
             @dragleave="dragleave" @drop="drop">
-            <input type="file" multiple name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file"
+            <input type="file" multiple name="file" id="fileInput" class="hidden-input" @change="onChange(e)" ref="file"
                 accept=".pdf,.jpg,.jpeg,.png" />
 
             <label for="fileInput" class="file-label">
@@ -50,8 +50,9 @@ export default {
         remove(i) {
             this.files.splice(i, 1);
         },
-        onChange() {
+        onChange(e) {
             this.files.push(...this.$refs.file.files);
+            this.$emit('downloadFile',  this.files )
         },
         dragover(e) {
             e.preventDefault();
@@ -63,8 +64,9 @@ export default {
         drop(e) {
             e.preventDefault();
             this.$refs.file.files = e.dataTransfer.files;
-            this.onChange();
-            this.$emit('downloadFile', this.$refs.file.files)
+            this.onChange(e);
+           
+           
             this.isDragging = false;
         },
         generateURL(file) {

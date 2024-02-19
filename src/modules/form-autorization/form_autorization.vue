@@ -13,9 +13,9 @@
                 <buttonComponent @click.prevent="sendEmailForGetNewPassword()">Получить пароль</buttonComponent>
             </div>
             <div class="block_info" v-else>
-                <InputComponent v-model="oldPassword" :labelValue="'Старый пароль'" :typeInput="'text'" />
+                <InputComponent v-model="oldPassword" :labelValue="'Одноразовый код входа'" :typeInput="'text'" />
                 <InputComponent v-model="newPassword" :labelValue="'Новый пароль'" :typeInput="'text'" />
-                <buttonComponent @click="changePassword()">Войти</buttonComponent>
+                <buttonComponent @click="changePassword()">Сохранить</buttonComponent>
             </div>
         </vue-final-modal>
 
@@ -174,6 +174,9 @@ export default {
                     password: newPassword.value
                 };
                 let response = await api.changePassword(objChangePassword);
+                toast.success('Пароль успешно изменен', {
+                            timeout: 3000
+                        });
             } catch (err) {
                 if (err.response) {
                     // Если есть ответ с сервера, то получаем текст ошибки из ответа

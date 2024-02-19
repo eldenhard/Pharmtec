@@ -1,5 +1,5 @@
 <template>
-    <form name="formSendOrderToServer" class="accordion accordion-flush" id="accordionFlushExample" >
+    <form name="formSendOrderToServer" class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -27,14 +27,14 @@
                             :key="index">
                             <div class="date_block">
                                 <InputComponent :labelValue="'Дата начала'" :typeInput="'date'"
-                                    @update:modelValue="start_date = $event" reqired/>
+                                    @update:modelValue="start_date = $event" reqired />
                                 <InputComponent :labelValue="'Дата окончания'" :typeInput="'date'"
-                                    @update:modelValue="end_date = $event" reqired/>
+                                    @update:modelValue="end_date = $event" reqired />
                             </div>
                             <div class="comment_block">
                                 <textarea v-model="comment" rows="6" placeholder="Комментарий"></textarea>
                             </div>
-                            <drop_zone @downloadFile="downloadFile()"/>
+                            <!-- <drop_zone @downloadFile="downloadFiles" /> -->
                             <buttonComponent @click="sendOrderToServer(item)" type="submit">Отправить</buttonComponent>
                         </div>
 
@@ -48,15 +48,15 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue'
+import { ref, watch, defineComponent } from 'vue'
 import api from '../../api/orders'
 import InputComponent from '../../ui/inputComponent/InputComponent.vue'
 import buttonComponent from '../../ui/button/buttonComponent.vue'
 import drop_zone from '../drop_zone/drop_zone.vue'
 import { useToast } from "vue-toastification";
 import { useLoaderStore } from '../../store/LoaderStore'
-
-export default {
+import { refreshToken } from '../../mixins/refreshToken'
+export default defineComponent({
     components: { InputComponent, buttonComponent, drop_zone },
     props: {
         type: {
@@ -75,10 +75,9 @@ export default {
         const end_date = ref("")
         const comment = ref("")
         const toast = useToast();
-        const files = ref(null)
-        const downloadFile = (data) => {
-            files.value  = data
-            console.log(context)
+        const files = ref([])
+        const downloadFiles = (data) => {
+            files.value = data
         }
         let objDataConversation = {
             order_vacation: 'Заявка на отпуск',
@@ -92,15 +91,15 @@ export default {
             start_date.value = data
         }
 
-        
-        let sendOrderToServer = function (subTab) {
-            if(!start_date.value || !end_date.value){
+
+        let sendOrderToServer = async function (subTab) {
+            if (!start_date.value || !end_date.value) {
                 toast.warning('Поля выбора дат обязательны к заполнению', {
                     timeout: 3000
                 })
                 return
             }
-            useLoaderStore().setLoader(true)
+            // useLoaderStore().setLoader(true)
             let activeMainTab = Object.keys(objDataConversation).find((key) => objDataConversation[key] == props.type)
             let dataObject = {
                 date_begin: start_date.value,
@@ -109,25 +108,30 @@ export default {
                 kind: activeMainTab,
                 sub_kind: subTab,
                 user: 1,
-                files: files.value
+                files: [...files.value]
             }
-            // console.log(files.value)
             let formData = new FormData()
             for (let i in dataObject) {
+    
                 formData.append(i, dataObject[i])
             }
-            api.createNewOrder(formData)
-                .then((response) => {
-                    toast.success("Заявка отправлена", {
-                        timeout: 3000,
-                    });
-                    useLoaderStore().setLoader(false)
-                }).catch((err) => {
-                    toast.error(`${err}`, {
-                        timeout: 3000,
-                    });
-                    useLoaderStore().setLoader(false)
-                })
+
+            await refreshToken()
+            try {
+                await api.createNewOrder(formData)
+
+                toast.success("Заявка отправлена", {
+                    timeout: 3000,
+                });
+                useLoaderStore().setLoader(false)
+            } catch (err) {
+                toast.error(`${err}`, {
+                    timeout: 3000,
+                });
+            } finally {
+                useLoaderStore().setLoader(false)
+
+            }
         }
 
         return {
@@ -140,10 +144,10 @@ export default {
             // funcstion`s
             sendOrderToServer,
             checkData,
-            downloadFile,
+            downloadFiles,
         }
     },
-}
+})
 </script>
 
 <style scoped>
