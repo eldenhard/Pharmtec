@@ -1,10 +1,13 @@
 @import '@/styles/commonMixins';
-
+.grid_row{
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+}
 .first_line {
   display: grid;
   column-gap: 4vw;
   row-gap: 2vh;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   align-items: center;
 }
 .date_start {

@@ -3,23 +3,8 @@
         <div class="header_element">Сотрудники
             <hr>
         </div>
-        <!-- <pre>
-            "last_login": null,
-    "is_superuser": false,
-    "username": "kirilicheva.d",
-    "first_name": "Дарья",
-    "last_name": "Кириличева",
-    "email": "kirilicheva.d@pharmtec.ru",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2024-02-15T22:37:18.649341+03:00",
-    "middle_name": "Александровна",
-    "phone": null,
-    "company": "ФАРМТЕК",
-    "groups": [],
-    "user_permissions": []
-               </pre> -->
-        <input type="text" v-model="search" class="search_on_table" placeholder="Поиск...">
+
+        <input type="search" v-model="search" class="search_on_table" placeholder="Поиск...">
         <div class="display_option">
             <button class="btn" @click="changeCurrentDisplayGrid('list')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
@@ -58,7 +43,7 @@
                             <td>{{ user.last_name }}</td>
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.middle_name }}</td>
-                            <td>{{ user.job_info.name ?? 'Нет должности'}}</td>
+                            <td>{{ user.job_info.name ?? 'Нет должности' }}</td>
                             <td @click="copyEmail(user.email)" class="email">{{ user.email }}</td>
                             <td>{{ user.company }}</td>
                         </tr>
@@ -73,7 +58,7 @@
                                 <div class="text_block">
                                     <div style="width: 30%; margin-left: auto; ">
                                         <!-- Сделать логотип фартек, если user.company ФАРМТЕК, в противном случае intelbio -->
-                                        <img :src="getCurrentPicture(user.company )">
+                                        <img :src="getCurrentPicture(user.company)">
                                     </div>
                                     <p style="margin-top: 10%;">{{ user.last_name }} {{ user.first_name }} {{
                                         user.middle_name }}</p>
@@ -128,20 +113,25 @@ export default {
                 useLoaderStore().setLoader(false)
             }
         })
-        const heandleSearch = () => {
-            const query = search.value.toLowerCase()
-            filteredUsersList.value = users.value.filter(user => user.last_name.toLowerCase().includes(query))
-            filteredUsersGrid.value = users.value.filter(user => user.last_name.toLowerCase().includes(query))
+        const handleSearch = () => {
+            const query = search.value.toLowerCase();
+            filteredUsersList.value = users.value.filter(user =>
+                user.last_name.toLowerCase().includes(query) ||
+                user.first_name.toLowerCase().includes(query) ||
+                (user.job_info && user.job_info.name.toLowerCase().includes(query)) || // Проверяем, существует ли job_info и name
+                user.email.toLowerCase().includes(query)
+            );
+            filteredUsersGrid.value = [...filteredUsersList.value]; // Так как логика фильтрации одинакова, можно просто скопировать результат
         }
-        const getCurrentPicture= (pic) => {
-            if(pic == 'ФАРМТЕК'){
+        const getCurrentPicture = (pic) => {
+            if (pic == 'ФАРМТЕК') {
                 return new URL(`./assets/farmtec.png`, import.meta.url).href
-            } else if(pic == 'ИНТЕЛБИО') {
+            } else if (pic == 'ИНТЕЛБИО') {
                 return new URL(`./assets/intelbio.png`, import.meta.url).href
             }
-        }   
+        }
         // Слушатель изменения поиск, с параметром для немедленного выполнения обработчика
-        watch(search, heandleSearch, { immediate: true })
+        watch(search, handleSearch, { immediate: true })
 
         const changeCurrentDisplayGrid = (color) => {
             currentColor.value = color

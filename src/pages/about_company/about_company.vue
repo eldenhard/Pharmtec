@@ -3,7 +3,7 @@
         <!-- <navbar /> -->
         <div class="air_block">
             <div class="air_block_header">
-                <h3 class="header_element">О компании</h3>
+                <h3 class="header_element">О компаниях</h3>
                 <hr>
             </div>
             <div class="about_company">

@@ -35,7 +35,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
           <li class="nav-item dws">
-            <router-link to="/about-company" class="nav-link">О компании</router-link>
+            <router-link to="/about-company" class="nav-link">О компаниях</router-link>
           </li>
           <li class="nav-item dws">
             <router-link to="/products" class="nav-link">Продукция</router-link>
