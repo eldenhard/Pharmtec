@@ -1,9 +1,9 @@
 <template>
     <div>
-        <vue-final-modal v-model="isModal"  classes="modal-container" content-class="modal-content">
+        <vue-final-modal v-model="isModal" classes="modal-container" content-class="modal-content">
             <button class="modal__close" @click="isModal = false">
                 <i class="bi bi-x-lg"></i>
-        </button>
+            </button>
             <span class="modal__title">Подтверждение заявки</span>
             <div class="block_info">
                 <div class="input-box">
@@ -51,10 +51,10 @@
                 </div>
                 <textarea rows="5" class="textarea" placeholder="Комментарий" v-model="title"></textarea>
                 <buttonComponent @click="saveDataHandle()">Сохранить</buttonComponent>
-                </div>
+            </div>
         </vue-final-modal>
         <div class="air_block" style="max-height: 90vh; overflow: hidden;">
-            <FullCalendar :options="calendarOptions" style="max-height: 70vh;"/>
+            <FullCalendar :options="calendarOptions" style="max-height: 70vh;" />
             <buttonComponent @click="saveCurrentShedule()">Сохранить</buttonComponent>
         </div>
     </div>
@@ -72,6 +72,8 @@ import interactionPlugin from '../../../node_modules/@fullcalendar/interaction';
 import listPlugin from '../../../node_modules/@fullcalendar/list';
 import localeRu from '../../../node_modules/@fullcalendar/core/locales/ru';
 import { ref, reactive, watch } from 'vue';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import multiMonthPlugin from '@fullcalendar/multimonth'
 import { useToast } from "vue-toastification";
 import modal from '../../ui/modal/modal.vue';
 import { $vfm, VueFinalModal, ModalsContainer } from 'vue-final-modal'
@@ -112,25 +114,25 @@ export default {
                 end: `${newStartDate.value}T${end_hour.value}:${end_minute.value}:00+03:00`,
                 resourceId: resourceIdForCreateEvent.value,
             };
-          
+
             events.value.push(newEvent);
             isModal.value = false
         }
         // Конфигурация
-        const calendarOptions = reactive({
+        const calendarOptions = ref({
             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-            plugins: [resourceTimeGridPlugin, interactionPlugin, listPlugin],
+            plugins: [resourceTimeGridPlugin, interactionPlugin, listPlugin, dayGridPlugin, multiMonthPlugin],
             weekends: false,
             //   Возможность выделения области
             selectable: true,
             //   Начальный вид - график на 4 дня
             initialView: 'resourceTimeGridFourDay',
-  
+
             //   Верхняя панель инструментов
             headerToolbar: {
-                left: 'prev,next',
+                left: 'prev,next today',
                 center: 'title',
-                right: 'resourceTimeGridDay,resourceTimeGridFourDay',
+                right: 'resourceTimeGridDay,resourceTimeGridFourDay dayGridMonth multiMonthYear',
             },
             views: {
                 resourceTimeGridFourDay: {
@@ -138,22 +140,40 @@ export default {
                     duration: { days: 4 },
                     buttonText: '4 дня',
                 },
+                dayGridMonth: {
+                    type: 'resourceTimeGrid',
+                    duration: { month: 1 },
+                    buttonText: '1 месяц',
+                }
             },
             eventOverlap: false,
             resources: [{ id: '1a', title: 'Переговорная комната 2 этаж' },
             { id: '2a', title: 'Переговорная комната 5 этаж' }],
             dateClick: (info) => {
-                if (!info.event) {
-                    modalTitle.value = 'Создание нового события'
-                    isModal.value = true
+                if (info.view.type === 'dayGridMonth' || info.view.type === 'multiMonthYear') {
+                    
+                    info.view.calendar.changeView('resourceTimeGridDay');
+                    console.log(info.date)
+                    info.view.calendar.gotoDate(info.date)
+                    // calendarOptions.initialView = 'day'
+                    // calendarOptions.selectInfo = {
+                    //     start: info.date,
+                    //     end: info.date,
+                    //     startStr: info.dateStr,
+                    //     endStr: info.dateStr
+                    // }
                 }
+                // if (!info.event) {
+                //     modalTitle.value = 'Создание нового события'
+                //     isModal.value = true
+                // }
             },
             select: (selectInfo) => {
                 const resourceId = selectInfo.resource.id
                 data_by_field.value = {
                     start: selectInfo.startStr,
                     end: selectInfo.endStr,
-                    resourceId:resourceId,
+                    resourceId: resourceId,
                 }
                 const start = new Date(data_by_field.value.start);
                 const end = new Date(data_by_field.value.end);

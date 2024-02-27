@@ -11,6 +11,7 @@ RUN npm install --save @fullcalendar/timegrid
 RUN npm install --save @fullcalendar/list
 RUN npm install --save @fullcalendar/resource-timeline
 RUN npm install --save @fullcalendar/interaction
+RUN npm install --save @fullcalendar/multimonth
 RUN npm install @fullcalendar/core @fullcalendar/resource @fullcalendar/resource-timegrid
 RUN npm install vue-final-modal@3
 RUN npm install
