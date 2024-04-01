@@ -23,31 +23,21 @@ import api from './api/user'
 import loaderComponent from './ui/loader/loaderComponent.vue';
 import Navbar from './components/navbar/navbar.vue';
 import { refreshToken } from './mixins/refreshToken';
+
 import { useCurrentUserId } from '@/store/CurrentUserId'
 export default {
   components: { MainPage, AutorizationPage, loaderComponent, Navbar },
+  
   setup() {
     const route = useRoute()
+    const current_user_id_store = useCurrentUserId()
     onMounted(async() => {
       if(localStorage.getItem('accessToken')) {
         await refreshToken()   
       }
-      const currentUserIdStore = useCurrentUserId()
-      currentUserIdStore.setCurrentUserId()
-      
+      current_user_id_store.setCurrentUserId()
     })
 
-    // api.refreshUserJWTToken(token)
-    //   .then(response => {
-    //     localStorage.setItem('accessToken', response)
-    //   })
-    // })
-
-    // onMounted(() => {
-    //   if (!localStorage.getItem('token')) {
-    //     window.location.href = '/login'
-    //   }
-    // })
     return {
       route
     }

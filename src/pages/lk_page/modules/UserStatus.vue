@@ -1,15 +1,15 @@
 <template>
-    <div class="air_block w60" >
+    <div class="air_block w60">
         <p class="header_element">Изменение статуса пользователя</p>
         <hr>
         <div class="content">
             <div class="input-box">
                 <label>ФИО</label>
-                <input type="text" name="full_name" disabled>
+                <input type="text" name="full_name" :value="full_name_current_user" disabled>
             </div>
             <div class="input-box">
                 <label>Статус</label>
-                <select >
+                <select>
                     <option value="Больничный">Больничный</option>
                     <option value="Командировка">Командировка</option>
                     <option value="Отпуск">Отпуск</option>
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <ButtonComponent type="submit" >Сохранить</ButtonComponent>
+        <ButtonComponent type="submit">Сохранить</ButtonComponent>
     </div>
 </template>
 
@@ -35,38 +35,58 @@ import { useToast } from "vue-toastification";
 import { refreshToken } from '@/mixins/refreshToken'
 import InputComponent from '../../../ui/inputComponent/InputComponent.vue';
 import ButtonComponent from '../../../ui/button/buttonComponent.vue';
+import { useCurrentUserId } from '@/store/CurrentUserId'
+import { storeToRefs } from 'pinia'
 export default {
     components: {
         InputComponent,
         ButtonComponent,
     },
     setup() {
-        const $TOAST = useToast()
+        const $toast = useToast()
         const all_users = ref([])
+        const current_user = ref([])
         const substitute_person = ref('')
+        const full_name_current_user = ref('')
+
         onMounted(async () => {
             useLoaderStore().setLoader(true)
             await refreshToken()
             try {
+                const $STORE = useCurrentUserId()
+                const { current_user_id } = storeToRefs($STORE)
+                let user_by_id = await api.getUserById(current_user_id.value)
+                current_user.value = user_by_id.data
+                full_name_current_user.value = `
+                    ${user_by_id.data.last_name || ""} 
+                    ${user_by_id.data.first_name || ""} 
+                    ${user_by_id.data.middle_name || ""} 
+                    ${user_by_id.data.email || ""}
+                `.trim()
+
                 let response = await api.getAllUsers()
                 all_users.value = response.data.reduce((acc, el) => {
                     let full_name = `${el.last_name} ${el.first_name} ${el.middle_name}`
                     return [...acc, { ...el, full_name }]
                 }, []).sort((a, b) => a.full_name.localeCompare(b.full_name))
-                $TOAST.success("Пользователи загружены", {
+                $toast.success("Пользователи загружены", {
                     timeout: 2000
                 })
             } catch (err) {
-                $TOAST.error(`Произошла ошибка при загрузке пользователей\n ${err.response.data}`, {
+                $toast.error(`Произошла ошибка при загрузке пользователей\n ${err.response.data}`, {
                     timeout: 3000
                 })
             } finally {
                 useLoaderStore().setLoader(false)
             }
         })
-        return{
+        
+        
+        return {
             all_users,
-            substitute_person
+            substitute_person,
+            current_user,
+            full_name_current_user,
         }
     },
 }
