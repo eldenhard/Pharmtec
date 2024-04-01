@@ -42,7 +42,7 @@
 
         <!-- <form class="d-flex"> -->
 
-        <router-link to="/login" class="nav-link">
+        <router-link to="/lk" class="nav-link lk">
           <div class="icon_block"></div>
         </router-link>
         <!-- </form> -->

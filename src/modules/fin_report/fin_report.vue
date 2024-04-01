@@ -1,41 +1,45 @@
 <template>
     <div class="air_block">
         <h5><b>
-            
-                Финансовый отчет за период 01{{ new Date().toLocaleDateString().slice(2) }} - 29.02.{{ new Date().getFullYear() }}
+
+
+                Финансовый отчет за период 01{{ new Date().toLocaleDateString().slice(2) }} - 29.02.{{ new
+                    Date().getFullYear() }}
             </b></h5>
         <div class="air_block_body">
 
+
             <section class="enterdata">
                 <div class="input-box">
-                      <label style="font-size: 13px;">Дата</label>
+                    <label style="font-size: 13px;">Дата</label>
                     <input type="date" name="" id="">
                 </div>
                 <div class="input-box">
-                      <label style="font-size: 13px;">Тип</label>
+                    <label style="font-size: 13px;">Тип</label>
                     <select v-model="typeFinReport">
                         <option value="false">-</option>
                         <option value="true">+</option>
                     </select>
                 </div>
                 <div class="input-box">
-                      <label style="font-size: 13px;">Сумма, ₽</label>
+                    <label style="font-size: 13px;">Сумма, ₽</label>
                     <input type="value" v-model="formattedInput" @input="formatInput">
                 </div>
-                <div class="input-box" >
-                      <label style="font-size: 13px;">Статья прихода / расхода</label>
-                    <v-select :options="typeValExpesesOrIncome" label="name" style="min-width: 20vw; width: auto;"/>
+                <div class="input-box">
+                    <label style="font-size: 13px;">Статья прихода / расхода</label>
+                    <v-select :options="typeValExpesesOrIncome" label="name" style="min-width: 20vw; width: auto;" />
 
                 </div>
                 <div class="input-box">
                     <br>
-                    <button type="button" class="btn btn-success" @click="countNewRowFin()"><i class="bi bi-plus-lg"></i></button>
+                    <button type="button" class="btn btn-success" @click="countNewRowFin()"><i
+                            class="bi bi-plus-lg"></i></button>
 
                 </div>
             </section>
             <textarea rows="2" class="textarea" placeholder="Комментарий"></textarea>
         </div>
-        <new_mini_fin_report :amountNewRowFin="amountRowFin"/>
+        <new_mini_fin_report :amountNewRowFin="amountRowFin" />
         <buttonComponent @click="saveFinReport()">Сохранить</buttonComponent>
     </div>
 </template>
@@ -49,7 +53,7 @@
 <script>
 import buttonComponent from '../../ui/button/buttonComponent.vue';
 import { ref, computed } from 'vue'
-import vSelect from "vue-select"; 
+import vSelect from "vue-select";
 import { useToast } from "vue-toastification";
 import new_mini_fin_report from './modules/new_mini_fin_report.vue'
 export default {

@@ -56,8 +56,7 @@
 
 
 <script>
-import { ref, onMounted } from 'vue';
-import { Transition } from 'vue';
+import { ref, onMounted, Transition } from 'vue';
 import navbar from '../../components/navbar/navbar.vue';
 import sidebar from '../../components/sidebar/sidebar.vue';
 import workspace from '../../components/workspace/workspace.vue';

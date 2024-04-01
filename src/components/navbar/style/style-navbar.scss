@@ -24,7 +24,7 @@ background: linear-gradient(56deg, rgba(0,142,192,1) 0%, rgba(49,163,155,1) 71%)
     border-radius: 50%;
     background: lightblue;
 }
-.router-link-active, .router-link-exact-active{
+.router-link-active:not(.lk), .router-link-exact-active:not(.lk){
     border-bottom: white 2px solid ;
     &:hover{
         border-bottom: lightblue 2px solid ;

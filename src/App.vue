@@ -23,7 +23,7 @@ import api from './api/user'
 import loaderComponent from './ui/loader/loaderComponent.vue';
 import Navbar from './components/navbar/navbar.vue';
 import { refreshToken } from './mixins/refreshToken';
-
+import { useCurrentUserId } from '@/store/CurrentUserId'
 export default {
   components: { MainPage, AutorizationPage, loaderComponent, Navbar },
   setup() {
@@ -32,7 +32,9 @@ export default {
       if(localStorage.getItem('accessToken')) {
         await refreshToken()   
       }
-     
+      const currentUserIdStore = useCurrentUserId()
+      currentUserIdStore.setCurrentUserId()
+      
     })
 
     // api.refreshUserJWTToken(token)

@@ -3,7 +3,6 @@
         <div class="header_element">Сотрудники
             <hr>
         </div>
-
         <input type="search" v-model="search" class="search_on_table" placeholder="Поиск...">
         <div class="display_option">
             <button class="btn" @click="changeCurrentDisplayGrid('list')">
@@ -79,7 +78,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, compile } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import api from '@/api/user'
 import { useLoaderStore } from '@/store/LoaderStore'
 import { useToast } from "vue-toastification";
