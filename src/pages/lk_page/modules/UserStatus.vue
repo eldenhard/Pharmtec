@@ -9,7 +9,7 @@
             </div>
             <div class="input-box">
                 <label>Статус</label>
-                <select>
+                <select v-model="user_status">
                     <option value="Больничный">Больничный</option>
                     <option value="Командировка">Командировка</option>
                     <option value="Отпуск">Отпуск</option>
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <ButtonComponent type="submit">Сохранить</ButtonComponent>
+        <ButtonComponent type="submit" @click="saveNewStatusUser()">Сохранить</ButtonComponent>
     </div>
 </template>
 
@@ -48,13 +48,14 @@ export default {
         const current_user = ref([])
         const substitute_person = ref('')
         const full_name_current_user = ref('')
+        const user_status = ref('')
 
+        const $STORE = useCurrentUserId()
+        const { current_user_id } = storeToRefs($STORE)
         onMounted(async () => {
             useLoaderStore().setLoader(true)
             await refreshToken()
             try {
-                const $STORE = useCurrentUserId()
-                const { current_user_id } = storeToRefs($STORE)
                 let user_by_id = await api.getUserById(current_user_id.value)
                 current_user.value = user_by_id.data
                 full_name_current_user.value = `
@@ -80,13 +81,33 @@ export default {
                 useLoaderStore().setLoader(false)
             }
         })
-        
-        
+
+        const saveNewStatusUser = async () => {
+            try {
+                useLoaderStore().setLoader(true)
+                let response = api.putUserById(current_user_id.value, { vice: substitute_person.value.id, status: user_status.value })
+                $toast.success("Статус пользователя изменен", {
+                    timeout: 2000
+                })
+            }
+            catch (err) {
+                $toast.error(`Ошибка!\nСтатус пользователя не изменен\n${err.response.data}`, {
+                    timeout: 3000
+                })
+            }
+            finally {
+                useLoaderStore().setLoader(false)
+            }
+        }
+
         return {
             all_users,
             substitute_person,
             current_user,
             full_name_current_user,
+            user_status,
+
+            saveNewStatusUser,
         }
     },
 }

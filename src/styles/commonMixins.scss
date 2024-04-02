@@ -3,7 +3,7 @@
     тега label */
     position: relative;
   }
-  
+
   input, select {
     background: #fff;
     padding: 2%;
@@ -12,7 +12,8 @@
     border: 1.2px solid var(--ColorDisabled);
     width: 100%;
     min-width: 5vw;
-    min-height: 4vh;
+    min-height: 4vh !important;
+    max-height: 4vh !important;
     transition: border .2s ease;
     outline: none;
     text-decoration: none;
@@ -24,7 +25,7 @@
     
     }
   }
-  
+
   label {
     position: absolute;
     /* смещение относительно родительского элемента 10px вверх от верхнего края и   10px влево */

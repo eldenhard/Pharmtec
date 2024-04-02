@@ -17,6 +17,9 @@
 tr {
   cursor: pointer;
 }
+td{
+  white-space: nowrap;
+}
 .air_block__table {
   height: 58vh;
   overflow-y: scroll;

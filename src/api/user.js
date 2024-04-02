@@ -29,6 +29,9 @@ const getAllUsers = () => {
 const getUserById = (id) => {
     return api.get(`${users}/${id}/`)
 }
+const putUserById = (id, data) => {
+    return api.patch(`${users}/${id}/`, data)
+}
 // смена пароля
 const changePassword = (data) => {
     return api.post(`${resourse}/signup/password/confirm-change`, data)
@@ -42,6 +45,7 @@ export default{
     getDepartments,
     getAllUsers,
     getUserById,
+    putUserById,
     changePassword,
     sendEmailForGetNewPassword,
 }

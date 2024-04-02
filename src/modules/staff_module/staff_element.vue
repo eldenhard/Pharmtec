@@ -33,6 +33,7 @@
                         <th>Должность</th>
                         <th>Почта</th>
                         <th>Компания</th>
+                        <th>Заменяющий</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,7 @@
                             <td>{{ user.job_info.name ?? 'Нет должности' }}</td>
                             <td @click="copyEmail(user.email)" class="email">{{ user.email }}</td>
                             <td>{{ user.company }}</td>
+                            <td>{{ viceInfoShort(user.vice_info) }}</td>
                         </tr>
                     </template>
 
@@ -60,9 +62,10 @@
                                         <img :src="getCurrentPicture(user.company)">
                                     </div>
                                     <p style="margin-top: 10%;">{{ user.last_name }} {{ user.first_name }} {{
-                                        user.middle_name }}</p>
+            user.middle_name }}</p>
                                     <p>{{ user.job_info.name }}</p>
-                                    <a @click="copyEmail(user.email)" style="color: var(--blue)">Почта: {{ user.email }}</a>
+                                    <a @click="copyEmail(user.email)" style="color: var(--blue)">Почта: {{ user.email
+                                        }}</a>
                                     <p>Тел: {{ user.phone }}</p>
 
                                 </div>
@@ -78,7 +81,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import api from '@/api/user'
 import { useLoaderStore } from '@/store/LoaderStore'
 import { useToast } from "vue-toastification";
@@ -91,6 +94,8 @@ export default {
         const filteredUsersList = ref([])
         const filteredUsersGrid = ref([])
         const currentColor = ref("list")
+
+
         onMounted(async () => {
             try {
                 useLoaderStore().setLoader(true)
@@ -112,6 +117,7 @@ export default {
                 useLoaderStore().setLoader(false)
             }
         })
+
         const handleSearch = () => {
             const query = search.value.toLowerCase();
             filteredUsersList.value = users.value.filter(user =>
@@ -129,7 +135,7 @@ export default {
                 return new URL(`./assets/intelbio.png`, import.meta.url).href
             }
         }
-        // Слушатель изменения поиск, с параметром для немедленного выполнения обработчика
+        // Слушатель изменения поиск, с параметром для немедленного выполнения обработчика    
         watch(search, handleSearch, { immediate: true })
 
         const changeCurrentDisplayGrid = (color) => {
@@ -141,6 +147,12 @@ export default {
                 timeout: 3000
             })
         }
+        const viceInfoShort = (viceInfo) => {
+            if (!viceInfo) return '';
+
+            // Пример преобразования
+            return  `${viceInfo.split(' ')[0]} ${viceInfo.split(' ')[1].slice(0, 1)}. ${viceInfo.split(' ')[2].slice(0, 1)}.`;
+        };
         return {
             users,
             search,
@@ -151,6 +163,8 @@ export default {
             copyEmail,
             changeCurrentDisplayGrid,
             getCurrentPicture,
+            viceInfoShort,
+
 
         }
     },
