@@ -30,6 +30,7 @@ thead {
     position: sticky;
     top: -1px;
     right: 0;
+    z-index: 1;
     text-align: center;
     th {
       background: lightgrey;
@@ -84,4 +85,20 @@ thead {
  
     }
   }
+}
+
+.inactive_user {
+  background: grey !important;
+  border: 2px solid red;
+}
+.bookmark_block{
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+    .bookmark{
+      position: absolute;
+      top: 0;
+      right: 2%;
+    }
 }

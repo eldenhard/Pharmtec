@@ -48,7 +48,7 @@ export default {
         const current_user = ref([])
         const substitute_person = ref('')
         const full_name_current_user = ref('')
-        const user_status = ref('')
+        const user_status = ref('Больничный')
 
         const $STORE = useCurrentUserId()
         const { current_user_id } = storeToRefs($STORE)

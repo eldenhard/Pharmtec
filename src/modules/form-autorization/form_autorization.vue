@@ -51,6 +51,7 @@ import { useToast } from "vue-toastification";
 import { useLoaderStore } from '../../store/LoaderStore'
 import { useRouter } from 'vue-router'
 import { $vfm, VueFinalModal, ModalsContainer } from 'vue-final-modal'
+import { useCurrentUserId } from '@/store/CurrentUserId'
 export default {
     components: {
         buttonComponent, InputComponent, VueFinalModal,
@@ -72,7 +73,7 @@ export default {
         const minutes = ref(15);
         const seconds = ref(0);
         let timer;
-
+        const current_user_id_store = useCurrentUserId()
         const startTimer = () => {
             timer = setInterval(() => {
                 if (seconds.value > 0) {
@@ -120,6 +121,7 @@ export default {
                 let response = await api.getUserJWTToken(objEnter);
                 localStorage.setItem('accessToken', JSON.stringify(response.data.access));
                 localStorage.setItem('refreshToken', JSON.stringify(response.data.refresh));
+                current_user_id_store.setCurrentUserId()
                 router.push({ path: 'about-company' });
             } catch (err) {
                 toast.error(`Не найдено активной учетной записи с указанными данными`, {

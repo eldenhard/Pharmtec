@@ -7,6 +7,7 @@ export const useCurrentUserId = defineStore("currentUserId", {
     actions:{
         setCurrentUserId(context){
             let token = JSON.parse(localStorage.getItem('accessToken'))
+            if (!token) return;
             const decodeJWT = (token) => {
                 const parts = token.split('.');
                 const header = JSON.parse(atob(parts[0]));

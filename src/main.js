@@ -42,12 +42,25 @@ VMdEditor.use(vuepressTheme, {
 VMdEditor.lang.use('ru-RU', ruRU);
 
 import VueTheMask from 'vue-the-mask'
+import VueTippy from 'vue-tippy'
+import 'tippy.js/dist/tippy.css'
 const app = createApp(App)
     .use(router)
     .use(pinia)
     .use(axiosPlugin)
     .use(VMdEditor)
     .use(VueTheMask)
+    .use(VueTippy, {
+      directive: 'tippy', // => v-tippy
+      component: 'tippy', // => <tippy/>
+      componentSingleton: 'tippy-singleton', // => <tippy-singleton/>,
+      theme: 'material',
+      defaultProps: {
+        placement: 'auto-end',
+        allowHTML: true,
+      }, // => Global default options * see all props
+      }
+    )
     .use(Toast, {
         position: "top-right",
         closeOnClick: true,

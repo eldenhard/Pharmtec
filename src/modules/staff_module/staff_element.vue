@@ -24,6 +24,7 @@
             </button>
         </div>
         <div class="air_block__table">
+
             <table class="table table-hover table-bordered">
                 <thead v-if="currentColor == 'list'">
                     <tr>
@@ -39,8 +40,18 @@
                 <tbody>
 
                     <template v-if="currentColor == 'list'">
-                        <tr v-for="user in filteredUsersList" :key="user.id">
-                            <td>{{ user.last_name }}</td>
+                        <tr v-for="user in filteredUsersList" :key="user.id" :class="{ 'table-warning': user.status }">
+                         
+                                <td class="bookmark_block" v-tippy="user.status">
+                                    {{ user.last_name }}
+                                 
+                                    <svg  v-if="user.status" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="rgb(180, 0, 0)" class="bi bi-bookmark-fill bookmark" viewBox="0 0 16 16">
+                                        <path
+                                            d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
+                                    </svg>
+                                </td>
+                       
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.middle_name }}</td>
                             <td>{{ user.job_info.name ?? 'Нет должности' }}</td>
@@ -58,11 +69,10 @@
                                 </div>
                                 <div class="text_block">
                                     <div style="width: 30%; margin-left: auto; ">
-                                        <!-- Сделать логотип фартек, если user.company ФАРМТЕК, в противном случае intelbio -->
                                         <img :src="getCurrentPicture(user.company)">
                                     </div>
-                                    <p style="margin-top: 10%;">{{ user.last_name }} {{ user.first_name }} {{
-            user.middle_name }}</p>
+                                    <p style="margin-top: 10%;">{{ user.last_name }} {{ user.first_name }}
+                                        {{ user.middle_name }}</p>
                                     <p>{{ user.job_info.name }}</p>
                                     <a @click="copyEmail(user.email)" style="color: var(--blue)">Почта: {{ user.email
                                         }}</a>
@@ -86,6 +96,7 @@ import api from '@/api/user'
 import { useLoaderStore } from '@/store/LoaderStore'
 import { useToast } from "vue-toastification";
 import { refreshToken } from '@/mixins/refreshToken'
+
 export default {
     setup() {
         const users = ref([]);
@@ -151,7 +162,7 @@ export default {
             if (!viceInfo) return '';
 
             // Пример преобразования
-            return  `${viceInfo.split(' ')[0]} ${viceInfo.split(' ')[1].slice(0, 1)}. ${viceInfo.split(' ')[2].slice(0, 1)}.`;
+            return `${viceInfo.split(' ')[0]} ${viceInfo.split(' ')[1].slice(0, 1)}. ${viceInfo.split(' ')[2].slice(0, 1)}.`;
         };
         return {
             users,
