@@ -34,6 +34,7 @@
                         <th>Должность</th>
                         <th>Почта</th>
                         <th>Компания</th>
+                        <th>Статус</th>
                         <th>Заменяющий</th>
                     </tr>
                 </thead>
@@ -41,22 +42,14 @@
 
                     <template v-if="currentColor == 'list'">
                         <tr v-for="user in filteredUsersList" :key="user.id" :class="{ 'table-warning': user.status }">
-                         
-                                <td class="bookmark_block" v-tippy="user.status">
-                                    {{ user.last_name }}
-                                 
-                                    <svg  v-if="user.status" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="rgb(180, 0, 0)" class="bi bi-bookmark-fill bookmark" viewBox="0 0 16 16">
-                                        <path
-                                            d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
-                                    </svg>
-                                </td>
-                       
+                         <!--  v-tippy="user.status" -->
+                            <td class="bookmark_block">{{ user.last_name }}</td>
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.middle_name }}</td>
                             <td>{{ user.job_info.name ?? 'Нет должности' }}</td>
                             <td @click="copyEmail(user.email)" class="email">{{ user.email }}</td>
                             <td>{{ user.company }}</td>
+                            <td>{{ user.status }}</td>
                             <td>{{ viceInfoShort(user.vice_info) }}</td>
                         </tr>
                     </template>
