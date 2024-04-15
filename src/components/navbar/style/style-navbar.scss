@@ -1,39 +1,150 @@
-li {
-    a {
-        text-transform: uppercase;
-        color: var(--colorWhite);
-        font-weight: 600;
-        font-size: 14px;
+// li {
+//     a {
+//         text-transform: uppercase;
+//         color: var(--colorWhite);
+//         font-weight: 600;
+//         font-size: 14px;
+//     }
+// }
+
+// nav {
+//     -webkit-box-shadow: -4px 6px 8px 0px rgba(23, 39, 51, 0.2);
+//     -moz-box-shadow: -4px 6px 8px 0px rgba(21, 37, 49, 0.2);
+//     box-shadow: -4px 6px 8px 0px rgba(27, 48, 65, 0.2);
+//     z-index: var(--zIndexNavbar);
+//     background: rgb(0,142,192);
+// background: linear-gradient(56deg, rgba(0,142,192,1) 0%, rgba(49,163,155,1) 71%);
+
+// }
+
+// .icon_block {
+//     width: 45px;
+//     height: 45px;
+//     border-radius: 50%;
+//     background: lightblue;
+// }
+// .router-link-active:not(.lk), .router-link-exact-active:not(.lk){
+//     border-bottom: white 2px solid ;
+//     &:hover{
+//         border-bottom: lightblue 2px solid ;
+//     }
+// }
+// .nav-link{
+//     font-size: 14px;
+//     // font-weight: 500;
+//     &:hover{
+//         color: lightgrey;
+//     }
+// }
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.navbar {
+  background: rgb(76, 192, 104);
+  background: linear-gradient(
+    66deg,
+    rgba(76, 192, 104, 1) 0%,
+    rgba(0, 95, 152, 1) 60%
+  );
+  height: 25vh;
+  padding: 0;
+
+  .container_block {
+    margin-left: 5vw;
+    width: 90vw;
+    display: grid;
+    grid-template-rows: 0.5fr 1fr 0.6fr;
+    height: 100%;
+
+    .row_1,
+    .row_2,
+    .row_3 {
+      margin-left: auto;
     }
-}
 
-nav {
-    -webkit-box-shadow: -4px 6px 8px 0px rgba(23, 39, 51, 0.2);
-    -moz-box-shadow: -4px 6px 8px 0px rgba(21, 37, 49, 0.2);
-    box-shadow: -4px 6px 8px 0px rgba(27, 48, 65, 0.2);
-    z-index: var(--zIndexNavbar);
-    background: rgb(0,142,192);
-background: linear-gradient(56deg, rgba(0,142,192,1) 0%, rgba(49,163,155,1) 71%);
+    .row_1 {
+      display: flex;
+      align-items: flex-end;
 
-
-}
-
-.icon_block {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: lightblue;
-}
-.router-link-active:not(.lk), .router-link-exact-active:not(.lk){
-    border-bottom: white 2px solid ;
-    &:hover{
-        border-bottom: lightblue 2px solid ;
+      .blue_text {
+        color: #9fd1d4;
+        font-size: 1rem;
+        font-family: "Golos Text", sans-serif;
+      }
     }
-}
-.nav-link{
-    font-size: 14px;
-    // font-weight: 500;
-    &:hover{
-        color: lightgrey;
+
+    .row_2 {
+      background: yellow;
     }
+
+    .row_3 {
+      width: 100%;
+      position: relative;
+      height: 100%; /* Установим высоту блока .row_3 (например, 100% от родителя) */
+
+      ul.tabs_block {
+        display: flex;
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        list-style: none;
+      }
+
+      li:first-child button.tab_button {
+        border-top-left-radius: 30px; /* Скругление правого верхнего угла первой кнопки */
+        background: #61a60e;
+        transition: background 0.3s ease-in-out;
+
+        &:hover {
+          background: #4b800c;
+        }
+      }
+      li:nth-child(2) button.tab_button {
+        background: #007481;
+        transition: background 0.3s ease-in-out;
+        &:hover {
+          background: #00606b;
+        }
+      }
+      li:nth-child(3) button.tab_button {
+        background: #1a93b4;
+        transition: background 0.3s ease-in-out;
+
+        &:hover {
+          background: #15748f;
+        }
+      }
+      li:nth-child(4) button.tab_button {
+        background: #0069a7;
+        transition: background 0.3s ease-in-out;
+
+        &:hover {
+          background: #005383;
+        }
+      }
+      li:last-child button.tab_button {
+        border-top-right-radius: 30px; /* Скругление правого верхнего угла первой кнопки */
+        background: #a4b200;
+        transition: background 0.3s ease-in-out;
+
+        &:hover {
+          background: #889400;
+        }
+      }
+      /* Стили для кнопок */
+      button.tab_button {
+        width: calc(90vw / 5);
+        height: 100%;
+        border: none;
+        color: #ffffff;
+        font-size: 1rem;
+        display: flex;
+        justify-content: center; /* Центрируем текст по горизонтали */
+        align-items: center; /* Центрируем текст по вертикали */
+        cursor: pointer;
+      }
+    }
+  }
 }
