@@ -1,13 +1,13 @@
 <template>
   <div>
     <!-- показать компонент navbar везде кроме страницы autorization -->
-    <Navbar  />
+    <Navbar v-if="route.path !== '/login'" />
     <!-- v-if="route.path !== '/login'" -->
-    <!-- <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component }">
       <transition name="moveUp">
         <component :is="Component" :key="$route.path" />
       </transition>
-    </router-view> -->
+    </router-view>
     <loaderComponent />
   </div>
 
@@ -30,17 +30,17 @@ export default {
   components: { MainPage, AutorizationPage, loaderComponent, Navbar },
   
   setup() {
-    // const route = useRoute()
-    // const current_user_id_store = useCurrentUserId()
-    // onMounted(async() => {
-    //   if(localStorage.getItem('accessToken')) {
-    //     await refreshToken()   
-    //   }
-    //   current_user_id_store.setCurrentUserId()
-    // })
+    const route = useRoute()
+    const current_user_id_store = useCurrentUserId()
+    onMounted(async() => {
+      if(localStorage.getItem('accessToken')) {
+        await refreshToken()   
+      }
+      current_user_id_store.setCurrentUserId()
+    })
 
     return {
-      // route
+      route
     }
   },
 

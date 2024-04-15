@@ -72,6 +72,12 @@
       font-size: 1rem;
       font-family: "Golos Text", sans-serif;
     }
+    .blue_text i {
+      font-size: 2rem; /* Установите желаемый размер */
+      vertical-align: middle; /* Центрируем по вертикали относительно текста */
+      width: 100%;
+      height: 100%;
+    }
     .row_1 {
       display: flex;
       align-items: flex-end;
@@ -79,57 +85,90 @@
 
     .row_2 {
       display: grid;
-      grid-template-columns: 1.4fr 1.8fr .8fr;
+      grid-template-columns: 1.4fr 1.8fr 0.8fr;
       column-gap: 2vw;
       align-items: center;
       width: 100%;
-    
+
       /* Стили для блока логотипа */
       .logo_block {
         display: flex;
         align-items: center;
         gap: 2vw;
         // background: red;
-    
+
         /* Стили для SVG-логотипов */
         .dynamic-svg-farmtec,
         .dynamic-svg-intelbio {
           width: 10vw;
         }
-    
+
         /* Стили для линии-разделителя */
         .dynamic-svg-line {
           width: 1%;
           height: 5vh;
         }
       }
-    
+
       /* Стили для блока поиска */
       .search_block {
         display: flex;
         align-items: center;
-        // background: blue;
-        /* Стили для ввода поискового запроса */
-        input {
-          width: 100%;
-          border: none;
-          background: rgba(255, 255, 255, 0.2);
-          text-decoration: none;
-          border-radius: 8px;
-          height: 4vh;
-    
-          &:focus {
-            outline: none;
-          }
+        position: relative;
+        width: 100%; /* Ширина контейнера */
+      }
+
+      /* Стили для текстового поля */
+      .search-input {
+        padding: 10px 40px 10px 10%; /* Поля вокруг текстового поля */
+        font-size: 16px;
+        box-sizing: border-box; /* Учитываем границы внутри ширины */
+        width: 100%;
+        border: none;
+        background: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+        border-radius: 8px;
+        height: 4vh;
+        color: white;
+        &::-webkit-search-cancel-button {
+          -webkit-appearance: none; /* Убираем стандартный стиль кнопки */
+          appearance: none;
+          content: '\2716'; /* Используем Unicode символ крестика */
+          color: red; /* Цвет крестика */
+          font-size: 14px; /* Размер крестика */
+          line-height: 1; /* Задаем высоту строки */
+          cursor: pointer; /* Изменяем курсор при наведении */
+          opacity: 0.5; /* Прозрачность по умолчанию */
+          transition: opacity 0.3s ease; /* Плавное изменение прозрачности */
         }
-    
-        /* Стили для плейсхолдера в поисковом поле */
-        input[type="search"]::-webkit-input-placeholder {
-          color: #ffffff;
-          padding-left: 4%;
+      
+        &::-webkit-search-cancel-button:hover {
+          opacity: 1; /* Увеличиваем прозрачность при наведении */
         }
       }
-    
+
+      /* Стили для иконки поиска */
+      .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 12px; /* Отступ слева для иконки */
+        transform: translateY(-50%);
+        font-size: 20px;
+        color: #888;
+      }
+
+      /* Стили при фокусе на текстовом поле */
+      .search-input:focus {
+        outline: none; /* Убираем стандартный фокусовый контур */
+        border-color: #66afe9; /* Цвет рамки при фокусе */
+      }
+
+      /* Стили для плейсхолдера в поисковом поле */
+      input[type="search"]::-webkit-input-placeholder {
+        color: #ffffff;
+        padding-left: 10%;
+      }
+
       /* Стили для блока меню */
       .menu_block {
         display: flex;
@@ -141,40 +180,37 @@
           align-items: center;
           justify-content: space-between;
         }
-    
+
         /* Стили для блока пользователя */
         .user_block {
           display: flex;
           gap: 1vw;
           align-items: center;
-    
+
           /* Стили для кнопки меню */
           .hamburger {
             background: transparent;
             color: white;
             border: 1px solid white;
             border-radius: 6px;
-            padding: 0 0.4vw;
-            height: 50%;
-            align-items: center;
-    
-            &:hover {
-              cursor: pointer;
-            }
+            display: flex;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 1.5vw;
+            height: 3vh;
+            padding: 0 !important;
+            font-size: 1rem;
           }
-    
+
           /* Стили для изображения пользователя */
           .user_pic {
-
             height: 5vh;
             width: 5vh;
             border-radius: 50%;
           }
         }
-  
       }
     }
-    
 
     .row_3 {
       width: 100%;
@@ -195,14 +231,14 @@
         transition: background 0.3s ease-in-out;
 
         &:hover {
-          background: #4b800c;
+          background: #528c0d;
         }
       }
       li:nth-child(2) button.tab_button {
         background: #007481;
         transition: background 0.3s ease-in-out;
         &:hover {
-          background: #00606b;
+          background: #015b65;
         }
       }
       li:nth-child(3) button.tab_button {
@@ -210,7 +246,7 @@
         transition: background 0.3s ease-in-out;
 
         &:hover {
-          background: #177e9b;
+          background: #177d99;
         }
       }
       li:nth-child(4) button.tab_button {
@@ -218,7 +254,7 @@
         transition: background 0.3s ease-in-out;
 
         &:hover {
-          background: #005383;
+          background: #01578a;
         }
       }
       li:last-child button.tab_button {
@@ -227,7 +263,7 @@
         transition: background 0.3s ease-in-out;
 
         &:hover {
-          background: #889400;
+          background: #95a103;
         }
       }
       /* Стили для кнопок */
@@ -241,6 +277,7 @@
         justify-content: center; /* Центрируем текст по горизонтали */
         align-items: center; /* Центрируем текст по вертикали */
         cursor: pointer;
+        white-space: wrap;
       }
     }
   }

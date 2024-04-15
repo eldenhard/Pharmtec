@@ -8,7 +8,7 @@
       <div class="row_2">
         <div class="logo_block">
           <!-- Фармтек -->
-          <svg class="dynamic-svg-farmtec"  viewBox="0 0 182 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="dynamic-svg-farmtec" viewBox="0 0 182 58" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
               d="M11.9221 16.6046C20.2345 11.7862 29.515 10.8799 36.9053 13.4371C36.6224 13.1227 36.3193 12.8065 36.0143 12.4922C26.5097 2.99331 12.5853 1.50239 4.9103 9.18311C0.378433 13.722 -0.968085 20.4468 0.670516 27.1495C3.32865 23.0518 7.14042 19.375 11.9221 16.6046Z"
               fill="white" />
@@ -51,7 +51,7 @@
 
           </svg>
           <!-- Интелбио -->
-          <svg class="dynamic-svg-intelbio"  viewBox="0 0 196 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="dynamic-svg-intelbio" viewBox="0 0 196 41" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M57.8133 15.2636C57.8133 15.2636 61.5111 16.2556 61.5111 20.0012V30.9865C61.5111 32.186 61.3109 34.1351 61.3109 34.1351H61.3678C61.3678 34.1351 62.3359 32.1566 63.0836 30.9552L70.7567 19.2407H74.4307V39.5763H70.7567V27.8599C70.7567 26.6585 70.9606 24.7094 70.9606 24.7094H70.9074C70.9074 24.7094 69.9576 26.6585 69.2155 27.8599L61.4817 39.5744H57.8077L57.8133 15.2636Z"
               fill="white" />
@@ -89,10 +89,15 @@
           </svg>
 
         </div>
-        <div class="search_block">
+        <!-- <div class="search_block">
           
-          <input type="search" placeholder="Искать сотрудника, документ, прочее">
+          <input type="search">
+        </div> -->
+        <div class="search_block">
+          <input type="search" class="search-input"  placeholder="Искать сотрудника, документ, прочее">
+          <i class="bi bi-search search-icon" style="color: white;"></i>
         </div>
+
         <div class="menu_block">
           <div class="date_time">
             <p class="blue_text">{{ new Date().toLocaleDateString() }}</p>
@@ -106,17 +111,21 @@
           <div class="user_block">
             <button class="hamburger"><i class="bi bi-list"></i></button>
             <div class="user_pic">
-              <img src="./assets/user.png" alt="логотип сотрудника" >
+              <img src="./assets/user.png" alt="логотип сотрудника">
             </div>
           </div>
         </div>
       </div>
-  
+
       <div class="row_3">
         <ul class="tabs_block">
-          <li><button class="tab_button">Главная</button></li>
+          <li>
+            <router-link to="/main" style="outline: none !important; text-decoration: none !important;">
+              <button class="tab_button">Главная</button>
+            </router-link>
+          </li>
           <li><button class="tab_button">Новости</button></li>
-          <li><button class="tab_button">Все сотрудники</button></li>
+          <li><button class="tab_button"><router-link to="/workspace" class="nav-link">Все сотрудники</router-link></button></li>
           <li><button class="tab_button">Служебные заявки</button></li>
           <li><button class="tab_button">Техподдержка</button></li>
         </ul>
