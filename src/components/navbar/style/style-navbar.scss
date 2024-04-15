@@ -48,14 +48,17 @@
     rgba(76, 192, 104, 1) 0%,
     rgba(0, 95, 152, 1) 60%
   );
-  height: 25vh;
+  height: 22vh;
+  //   height: auto;
   padding: 0;
 
   .container_block {
     margin-left: 5vw;
     width: 90vw;
     display: grid;
-    grid-template-rows: 0.5fr 1fr 0.6fr;
+    // padding-top: 1vh;
+    grid-template-rows: 0.5fr 1fr 0.5fr;
+    gap: 1vh;
     height: 100%;
 
     .row_1,
@@ -64,20 +67,114 @@
       margin-left: auto;
     }
 
+    .blue_text {
+      color: #9fd1d4;
+      font-size: 1rem;
+      font-family: "Golos Text", sans-serif;
+    }
     .row_1 {
       display: flex;
       align-items: flex-end;
-
-      .blue_text {
-        color: #9fd1d4;
-        font-size: 1rem;
-        font-family: "Golos Text", sans-serif;
-      }
     }
 
     .row_2 {
-      background: yellow;
+      display: grid;
+      grid-template-columns: 1.4fr 1.8fr .8fr;
+      column-gap: 2vw;
+      align-items: center;
+      width: 100%;
+    
+      /* Стили для блока логотипа */
+      .logo_block {
+        display: flex;
+        align-items: center;
+        gap: 2vw;
+        // background: red;
+    
+        /* Стили для SVG-логотипов */
+        .dynamic-svg-farmtec,
+        .dynamic-svg-intelbio {
+          width: 10vw;
+        }
+    
+        /* Стили для линии-разделителя */
+        .dynamic-svg-line {
+          width: 1%;
+          height: 5vh;
+        }
+      }
+    
+      /* Стили для блока поиска */
+      .search_block {
+        display: flex;
+        align-items: center;
+        // background: blue;
+        /* Стили для ввода поискового запроса */
+        input {
+          width: 100%;
+          border: none;
+          background: rgba(255, 255, 255, 0.2);
+          text-decoration: none;
+          border-radius: 8px;
+          height: 4vh;
+    
+          &:focus {
+            outline: none;
+          }
+        }
+    
+        /* Стили для плейсхолдера в поисковом поле */
+        input[type="search"]::-webkit-input-placeholder {
+          color: #ffffff;
+          padding-left: 4%;
+        }
+      }
+    
+      /* Стили для блока меню */
+      .menu_block {
+        display: flex;
+        justify-content: space-between;
+        // background: sienna;
+        /* Стили для блока с датой и временем */
+        .date_time {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+    
+        /* Стили для блока пользователя */
+        .user_block {
+          display: flex;
+          gap: 1vw;
+          align-items: center;
+    
+          /* Стили для кнопки меню */
+          .hamburger {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            border-radius: 6px;
+            padding: 0 0.4vw;
+            height: 50%;
+            align-items: center;
+    
+            &:hover {
+              cursor: pointer;
+            }
+          }
+    
+          /* Стили для изображения пользователя */
+          .user_pic {
+
+            height: 5vh;
+            width: 5vh;
+            border-radius: 50%;
+          }
+        }
+  
+      }
     }
+    
 
     .row_3 {
       width: 100%;
@@ -113,7 +210,7 @@
         transition: background 0.3s ease-in-out;
 
         &:hover {
-          background: #15748f;
+          background: #177e9b;
         }
       }
       li:nth-child(4) button.tab_button {
