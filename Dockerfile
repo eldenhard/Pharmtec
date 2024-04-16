@@ -15,6 +15,7 @@ RUN npm install --save @fullcalendar/multimonth
 RUN npm install @fullcalendar/core @fullcalendar/resource @fullcalendar/resource-timegrid
 RUN npm install vue-final-modal@3
 RUN npm install vue-tippy@v6
+RUN npm install @vueuse/core@latest
 RUN npm install
 COPY ./ .
 RUN npm run build

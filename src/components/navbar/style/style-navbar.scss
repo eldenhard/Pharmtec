@@ -209,6 +209,7 @@
             height: 5vh;
             width: 5vh;
             border-radius: 50%;
+            cursor: pointer;
           }
         }
       }
@@ -287,17 +288,32 @@
 .active_hamburger {
   background: rgba(255, 255, 255, 0.4) !important;
 }
+.user_menu{
+  background: white;
+  box-shadow: 2px 2px 5px grey;
+  min-height: 25vh;
+  height: auto;
+  min-width: 20vw;
+  position: absolute;
+  z-index: 5;
+  right: 6%;
+  top: 65%;
+  border-radius: 30px;
+  box-sizing: border-box;
+}
 .mini_menu {
   background: white;
   box-shadow: 2px 2px 5px grey;
-  min-height: 50vh;
+  min-height: 52vh;
   height: auto;
-  width: 25vw;
+  min-width: 25vw;
+  max-width:28vw;
   position: absolute;
   z-index: 5;
   right: 8%;
   top: 65%;
   border-radius: 30px;
+  box-sizing: border-box;
   .hot_keys_group {
     margin-top: 6%;
     justify-items: center;
@@ -309,4 +325,56 @@
     align-items: flex-start; /* Изменено на flex-start для выравнивания элементов по верхнему краю */
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+
+.active_block{
+  background: #F9F9F9;
+  // background: grey;
+  margin: 4%;
+  border-radius: 22px;
+  padding: 2%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .f_line{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: baseline;
+    h5{
+      color: #4E4E4E
+    }
+    span{
+      color: #939393
+    }
+  }
+  .description{
+    width: 75%;
+  }
+  .button_border{
+    background: transparent;
+    border: 2px solid #14949C;
+    color: #4E4E4E;
+    margin: 0 auto;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 2% 6%;
+    width: 90%;
+    margin-top: 10%;
+    
+  }
+
+}
+  .exit_btn{
+  display: flex;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin: 2% auto;
+
 }
