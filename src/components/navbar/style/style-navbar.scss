@@ -49,11 +49,11 @@
   background-repeat: no-repeat, no-repeat; /* Запрещаем повторение изображений */
   height: 22vh;
   padding: 0;
-  overflow: hidden;
   
   .container_block {
     margin-left: 5vw;
     display: grid;
+    // width: 50% !important;
     // padding-top: 1vh;
     grid-template-rows: 0.5fr 1fr 0.5fr;
     gap: 1vh;
