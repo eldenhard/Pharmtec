@@ -1,9 +1,10 @@
 <template>
 
   <nav class="navbar">
+    <!-- <img src="./assets/logo_company.png" alt=""> -->
     <div class="container_block">
       <div class="row_1">
-        <p class="blue_text"><i class="bi bi-dot"></i> Корпоративный портал</p>
+        <p class="blue_text"><i class="bi bi-dot" style="color: #9FD1D4 !important;"></i> Корпоративный портал</p>
       </div>
       <div class="row_2">
         <div class="logo_block">

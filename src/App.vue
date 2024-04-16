@@ -31,13 +31,13 @@ export default {
   
   setup() {
     const route = useRoute()
-    const current_user_id_store = useCurrentUserId()
-    onMounted(async() => {
-      if(localStorage.getItem('accessToken')) {
-        await refreshToken()   
-      }
-      current_user_id_store.setCurrentUserId()
-    })
+    // const current_user_id_store = useCurrentUserId()
+    // onMounted(async() => {
+    //   if(localStorage.getItem('accessToken')) {
+    //     await refreshToken()   
+    //   }
+    //   current_user_id_store.setCurrentUserId()
+    // })
 
     return {
       route

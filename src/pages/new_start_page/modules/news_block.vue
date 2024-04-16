@@ -31,7 +31,9 @@
                             </p>
                         </div>
                         <div class="footer_item">
-                            <p>01.01.2022</p>
+                            <p class="green_text">01.01.2022</p>
+                            <like_el />
+                            <link_el />
                         </div>
                     </div>
                     <div class="news_item">
@@ -45,7 +47,9 @@
                             </p>
                         </div>
                         <div class="footer_item">
-                            <p>01.01.2022</p>
+                            <p class="green_text">01.01.2022</p>
+                            <like_el />
+                            <link_el />
                         </div>
                     </div>
                     <div class="news_item">
@@ -54,14 +58,20 @@
                         </div>
                         <div class="description">
                             <p class="description_text">
-                                Поздравляем с Днем рождения! Сегодня день рождения отмечает Анна Петрова,  медицинский представитель г. Волгоград
+                                Поздравляем с Днем рождения! Сегодня день рождения отмечает Анна Петрова,  медицинский
+                                представитель г. Волгоград
                             </p>
                         </div>
                         <div class="footer_item">
-                            <p>01.01.2022</p>
+                            <p class="green_text">01.01.2022</p>
+                            <like_el />
+                            <link_el />
                         </div>
                     </div>
+               
                 </div>
+                <br>
+                <a class="watch_all_news">Смотреть все новости</a>
             </div>
         </div>
     </div>
@@ -69,7 +79,13 @@
 
 
 <script>
+import like_el from '../ui/like_element_ui.vue'
+import link_el from '../ui/link_element_ui.vue'
 export default {
+    components: {
+        like_el,
+        link_el
+    },
     setup() {
 
     },
@@ -78,5 +94,5 @@ export default {
 
 
 <style scoped>
-@import '@/pages/new_start_page/style/style_body_elements.scss'
+@import '@/pages/new_start_page/style/style_body_elements.scss';
 </style>

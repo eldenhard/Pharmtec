@@ -43,18 +43,16 @@
 
 .navbar {
   background: rgb(76, 192, 104);
-  background: linear-gradient(
-    66deg,
-    rgba(76, 192, 104, 1) 0%,
-    rgba(0, 95, 152, 1) 60%
-  );
+  background-image: url(../assets/logo_company.png),
+    linear-gradient(66deg, rgba(76, 192, 104, 1) 0%, rgba(0, 95, 152, 1) 50%);
+  background-position: right center, left top; /* Устанавливаем позиции для каждого изображения */
+  background-repeat: no-repeat, no-repeat; /* Запрещаем повторение изображений */
   height: 22vh;
-  //   height: auto;
   padding: 0;
-
+  overflow: hidden;
+  
   .container_block {
     margin-left: 5vw;
-    width: 90vw;
     display: grid;
     // padding-top: 1vh;
     grid-template-rows: 0.5fr 1fr 0.5fr;
@@ -68,7 +66,7 @@
     }
 
     .blue_text {
-      color: #9fd1d4;
+      color: #9FD1D4;
       font-size: 1rem;
       font-family: "Golos Text", sans-serif;
     }
@@ -133,7 +131,7 @@
         &::-webkit-search-cancel-button {
           -webkit-appearance: none; /* Убираем стандартный стиль кнопки */
           appearance: none;
-          content: '\2716'; /* Используем Unicode символ крестика */
+          content: "\2716"; /* Используем Unicode символ крестика */
           color: red; /* Цвет крестика */
           font-size: 14px; /* Размер крестика */
           line-height: 1; /* Задаем высоту строки */
@@ -141,7 +139,7 @@
           opacity: 0.5; /* Прозрачность по умолчанию */
           transition: opacity 0.3s ease; /* Плавное изменение прозрачности */
         }
-      
+
         &::-webkit-search-cancel-button:hover {
           opacity: 1; /* Увеличиваем прозрачность при наведении */
         }

@@ -15,15 +15,28 @@
   background: #f9f9f9;
   width: 100%;
   border-radius: 40px;
-  min-height: 55vh;
+  min-height: 60vh;
   height: auto;
   margin-top: 4vh;
   display: flex;
-  justify-content: flex-start; /* Выравнивание контента по горизонтали вправо */
-  align-items: flex-start; /* Выравнивание контента по вертикали вниз */
+  flex-direction: column;
+
   overflow: hidden; /* Обрезание контента, выходящего за пределы блока */
   position: relative; /* Позиционирование относительно родительского контейнера */
   padding: 2%;
+}
+.watch_all_news {
+  color: #767676;
+  margin-top: 4%;
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  outline: none;
+  text-decoration: none;
+  transition: color 0.3s ease-in;
+  &:hover {
+    color: #262626;
+  }
 }
 
 .grey_container svg {
@@ -40,26 +53,72 @@
   z-index: 1;
   display: flex;
   justify-content: space-around;
+
   .news_item {
     border-radius: 40px;
     position: relative;
     background: white;
-    width: 30%;
+    width: 28%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Распределение контента по вертикали */
+    height: 45vh; /* Занимает всю доступную высоту */
+ 
     .img_block {
-      width: 100%;
+      width: 85%;
       margin: 0 auto;
-      object-fit: cover;
-      padding: 6%;
-      img {
-        border-radius: 40px;
+      height: 25vh;
+      overflow: hidden; /* Обрезаем лишнее содержимое */
+      margin-top: 4%;
+      background: rgb(207, 170, 170);
+      border-radius: 40px;
+      display: flex; /* Используем flexbox для центрирования изображения */
+      justify-content: center;
+      align-items: center;
+    }
+    .img_block img {
+      max-width: 100%; /* Максимальная ширина изображения 100% от родительского контейнера */
+      height: 100%; /* Максимальная высота изображения 100% от родительского контейнера */
+      object-fit: cover; /* Сохраняем пропорции изображения, вписывая его полностью */
+    }
+
+    .description {
+      width: 85%;
+      margin: 0 auto;
+      .description_text {
+        color: var(--newGreyColor);
       }
+    }
+    .footer_item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start; /* Выравнивание по верхнему краю блока */
+      width: 90%;
+      margin: 0 auto;
+      padding: 12px; /* Добавление отступов */
+    }
+
+    .footer_item p {
+      margin-right: 2vw; /* Отступ между первым и вторым элементом */
+    }
+
+    .footer_item > *:last-child {
+      margin-left: auto; /* Прижатие последнего элемента к правой стороне */
     }
   }
 }
+
 .description {
   width: calc(100% - 12%);
   margin: 0 auto;
-  .description_text{
-    color: var(--newGreyColor)
+  .description_text {
+    color: var(--newGreyColor);
   }
+}
+
+.green_text {
+  color: #14949c;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "Golos Text", sans-serif;
 }
