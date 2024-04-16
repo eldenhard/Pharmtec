@@ -1,46 +1,66 @@
 <template>
-    <div class="container_key">
-      <div class="hot_key">
-        <div class="blue_circle"></div>
-        <div class="ui_el">
-          <slot></slot>
-        </div>
+  <div class="container_key" >
+    <div class="hot_key" :class="[classSize]">
+      <div class="blue_circle"></div>
+      <div class="ui_el">
+        <slot></slot>
       </div>
-      <p>{{ figcaption }}</p>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      figcaption: {
-        type: String,
-      },
+    <p>{{ figcaption }}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    figcaption: {
+      type: String,
     },
-  };
-  </script>
+    classSize: {
+      type: String,
+    }
+  },
+};
+</script>
 
 
 
 <style scoped>
 .container_key {
-  width: 5vw;
-  height: 5vw;
   cursor: pointer;
   position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.l_size {
+  width: 5vw;
+  height: 5vw;
+}
+
+.m_size {
+  width: 4vw;
+  height: 4vw;
+}
+
+.s_size {
+  width: 3vw;
+  height: 3vw;
 }
 
 .hot_key {
   position: relative;
   border-radius: 25%;
-  width: 5vw;
-  height: 5vw;
+
   background: linear-gradient(to bottom, #1baeb7, #015c8e);
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: center;
   overflow: hidden;
-  transition: background-color .3s ease; /* Плавный переход цвета фона */
+  transition: background-color .3s ease;
+  /* Плавный переход цвета фона */
 }
 
 .blue_circle {
@@ -52,19 +72,27 @@
   height: 5vw;
   background-color: #61A60E;
   border-radius: 50%;
-  z-index: 0; /* Круг на заднем плане */
-  transition: background-color .3s ease; /* Плавный переход цвета фона */
+  z-index: 0;
+  /* Круг на заднем плане */
+  transition: background-color .3s ease;
+  /* Плавный переход цвета фона */
 }
 
 .ui_el {
   position: relative;
-  z-index: 1; /* Иконка на переднем плане */
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Центрирование содержимого по горизонтали и вертикали */
 }
 
 .container_key p {
   text-align: center;
   color: #4e4e4e;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  padding-top: 5%;
+
 }
 
 /* Hover эффекты при наведении на .container_key */
@@ -76,4 +104,3 @@
   background: #259D1B;
 }
 </style>
-

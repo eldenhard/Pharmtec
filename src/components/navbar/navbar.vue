@@ -90,15 +90,10 @@
           </svg>
 
         </div>
-        <!-- <div class="search_block">
-          
-          <input type="search">
-        </div> -->
         <div class="search_block">
           <input type="search" class="search-input" placeholder="Искать сотрудника, документ, прочее">
           <i class="bi bi-search search-icon" style="color: white; "></i>
         </div>
-
         <div class="menu_block">
           <div class="date_time">
             <p class="blue_text">{{ new Date().toLocaleDateString() }}</p>
@@ -110,10 +105,50 @@
             <p class="blue_text">{{ currentTime }}</p>
           </div>
           <div class="user_block">
-            <button class="hamburger"><i class="bi bi-list" style="color: white !important"></i></button>
+            <button class="hamburger" :class="{ active_hamburger: isVisibleMiniMenu }"
+              @click="isVisibleMiniMenu = !isVisibleMiniMenu">
+
+              <img src="./assets/hamburger.png" style="width: 65%;">
+            </button>
             <div class="user_pic">
               <img src="./assets/user.png" alt="логотип сотрудника">
             </div>
+          </div>
+        </div>
+        <div class="mini_menu" v-show="isVisibleMiniMenu">
+          <div class="hot_keys_group">
+            <hot_key_blue :figcaption="'Все сотрудники'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/circle.png" style="width: 70%; margin: 0 auto;" /></hot_key_blue>
+            <hot_key_green :figcaption="'Служебные заявки'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/check2.png" style="width: 70%; margin: 0 auto;" alt="">
+            </hot_key_green>
+            <hot_key_blue :figcaption="'Финансовый отчет'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/rub3.png" style="width: 70%; margin: 0 auto;" alt=""></hot_key_blue>
+            <hot_key_green :figcaption="'Служебные автомобили'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/wheel.png" style="width: 70%; margin: 0 auto;" alt="автомобили">
+            </hot_key_green>
+            <hot_key_blue :figcaption="'Обучение'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/graduation.png" style="width: 70%; margin: 0 auto;" alt="обучение">
+            </hot_key_blue>
+            <hot_key_green :figcaption="'Календарь мероприятий'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/calendar.png" style="width: 70%; margin: 0 auto;" alt="календарь">
+            </hot_key_green>
+
+
+            <hot_key_green :figcaption="'Электронный каталог'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/folder.png" style="width: 70%; margin: 0 auto;" alt="каталог">
+            </hot_key_green>
+            <hot_key_blue :figcaption="'Структура компании'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/structura.png" style="width: 70%; margin: 0 auto;"></hot_key_blue>
+            <hot_key_green :figcaption="'Банк файлов'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/cloudy.png" style="width: 70%; margin: 0 auto;"> </hot_key_green>
+            <hot_key_blue :figcaption="'Документы охрана труда'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/warning.png" style="width: 70%; margin: 0 auto;"></hot_key_blue>
+            <hot_key_green :figcaption="'Приказы инструкции'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/mark.png" style="width: 70%; margin: 0 auto;"></hot_key_green>
+            <hot_key_blue :figcaption="'График отпусков'" :classSize="'s_size'"><img
+                src="@/pages/new_start_page/assets/graphik.png" style="width: 70%; margin: 0 auto;"></hot_key_blue>
+
           </div>
         </div>
       </div>
@@ -196,13 +231,18 @@
 
 
 <script>
-import { ref, onMounted, onUnmounted } from 'vue';
-
+import { ref, onMounted, onUnmounted, watchEffect } from 'vue';
+import hot_key_blue from '@/pages/new_start_page/ui/hot_key_blue_ui.vue';
+import hot_key_green from '@/pages/new_start_page/ui/hot_key_green_ui.vue';
 export default {
+  components: {
+    hot_key_blue,
+    hot_key_green
+  },
   setup() {
     // Создаем реактивную переменную для хранения текущего времени
     const currentTime = ref(getCurrentTime());
-
+    const isVisibleMiniMenu = ref(false);
     // Функция для получения текущего времени в формате 'чч:мм:сс'
     function getCurrentTime() {
       const now = new Date();
@@ -216,26 +256,22 @@ export default {
       return number < 10 ? '0' + number : number;
     }
 
-    // Функция для обновления текущего времени
-    function updateTime() {
-      currentTime.value = getCurrentTime();
-    }
+    // Обновляем текущее время каждую секунду
+    watchEffect((onInvalidate) => {
+      const intervalId = setInterval(() => {
+        currentTime.value = getCurrentTime();
+      }, 1000);
 
-    // Запускаем таймер при монтировании компонента
-    onMounted(() => {
-      // Обновляем время сразу при загрузке компонента
-      updateTime();
-      // Запускаем таймер с интервалом в 1 секунду для обновления времени
-      intervalId = setInterval(updateTime, 1000);
+      // Отменяем таймер при размонтировании компонента
+      onInvalidate(() => {
+        clearInterval(intervalId);
+      });
     });
 
-    // Останавливаем таймер при размонтировании компонента
-    onUnmounted(() => {
-      clearInterval(intervalId);
-    });
-
+    // Возвращаем текущее время для отображения в шаблоне
     return {
-      currentTime
+      currentTime,
+      isVisibleMiniMenu
     };
   }
 };
