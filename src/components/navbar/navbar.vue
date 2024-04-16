@@ -95,8 +95,8 @@
           <input type="search">
         </div> -->
         <div class="search_block">
-          <input type="search" class="search-input"  placeholder="Искать сотрудника, документ, прочее">
-          <i class="bi bi-search search-icon" style="color: white;"></i>
+          <input type="search" class="search-input" placeholder="Искать сотрудника, документ, прочее">
+          <i class="bi bi-search search-icon" style="color: white; "></i>
         </div>
 
         <div class="menu_block">
@@ -107,10 +107,10 @@
                 <path d="M1 0V65" stroke="white" />
               </svg>
             </p>
-            <p class="blue_text">13:45</p>
+            <p class="blue_text">{{ currentTime }}</p>
           </div>
           <div class="user_block">
-            <button class="hamburger"><i class="bi bi-list"></i></button>
+            <button class="hamburger"><i class="bi bi-list" style="color: white !important"></i></button>
             <div class="user_pic">
               <img src="./assets/user.png" alt="логотип сотрудника">
             </div>
@@ -126,7 +126,8 @@
             </router-link>
           </li>
           <li><button class="tab_button">Новости</button></li>
-          <li><button class="tab_button"><router-link to="/workspace" class="nav-link">Все сотрудники</router-link></button></li>
+          <li><button class="tab_button"><router-link to="/workspace" class="nav-link">Все
+                сотрудники</router-link></button></li>
           <li><button class="tab_button">Служебные заявки</button></li>
           <li><button class="tab_button">Техподдержка</button></li>
         </ul>
@@ -195,15 +196,47 @@
 
 
 <script>
+import { ref, onMounted, onUnmounted } from 'vue';
+
 export default {
   setup() {
-    const deleteTokenUser = () => {
-      localStorage.removeItem('accessToken')
-      localStorage.removeItem('refreshToken')
+    // Создаем реактивную переменную для хранения текущего времени
+    const currentTime = ref(getCurrentTime());
+
+    // Функция для получения текущего времени в формате 'чч:мм:сс'
+    function getCurrentTime() {
+      const now = new Date();
+      const hours = addLeadingZero(now.getHours());
+      const minutes = addLeadingZero(now.getMinutes());
+      return `${hours}:${minutes}`;
     }
+
+    // Функция для добавления нуля перед числом, если оно однозначное (например, 1 -> '01')
+    function addLeadingZero(number) {
+      return number < 10 ? '0' + number : number;
+    }
+
+    // Функция для обновления текущего времени
+    function updateTime() {
+      currentTime.value = getCurrentTime();
+    }
+
+    // Запускаем таймер при монтировании компонента
+    onMounted(() => {
+      // Обновляем время сразу при загрузке компонента
+      updateTime();
+      // Запускаем таймер с интервалом в 1 секунду для обновления времени
+      intervalId = setInterval(updateTime, 1000);
+    });
+
+    // Останавливаем таймер при размонтировании компонента
+    onUnmounted(() => {
+      clearInterval(intervalId);
+    });
+
     return {
-      deleteTokenUser
-    }
+      currentTime
+    };
   }
-}
+};
 </script>

@@ -31,7 +31,7 @@
                             </p>
                         </div>
                         <div class="footer_item">
-                            <p class="green_text">01.01.2022</p>
+                            <p class="green_text">23.03.2024</p>
                             <like_el />
                             <link_el />
                         </div>
@@ -47,7 +47,7 @@
                             </p>
                         </div>
                         <div class="footer_item">
-                            <p class="green_text">01.01.2022</p>
+                             <p class="green_text">23.03.2024</p>
                             <like_el />
                             <link_el />
                         </div>
@@ -63,7 +63,7 @@
                             </p>
                         </div>
                         <div class="footer_item">
-                            <p class="green_text">01.01.2022</p>
+                             <p class="green_text">23.03.2024</p>
                             <like_el />
                             <link_el />
                         </div>
