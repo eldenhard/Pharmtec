@@ -122,7 +122,7 @@ export default {
                 localStorage.setItem('accessToken', JSON.stringify(response.data.access));
                 localStorage.setItem('refreshToken', JSON.stringify(response.data.refresh));
                 current_user_id_store.setCurrentUserId()
-                router.push({ path: 'about-company' });
+                router.push({ path: 'main' });
             } catch (err) {
                 toast.error(`Не найдено активной учетной записи с указанными данными`, {
                     timeout: 3000
