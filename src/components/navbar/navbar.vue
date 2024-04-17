@@ -105,7 +105,7 @@
             <p class="blue_text">{{ currentTime }}</p>
           </div>
           <div class="user_block">
-            <button class="hamburger" :class="{ active_hamburger: isVisibleMiniMenu }" 
+            <button class="hamburger" :class="{ active_hamburger: isVisibleMiniMenu }"
               @click="isVisibleMiniMenu = !isVisibleMiniMenu">
               <img src="./assets/hamburger.png" style="width: 65%;">
             </button>
@@ -182,8 +182,11 @@
             </router-link>
           </li>
           <li><button class="tab_button">Новости</button></li>
-          <li><button class="tab_button"><router-link to="/workspace" class="nav-link">Все
-                сотрудники</router-link></button></li>
+          <li>
+            <router-link to="/workspace" style="outline: none !important; text-decoration: none !important;">
+              <button class="tab_button">Все сотрудники</button>
+            </router-link>
+          </li>
           <li><button class="tab_button">Служебные заявки</button></li>
           <li><button class="tab_button">Техподдержка</button></li>
         </ul>
@@ -218,7 +221,7 @@ export default {
 
 
 
-    
+
 
     // onClickOutside(miniMenuRef, event => isVisibleMiniMenu.value = false)
     // onClickOutside(userMenuRef, event => isVisibleUserMenu.value = false)
