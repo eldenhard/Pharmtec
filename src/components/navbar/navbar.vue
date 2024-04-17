@@ -105,16 +105,17 @@
             <p class="blue_text">{{ currentTime }}</p>
           </div>
           <div class="user_block">
-            <button class="hamburger" :class="{ active_hamburger: isVisibleMiniMenu }"
+            <button class="hamburger" :class="{ active_hamburger: isVisibleMiniMenu }" 
               @click="isVisibleMiniMenu = !isVisibleMiniMenu">
-
               <img src="./assets/hamburger.png" style="width: 65%;">
             </button>
+
             <div class="user_pic" @click="isVisibleUserMenu = !isVisibleUserMenu">
               <img src="./assets/user.png" alt="логотип сотрудника">
             </div>
           </div>
         </div>
+
         <div class="mini_menu" ref="miniMenuRef" v-show="isVisibleMiniMenu">
           <div class="hot_keys_group">
             <hot_key_blue :figcaption="'Все\nсотрудники'" :classSize="'s_size'"><img
@@ -151,6 +152,7 @@
 
           </div>
         </div>
+
         <div class="user_menu" ref="userMenuRef" v-show="isVisibleUserMenu">
           <div class="active_block">
             <div class="f_line">
@@ -211,12 +213,17 @@ export default {
     const currentTime = ref(getCurrentTime());
     const isVisibleMiniMenu = ref(false);
     const isVisibleUserMenu = ref(false)
-
     const miniMenuRef = ref(null);
     const userMenuRef = ref(null);
 
-    onClickOutside(miniMenuRef, event => isVisibleMiniMenu.value = false)
-    onClickOutside(userMenuRef, event => isVisibleUserMenu.value = false)
+
+
+    
+
+    // onClickOutside(miniMenuRef, event => isVisibleMiniMenu.value = false)
+    // onClickOutside(userMenuRef, event => isVisibleUserMenu.value = false)
+
+
     // Функция для получения текущего времени в формате 'чч:мм:сс'
     function getCurrentTime() {
       const now = new Date();
