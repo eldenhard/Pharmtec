@@ -22,7 +22,8 @@
               <order :type="'Увольнение'" :idItem="'flush-collapseSix'" :list_category="['Увольнение']" />
             </div>
           </Transition>
-          <div v-if="receivedData == 'forManagment'">
+          <component :is="currentTabComponent" />
+          <!-- <div v-if="receivedData == 'forManagment'">
             <for_manager />
           </div>
           <div v-if="receivedData == 'staff'">
@@ -47,6 +48,9 @@
           <div v-if="receivedData == 'News'">
             <news />
           </div>
+          <div v-if="receivedData == 'informationAboutProducts'">
+            <products_company />
+          </div> -->
         </workspace>
       </Transition>
     </div>
@@ -56,7 +60,7 @@
 
 
 <script>
-import { ref, onMounted, Transition } from 'vue';
+import { ref, onMounted, Transition, computed } from 'vue';
 import navbar from '../../components/navbar/navbar.vue';
 import sidebar from '../../components/sidebar/sidebar.vue';
 import workspace from '../../components/workspace/workspace.vue';
@@ -70,8 +74,10 @@ import check_application from '../../modules/check_application/check_application
 import company_structure from '../../modules/company_structure/company_structure.vue'
 import staff_element from '../../modules/staff_module/staff_element.vue';
 import { useActiveTabStore } from '../../store/ActiveTabStore'
+import products_company from '../../modules/products_company/products_company.vue';
 export default {
-  components: { navbar, sidebar, workspace, Transition, order, for_manager, for_admin, news, sheduleElement, fin_report, check_application, company_structure, staff_element },
+  components: { navbar, sidebar, workspace, Transition, order, for_manager, for_admin, news, sheduleElement, fin_report, check_application, company_structure, 
+    products_company, staff_element },
   setup() {
     onMounted(() => {
 
@@ -80,7 +86,28 @@ export default {
       // }
     })
     const receivedData = ref('');
-
+    const currentTabComponent = computed(() => {
+      switch(receivedData.value) {
+        case 'companyStructure':
+          return company_structure
+        case 'staff':
+          return staff_element
+        case 'FinReport':
+          return fin_report
+        case 'booking':
+          return sheduleElement
+        case 'forManagment':
+          return for_manager
+        case 'ApproveApplication':
+          return check_application
+        case 'ForAdmin':
+          return for_admin
+        case 'informationAboutProducts':
+          return products_company
+        default:
+          return order
+      }
+    })
     const handleSomeEvent = (data) => {
       console.log(data)
       receivedData.value = data;
@@ -88,6 +115,7 @@ export default {
 
     return {
       receivedData,
+      currentTabComponent,
       handleSomeEvent
     };
   }

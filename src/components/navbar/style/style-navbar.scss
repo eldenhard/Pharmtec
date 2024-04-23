@@ -318,12 +318,13 @@
     margin-top: 6%;
     justify-items: center;
     display: grid;
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+
     row-gap: 3vh;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start; /* Изменено на flex-start для выравнивания элементов по верхнему краю */
-    grid-template-columns: repeat(4, 1fr);
   }
 }
 

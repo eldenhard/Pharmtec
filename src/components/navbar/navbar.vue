@@ -163,7 +163,9 @@
               </div>
             </div>
 
-            <button class="button_border">Перейти в личный кабинет</button>
+            <router-link to="/lk" @click="closeElement" style="width: 100%;">
+              <button class="button_border">Перейти в личный кабинет</button>
+            </router-link>
 
           </div>
           <router-link to="/login" class="nav-link" @click="deleteTokenUser">
@@ -220,7 +222,9 @@ export default {
     const userMenuRef = ref(null);
 
 
-
+    const closeElement = () => {
+        isVisibleUserMenu.value = false
+    }
 
 
     // onClickOutside(miniMenuRef, event => isVisibleMiniMenu.value = false)
@@ -271,7 +275,7 @@ export default {
       isVisibleMiniMenu,
       isVisibleUserMenu,
       deleteTokenUser,
-
+      closeElement,
       miniMenuRef,
       userMenuRef,
 
