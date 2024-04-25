@@ -18,7 +18,7 @@
 <script>
 import MainPage from './pages/mainpage/MainPage.vue';
 import AutorizationPage from './pages/autorization/autorizationPage.vue';
-import { onMounted } from 'vue'
+import { onMounted, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router';
 import api from './api/user'
 import loaderComponent from './ui/loader/loaderComponent.vue';
@@ -32,6 +32,8 @@ export default {
   setup() {
     const route = useRoute()
     const current_user_id_store = useCurrentUserId()
+
+    
     onMounted(async() => {
       if(localStorage.getItem('accessToken')) {
         await refreshToken()   

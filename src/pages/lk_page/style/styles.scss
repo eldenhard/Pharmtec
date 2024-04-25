@@ -1,0 +1,112 @@
+.lkpage_wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: max(250px, 18%) 1fr;
+  min-height: 40vh;
+  display: flex;
+  justify-content: center;
+}
+.circle{
+    background: red;
+    height: 1vh;
+    width: 1vw;
+}
+.grey_container {
+  background: #f9f9f9;
+  width: 80%;
+  border-radius: 40px;
+  min-height: 50vh;
+  height: auto;
+  display: flex;
+  margin-top: 8vh;
+  flex-direction: column;
+  overflow: hidden; /* Обрезание контента, выходящего за пределы блока */
+  position: relative; /* Позиционирование относительно родительского контейнера */
+  padding: 2%;
+  svg {
+    position: absolute; /* Позиционирование абсолютно внутри блока */
+    bottom: 0; /* Выравнивание к нижней границе блока */
+    left: 10%; /* Выравнивание к левой границе блока */
+    height: 100%; /* Заполнение высоты блока */
+    width: auto; /* Автоматическое определение ширины */
+    pointer-events: none; /* Исключение svg из событий мыши */
+  }
+}
+
+.grid_lk {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 2vw;
+  z-index: 1;
+}
+.grid_lk {
+  display: grid;
+  grid-template-rows: 0.08fr 1fr;
+  padding: 2%;
+}
+.f_line {
+  display: flex;
+  gap: 8%;
+  h4 {
+    font-weight: 600;
+  }
+  p {
+    flex-grow: 1;
+  }
+}
+.s_line {
+  display: flex;
+  gap: 2%;
+  .img_block {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    .img_block_img{
+        border-radius: 20px;
+        img{
+            object-fit: fill;
+            border-radius: 20px;
+        }
+    }
+    .img_block_description{ 
+        height: 100%;  
+        padding-top: 10%;
+
+    }
+  }
+  .information_block {
+    width: 80%;
+    background: white;
+    border-radius: 40px;
+    padding: 6%;
+    .information_block_top_block,
+    .information_block_top_block_bottom_block{
+        display: flex;
+        justify-content: space-between;
+    }
+    .information_block_top_block div:last-child,
+    .information_block_top_block_bottom_block div:last-child{
+        width: 25%;
+  }
+  }
+}
+
+hr{
+   color: #c5c5c5;
+}
+
+.red{
+  color: #E70000;
+}
+.blue{
+  color: #0069A7;
+}
+.green{
+  color: #61A60E;
+}
+.turquoise{
+  color: #14949C;
+}
+span{color: #000000}
+p{color: #7F7F7F}

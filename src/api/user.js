@@ -26,6 +26,9 @@ const getDepartments = () => {
 const getAllUsers = () => {
     return api.get(`${users}/`)
 }
+const getFullDataUserById = (id) => {
+    return api.get(`${users}/${id}`)
+}
 const getUserById = (id) => {
     return api.get(`${users}/${id}/`)
 }
@@ -48,4 +51,5 @@ export default{
     putUserById,
     changePassword,
     sendEmailForGetNewPassword,
+    getFullDataUserById,
 }

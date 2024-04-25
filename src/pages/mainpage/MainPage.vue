@@ -73,6 +73,7 @@ import fin_report from '../../modules/fin_report/fin_report.vue'
 import check_application from '../../modules/check_application/check_application.vue';
 import company_structure from '../../modules/company_structure/company_structure.vue'
 import staff_element from '../../modules/staff_module/staff_element.vue';
+import user_status from '@/pages/lk_page/modules/UserStatus.vue'
 import { useActiveTabStore } from '../../store/ActiveTabStore'
 import products_company from '../../modules/products_company/products_company.vue';
 export default {
@@ -104,6 +105,8 @@ export default {
           return for_admin
         case 'informationAboutProducts':
           return products_company
+        case 'UserStatus':
+          return user_status
         default:
           return order
       }

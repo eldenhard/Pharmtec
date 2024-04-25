@@ -9,7 +9,8 @@
                 <span class="timer">{{ enter_password ? '' : `Осталось времени: ${formattedTime}` }}</span>
             </div>
             <div class="block_info" v-if="enter_password">
-                <InputComponent v-model="emailForPassword" :labelValue="'Адрес электронной почты'" :typeInput="'email'" />
+                <InputComponent v-model="emailForPassword" :labelValue="'Адрес электронной почты'"
+                    :typeInput="'email'" />
                 <buttonComponent @click.prevent="sendEmailForGetNewPassword()">Получить пароль</buttonComponent>
             </div>
             <div class="block_info" v-else>
@@ -41,7 +42,7 @@
         </div>
     </div>
 </template>
-  
+
 <script>
 import buttonComponent from '../../ui/button/buttonComponent.vue';
 import InputComponent from '../../ui/inputComponent/InputComponent.vue';
@@ -122,6 +123,7 @@ export default {
                 localStorage.setItem('accessToken', JSON.stringify(response.data.access));
                 localStorage.setItem('refreshToken', JSON.stringify(response.data.refresh));
                 current_user_id_store.setCurrentUserId()
+                localStorage.setItem('id', JSON.stringify(current_user_id_store.current_user_id))
                 router.push({ path: 'main' });
             } catch (err) {
                 toast.error(`Не найдено активной учетной записи с указанными данными`, {
@@ -161,7 +163,7 @@ export default {
                     timeout: 3000
                 })
                 isModal.value = false
-            } finally{
+            } finally {
                 useLoaderStore().setLoader(false)
             }
 
@@ -177,8 +179,8 @@ export default {
                 };
                 let response = await api.changePassword(objChangePassword);
                 toast.success('Пароль успешно изменен', {
-                            timeout: 3000
-                        });
+                    timeout: 3000
+                });
             } catch (err) {
                 if (err.response) {
                     // Если есть ответ с сервера, то получаем текст ошибки из ответа
@@ -226,4 +228,3 @@ export default {
 <style scoped>
 @import './style/form_autorization_style.scss';
 </style>
-
