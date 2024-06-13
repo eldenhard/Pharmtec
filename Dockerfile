@@ -16,6 +16,7 @@ RUN npm install @fullcalendar/core @fullcalendar/resource @fullcalendar/resource
 RUN npm install vue-final-modal@3
 RUN npm install vue-tippy@v6
 RUN npm install @vueuse/core
+RUN npm install vee-validate yup
 RUN npm install
 COPY ./ .
 RUN npm run build

@@ -27,7 +27,11 @@
     --newGreyColor: #4E4E4E;
 }
 
-
+.error_message{
+    color: red;
+    font-weight: 100;
+    font-size: 12px;
+}
 a, li, button{
     cursor: pointer;
 }

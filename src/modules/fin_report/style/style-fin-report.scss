@@ -8,11 +8,11 @@
     background: #fff;
     padding: 2% 4%;
     /* закруглим края у поля ввода */
-    border-radius: 6px;
+    border-radius: 4px;
     border: 1.2px solid var(--ColorDisabled);
     width: 100%;
     min-width: 3vw;
-    min-height: 4vh;
+    min-height: 3.2vh;
     transition: border .2s ease;
     outline: none;
     text-decoration: none;
@@ -24,11 +24,13 @@
     
     }
   }
+
 .enterdata {
     display: flex;
     justify-content: space-between;
     align-items: center;
     white-space: wrap;
+    gap: 2%;
 }
 
 .air_block_body{

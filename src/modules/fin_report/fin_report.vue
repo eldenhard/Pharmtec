@@ -3,48 +3,45 @@
         <!-- <h5><b> -->
 
 
-                <!-- Финансовый отчет за период 01{{ new Date().toLocaleDateString().slice(2) }} - 29.02.{{ new
+        <!-- Финансовый отчет за период 01{{ new Date().toLocaleDateString().slice(2) }} - 29.02.{{ new
                     Date().getFullYear() }} -->
-            <!-- </b></h5> -->
+        <!-- </b></h5> -->
 
-            <label for="">Выберите месяц и год отчета
-                <input type="month" v-model="_date_fin_report">
-            </label>
+        <label for="">Выберите месяц и год отчета
+            <input type="month" v-model="_date_fin_report">
+        </label>
         <div class="air_block_body" v-show="Number(_date_fin_report.split('-')[1]) == new Date().getMonth() + 1">
 
 
             <section class="enterdata">
                 <div class="input-box">
                     <label style="font-size: 13px;">Дата</label>
-                    <input type="date" name="" id="">
-                </div>
-                <div class="input-box">
-                    <label style="font-size: 13px;">Тип</label>
-                    <select v-model="typeFinReport">
-                        <option value="false">-</option>
-                        <option value="true">+</option>
-                    </select>
+                    <input type="date" v-model="_date_transaction">
                 </div>
                 <div class="input-box">
                     <label style="font-size: 13px;">Сумма, ₽</label>
-                    <input type="value" v-model="formattedInput" @input="formatInput">
+                    <input type="value" v-model="inputValue" >
                 </div>
                 <div class="input-box">
                     <label style="font-size: 13px;">Статья прихода / расхода</label>
-                    <v-select :options="typeValExpesesOrIncome" label="name" style="min-width: 20vw; width: auto;" />
-
+                    <v-select v-model="_type_report" :options="expensesLabel" label="name"
+                        style="min-width: 20vw; width: auto;" />
                 </div>
                 <div class="input-box">
-                    <br>
-                    <button type="button" class="btn btn-success" @click="countNewRowFin()"><i
-                            class="bi bi-plus-lg"></i></button>
-
+                    <label style="font-size: 13px;">Остаток по статье, ₽</label>
+                    <input disabled :value="_type_report.amount">
                 </div>
             </section>
-            <textarea rows="2" class="textarea" placeholder="Комментарий"></textarea>
+
+            <Form @submit="saveFinReport">
+                <Field name="_comment_transaction" v-slot="{ comment, errors }" :rules="validateComment">
+                    <textarea rows="2" class="textarea" placeholder="Комментарий" v-model="_comment_transaction" v-bind="comment"></textarea>
+                    <span class="error_message">{{ errors[0] }}</span>
+                </Field>
+                <buttonComponent type="submit" v-show="Number(_date_fin_report.split('-')[1]) == new Date().getMonth() + 1"> Сохранить</buttonComponent>
+            </Form>
         </div>
-        <!-- <new_mini_fin_report :amountNewRowFin="amountRowFin" /> -->
-        <!-- <buttonComponent @click="saveFinReport()">Сохранить</buttonComponent> -->
+
     </div>
 </template>
 
@@ -56,100 +53,79 @@
 
 <script>
 import buttonComponent from '../../ui/button/buttonComponent.vue';
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import vSelect from "vue-select";
 import { useToast } from "vue-toastification";
 import new_mini_fin_report from './modules/new_mini_fin_report.vue'
 import api from '@/api/fin_report.js'
 import { useLoaderStore } from '@/store/LoaderStore'
+import { refreshToken } from '@/mixins/refreshToken'
+
+import { Form, Field } from 'vee-validate'
+
 export default {
     components: {
         buttonComponent,
         vSelect,
-        new_mini_fin_report
+        new_mini_fin_report,
+        Form,
+        Field
     },
     setup() {
         const _date_fin_report = ref("")
+        const _date_transaction = ref("new Date()")
+        const _comment_transaction = ref("")
         const inputValue = ref('');
         const incomeLabel = []
         const $loader = useLoaderStore()
-        const expensesLabel = [{ name: "Авиабилеты, купленные в офисе", },
-        { name: "Акция Любримакс Ретро", },
-        { name: "Акция на закупку", },
-        { name: "Акция на продажу из аптек", },
-        { name: "Акция на продажу тестовых продуктов из аптек", },
-        { name: "Акция стикеры", },
-        { name: "Банкеты / конференции / доклады(лекции) / исследования", },
-        { name: "Бензин за наличный расчет", },
-        { name: "Визитки", },
-        { name: "Возмещение за закуп новинок или ввод новинок", },
-        { name: "Встречи с клиентами", },
-        { name: "Выкуп продукции(кроме тестовых аптек)", },
-        { name: "Выкуп продукции из тестовых аптек", },
-        { name: "Гостиница, оплаченная в офисе", },
-        { name: "Доставка рассылки(Деловые линии)", },
-        { name: "Ж / д билеты, купленные в офисе", },
-        { name: "Канцелярские товары / Хозяйственные товары", },
-        { name: "Клуб специалистов ФАРМТЕК", },
-        { name: "Командировки / служебные поездки(билеты на самолет / поезд / автобус)", },
-        { name: "Командировки / служебные поездки(проживание)", },
-        { name: "Командировки / служебные поездки(суточные)", },
-        { name: "Командировки / служебные поездки(такси)", },
-        { name: "Компенсация за использование личного автомобиля", },
-        { name: "Лидеры мнения", },
-        { name: "НЕ использовать.Акция(прочие)", },
-        { name: "Обеды", },
-        { name: "Оплата отчетов по продажам", },
-        { name: "Отчеты по продажам", },
-        { name: "Перевод денежных средств сотруднику", },
-        { name: "Подарки для врачей, провизоров, бизнес - партнеров", },
-        { name: "Почтовые расходы", },
-        { name: "Разовые выплаты", },
-        { name: "Распечатка и ксерокопирование", },
-        { name: "Расходы на лектора", },
-        { name: "Расходы на медицинские осмотры", },
-        { name: "Расходы на  неаптечную  розницу", },
-        { name: "Расходы на общественный транспорт", },
-        { name: "Расходы на оформление визы", },
-        { name: "Расходы на содержание автомобиля(автомойка)", },
-        { name: "Расходы на содержание автомобиля(расходные материалы и  запчасти)", },
-        { name: "Расходы на содержание автомобиля(стоянка / парковка / платная дорога)", },
-        { name: "Расходы на содержание автомобиля(шины / шиномонтаж)", },
-        { name: "Расходы, связанные с планшетами", },
-        { name: "Сотовая связь, интернет", },
-        { name: "Услуги сторонних организаций", },
-        { name: "Фармкружок / Круглый стол", },
+        const _type_report = ref("")
+        const expensesLabel = [{ id: 1, name: "Авиабилеты, купленные в офисе", amount: 1000 },
+        { id: 2, name: "Акция Любримакс Ретро", amount: 10500 },
+        { id: 3, name: "Акция на закупку", amount: 114000 },
+        { id: 4, name: "Акция на продажу из аптек", amount: 1000 },
+        { id: 5, name: "Акция на продажу тестовых продуктов из аптек", amount: 10200 },
+        { id: 6, name: "Акция стикеры", amount: 6000 },
+        { id: 7, name: "Банкеты / конференции / доклады(лекции) / исследования", amount: 1000 },
+        { id: 8, name: "Бензин за наличный расчет", amount: 1000 },
+        { id: 9, name: "Визитки", amount: 1000 },
+        { id: 10, name: "Возмещение за закуп новинок или ввод новинок", amount: 1000 },
+        { id: 11, name: "Встречи с клиентами", amount: 1000 },
+        { id: 12, name: "Выкуп продукции(кроме тестовых аптек)", amount: 1000 },
+        { id: 13, name: "Выкуп продукции из тестовых аптек", amount: 1000 },
+        { id: 14, name: "Гостиница, оплаченная в офисе", amount: 1000 },
+        { id: 15, name: "Доставка рассылки(Деловые линии)", amount: 1000 },
+        { id: 16, name: "Ж / д билеты, купленные в офисе", amount: 1000 },
+
         ]
         const amountRowFin = ref(0)
-        const typeFinReport = ref(Boolean)
         const $toast = useToast();
 
         const user_id = localStorage.getItem('id')
-        const typeValExpesesOrIncome = computed(() => {
-            return typeFinReport.value == 'false' ? expensesLabel : incomeLabel
+        onMounted(() => {
+            _date_transaction.value = new Date().toISOString().slice(0, 10)
         })
-        const formatInput = (event) => {
-            // Удаление всех пробелов из введенного значения
-            let value = event.target.value.replace(/\s/g, '');
-            // Форматирование числа с разделением на тысячи пробелами
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-            // Обновление значения в компоненте
-            inputValue.value = value;
+
+
+        const validateComment = (value) => {
+            const formattedValue = parseFloat(inputValue.value.replace(/\s/g, ''));
+            if (formattedValue > _type_report.value.amount) {
+                return value ? true : 'Комментарий обязателен при превышении суммы остатка';
+            }
+            return true;
         };
 
-        // Привязка отформатированного значения к переменной formattedInput
-        const formattedInput = computed(() => inputValue.value);
+
         const countNewRowFin = () => {
             return amountRowFin.value++
         }
         watch(_date_fin_report, async () => {
-            console.log(Number(_date_fin_report.value.split('-')[1]), new Date().getMonth() + 1)
+            await refreshToken()
             let queryParametrs = {
                 author: user_id,
                 month: _date_fin_report.value.slice(-2),
                 year: _date_fin_report.value.slice(0, 4)
             }
-            try{
+            try {
                 $loader.setLoader(true)
                 let response = await api.getFinanialReports(queryParametrs)
 
@@ -159,30 +135,53 @@ export default {
                 })
                 $loader.setLoader(false)
             }
-            catch (err){
+            catch (err) {
+                $loader.setLoader(false)
+                $toast.error(`${err}`, {
+                    timeout: 4000
+                })
+            }
+
+        })
+
+
+
+        const saveFinReport = async () => {
+            $loader.setLoader(true)
+            await refreshToken()
+            let queryParametrs = {
+                on_date: _date_transaction.value,
+                amount: inputValue.value,
+                comment: _comment_transaction.value,
+                // balance_sheet_item: _type_report.value.id
+            }
+            try{
+                let response = await api.createNewTransaction(queryParametrs)
+                console.log(response)
+                $loader.setLoader(true)
+            } catch(err){
                 $loader.setLoader(false)
                 $toast.error(`${err}`, {
                     timeout: 4000
                 })
             }
            
-        })
-        const saveFinReport = () => {
-            $toast.info('Раздел в разработке. Сохранение невозможно', {
-                timeout: 3000
-            })
+            // $toast.info('Раздел в разработке. Сохранение невозможно', {
+            //     timeout: 3000
+            // })
         }
         return {
             _date_fin_report,
             amountRowFin,
             countNewRowFin,
-            formattedInput,
-            formatInput,
-            typeValExpesesOrIncome,
-            typeFinReport,
+            _type_report,
             incomeLabel,
             expensesLabel,
             saveFinReport,
+            _date_transaction,
+            _comment_transaction,
+           
+            validateComment,
         };
     }
 };
