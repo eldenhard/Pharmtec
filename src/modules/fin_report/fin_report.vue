@@ -20,7 +20,7 @@
                 </div>
                 <div class="input-box">
                     <label style="font-size: 13px;">Сумма, ₽</label>
-                    <input type="value" v-model="inputValue" >
+                    <input type="number" v-model="_inputValue" >
                 </div>
                 <div class="input-box">
                     <label style="font-size: 13px;">Статья прихода / расхода</label>
@@ -34,8 +34,10 @@
             </section>
 
             <Form @submit="saveFinReport">
-                <Field name="_comment_transaction" v-slot="{ comment, errors }" :rules="validateComment">
-                    <textarea rows="2" class="textarea" placeholder="Комментарий" v-model="_comment_transaction" v-bind="comment"></textarea>
+                <Field name="_comment_transaction" v-slot="{ field, errors }" :rules="validateComment">
+                    <textarea rows="2" class="textarea" placeholder="Комментарий" 
+                    ref="_commentField"
+                    v-model="_comment_transaction" v-bind="field"></textarea>
                     <span class="error_message">{{ errors[0] }}</span>
                 </Field>
                 <buttonComponent type="submit" v-show="Number(_date_fin_report.split('-')[1]) == new Date().getMonth() + 1"> Сохранить</buttonComponent>
@@ -75,10 +77,11 @@ export default {
         const _date_fin_report = ref("")
         const _date_transaction = ref("new Date()")
         const _comment_transaction = ref("")
-        const inputValue = ref('');
+        const _inputValue = ref(0);
         const incomeLabel = []
         const $loader = useLoaderStore()
         const _type_report = ref("")
+        const _commentField = ref(null)
         const expensesLabel = [{ id: 1, name: "Авиабилеты, купленные в офисе", amount: 1000 },
         { id: 2, name: "Акция Любримакс Ретро", amount: 10500 },
         { id: 3, name: "Акция на закупку", amount: 114000 },
@@ -107,8 +110,11 @@ export default {
 
 
         const validateComment = (value) => {
-            const formattedValue = parseFloat(inputValue.value.replace(/\s/g, ''));
+            const formattedValue = _inputValue.value
             if (formattedValue > _type_report.value.amount) {
+                if(!value){
+                  _commentField.value.focus()
+                }
                 return value ? true : 'Комментарий обязателен при превышении суммы остатка';
             }
             return true;
@@ -145,13 +151,13 @@ export default {
         })
 
 
-
-        const saveFinReport = async () => {
+        const saveFinReport = async (values) => {
+           
             $loader.setLoader(true)
             await refreshToken()
             let queryParametrs = {
                 on_date: _date_transaction.value,
-                amount: inputValue.value,
+                amount: _inputValue.value,
                 comment: _comment_transaction.value,
                 // balance_sheet_item: _type_report.value.id
             }
@@ -180,8 +186,9 @@ export default {
             saveFinReport,
             _date_transaction,
             _comment_transaction,
-           
+            _inputValue,
             validateComment,
+            _commentField,
         };
     }
 };
