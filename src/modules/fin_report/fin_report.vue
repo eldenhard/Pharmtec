@@ -1,12 +1,16 @@
 <template>
     <div class="air_block">
-        <h5><b>
+        <!-- <h5><b> -->
 
 
-                Финансовый отчет за период 01{{ new Date().toLocaleDateString().slice(2) }} - 29.02.{{ new
-                    Date().getFullYear() }}
-            </b></h5>
-        <div class="air_block_body">
+                <!-- Финансовый отчет за период 01{{ new Date().toLocaleDateString().slice(2) }} - 29.02.{{ new
+                    Date().getFullYear() }} -->
+            <!-- </b></h5> -->
+
+            <label for="">Выберите месяц и год отчета
+                <input type="month" v-model="_date_fin_report">
+            </label>
+        <div class="air_block_body" v-show="Number(_date_fin_report.split('-')[1]) == new Date().getMonth() + 1">
 
 
             <section class="enterdata">
@@ -39,8 +43,8 @@
             </section>
             <textarea rows="2" class="textarea" placeholder="Комментарий"></textarea>
         </div>
-        <new_mini_fin_report :amountNewRowFin="amountRowFin" />
-        <buttonComponent @click="saveFinReport()">Сохранить</buttonComponent>
+        <!-- <new_mini_fin_report :amountNewRowFin="amountRowFin" /> -->
+        <!-- <buttonComponent @click="saveFinReport()">Сохранить</buttonComponent> -->
     </div>
 </template>
 
@@ -52,10 +56,12 @@
 
 <script>
 import buttonComponent from '../../ui/button/buttonComponent.vue';
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import vSelect from "vue-select";
 import { useToast } from "vue-toastification";
 import new_mini_fin_report from './modules/new_mini_fin_report.vue'
+import api from '@/api/fin_report.js'
+import { useLoaderStore } from '@/store/LoaderStore'
 export default {
     components: {
         buttonComponent,
@@ -63,8 +69,10 @@ export default {
         new_mini_fin_report
     },
     setup() {
+        const _date_fin_report = ref("")
         const inputValue = ref('');
         const incomeLabel = []
+        const $loader = useLoaderStore()
         const expensesLabel = [{ name: "Авиабилеты, купленные в офисе", },
         { name: "Акция Любримакс Ретро", },
         { name: "Акция на закупку", },
@@ -114,7 +122,9 @@ export default {
         ]
         const amountRowFin = ref(0)
         const typeFinReport = ref(Boolean)
-        const toast = useToast();
+        const $toast = useToast();
+
+        const user_id = localStorage.getItem('id')
         const typeValExpesesOrIncome = computed(() => {
             return typeFinReport.value == 'false' ? expensesLabel : incomeLabel
         })
@@ -132,12 +142,38 @@ export default {
         const countNewRowFin = () => {
             return amountRowFin.value++
         }
+        watch(_date_fin_report, async () => {
+            console.log(Number(_date_fin_report.value.split('-')[1]), new Date().getMonth() + 1)
+            let queryParametrs = {
+                author: user_id,
+                month: _date_fin_report.value.slice(-2),
+                year: _date_fin_report.value.slice(0, 4)
+            }
+            try{
+                $loader.setLoader(true)
+                let response = await api.getFinanialReports(queryParametrs)
+
+                console.log(response.data)
+                $toast.success("Отчеты загружены", {
+                    timeout: 3000
+                })
+                $loader.setLoader(false)
+            }
+            catch (err){
+                $loader.setLoader(false)
+                $toast.error(`${err}`, {
+                    timeout: 4000
+                })
+            }
+           
+        })
         const saveFinReport = () => {
-            toast.info('Раздел в разработке. Сохранение невозможно', {
+            $toast.info('Раздел в разработке. Сохранение невозможно', {
                 timeout: 3000
             })
         }
         return {
+            _date_fin_report,
             amountRowFin,
             countNewRowFin,
             formattedInput,
