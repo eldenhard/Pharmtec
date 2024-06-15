@@ -26,19 +26,22 @@ import Navbar from './components/navbar/navbar.vue';
 import { refreshToken } from './mixins/refreshToken';
 
 import { useCurrentUserId } from '@/store/CurrentUserId'
+import { useBalanceItemsStore } from '@/store/BalanceItemsStore'
 export default {
   components: { MainPage, AutorizationPage, loaderComponent, Navbar },
   
   setup() {
     const route = useRoute()
-    const current_user_id_store = useCurrentUserId()
-
+    const $current_user_id_store = useCurrentUserId()
+    const $balanceItemsStore = useBalanceItemsStore()
     
     onMounted(async() => {
       if(localStorage.getItem('accessToken')) {
         await refreshToken()   
       }
-      current_user_id_store.setCurrentUserId()
+    
+      $balanceItemsStore.getAllBalanceItems()
+      $current_user_id_store.setCurrentUserId()
     })
 
     return {

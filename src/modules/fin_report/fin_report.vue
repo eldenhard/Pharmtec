@@ -29,7 +29,7 @@
                 </div>
                 <div class="input-box">
                     <label style="font-size: 13px;">Остаток по статье, ₽</label>
-                    <input disabled :value="_type_report.amount">
+                    <!-- <input disabled :value="_type_report.amount"> -->
                 </div>
             </section>
 
@@ -62,7 +62,7 @@ import new_mini_fin_report from './modules/new_mini_fin_report.vue'
 import api from '@/api/fin_report.js'
 import { useLoaderStore } from '@/store/LoaderStore'
 import { refreshToken } from '@/mixins/refreshToken'
-
+import { useBalanceItemsStore } from '@/store/BalanceItemsStore'
 import { Form, Field } from 'vee-validate'
 
 export default {
@@ -82,34 +82,34 @@ export default {
         const $loader = useLoaderStore()
         const _type_report = ref("")
         const _commentField = ref(null)
-        const expensesLabel = [{ id: 1, name: "Авиабилеты, купленные в офисе", amount: 1000 },
-        { id: 2, name: "Акция Любримакс Ретро", amount: 10500 },
-        { id: 3, name: "Акция на закупку", amount: 114000 },
-        { id: 4, name: "Акция на продажу из аптек", amount: 1000 },
-        { id: 5, name: "Акция на продажу тестовых продуктов из аптек", amount: 10200 },
-        { id: 6, name: "Акция стикеры", amount: 6000 },
-        { id: 7, name: "Банкеты / конференции / доклады(лекции) / исследования", amount: 1000 },
-        { id: 8, name: "Бензин за наличный расчет", amount: 1000 },
-        { id: 9, name: "Визитки", amount: 1000 },
-        { id: 10, name: "Возмещение за закуп новинок или ввод новинок", amount: 1000 },
-        { id: 11, name: "Встречи с клиентами", amount: 1000 },
-        { id: 12, name: "Выкуп продукции(кроме тестовых аптек)", amount: 1000 },
-        { id: 13, name: "Выкуп продукции из тестовых аптек", amount: 1000 },
-        { id: 14, name: "Гостиница, оплаченная в офисе", amount: 1000 },
-        { id: 15, name: "Доставка рассылки(Деловые линии)", amount: 1000 },
-        { id: 16, name: "Ж / д билеты, купленные в офисе", amount: 1000 },
-
-        ]
+        const expensesLabel = ref(useBalanceItemsStore().balance_items)
+        // [{ id: 1, name: "Авиабилеты, купленные в офисе", amount: 1000 },
+        // { id: 2, name: "Акция Любримакс Ретро", amount: 10500 },
+        // { id: 3, name: "Акция на закупку", amount: 114000 },
+        // { id: 4, name: "Акция на продажу из аптек", amount: 1000 },
+        // { id: 5, name: "Акция на продажу тестовых продуктов из аптек", amount: 10200 },
+        // { id: 6, name: "Акция стикеры", amount: 6000 },
+        // { id: 7, name: "Банкеты / конференции / доклады(лекции) / исследования", amount: 1000 },
+        // { id: 8, name: "Бензин за наличный расчет", amount: 1000 },
+        // { id: 9, name: "Визитки", amount: 1000 },
+        // { id: 10, name: "Возмещение за закуп новинок или ввод новинок", amount: 1000 },
+        // { id: 11, name: "Встречи с клиентами", amount: 1000 },
+        // { id: 12, name: "Выкуп продукции(кроме тестовых аптек)", amount: 1000 },
+        // { id: 13, name: "Выкуп продукции из тестовых аптек", amount: 1000 },
+        // { id: 14, name: "Гостиница, оплаченная в офисе", amount: 1000 },
+        // { id: 15, name: "Доставка рассылки(Деловые линии)", amount: 1000 },
+        // { id: 16, name: "Ж / д билеты, купленные в офисе", amount: 1000 },
+        // ]
         const amountRowFin = ref(0)
         const $toast = useToast();
 
         const user_id = localStorage.getItem('id')
         onMounted(() => {
             _date_transaction.value = new Date().toISOString().slice(0, 10)
+            console.log(expensesLabel.value)
         })
 
-
-        const validateComment = (value) => {
+               const validateComment = (value) => {
             const formattedValue = _inputValue.value
             if (formattedValue > _type_report.value.amount) {
                 if(!value){
@@ -159,6 +159,7 @@ export default {
                 on_date: _date_transaction.value,
                 amount: _inputValue.value,
                 comment: _comment_transaction.value,
+                report: _type_report.value.id,
                 // balance_sheet_item: _type_report.value.id
             }
             try{
