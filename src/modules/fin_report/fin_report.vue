@@ -24,12 +24,17 @@
                 </div>
                 <div class="input-box">
                     <label style="font-size: 13px;">Статья прихода / расхода</label>
-                    <v-select v-model="_type_report" :options="expensesLabel" label="name"
+                    <v-select v-model="_type_report" :options="expensesLabelLimit" label="name"
                         style="min-width: 20vw; width: auto;" />
                 </div>
                 <div class="input-box">
                     <label style="font-size: 13px;">Остаток по статье, ₽</label>
                     <!-- <input disabled :value="_type_report.amount"> -->
+                </div>
+                <div class="input-box">
+                    <label style="font-size: 13px;">Лимит по статье, ₽</label>
+                    <input :value="_type_report.limit" disabled>
+                    <!-- <pre>{{ _type_report }}</pre> -->
                 </div>
             </section>
 
@@ -46,7 +51,7 @@
 
             <br>
         </div>
-        <early_transaction :data_fin_report="_response_data_fin_report"/>
+        <early_transaction :data_fin_report="_response_data_fin_report" />
 
     </div>
 </template>
@@ -88,6 +93,7 @@ export default {
         const _type_report = ref("")
         const _commentField = ref(null)
         const expensesLabel = ref(useBalanceItemsStore().balance_items)
+        const expensesLabelLimit = ref("")
         const _response_data_fin_report = ref([])
         const amountRowFin = ref(0)
         const $toast = useToast();
@@ -102,50 +108,67 @@ export default {
 
         const validateComment = (value) => {
             const formattedValue = _inputValue.value
-            if (formattedValue > _type_report.value.amount) {
+            if (formattedValue > _type_report.value.limit) {
                 if (!value) {
                     _commentField.value.focus()
                 }
-                return value ? true : 'Комментарий обязателен при превышении суммы остатка';
+                return value ? true : 'Комментарий обязателен при превышении суммы остатка или лимита';
             }
             return true;
         };
 
-
         const countNewRowFin = () => {
             return amountRowFin.value++
         }
+        // Получаем данные по текущему месяцу
         watch(_date_fin_report, async () => {
             await refreshToken()
-            let queryParametrs = {
-                author: Number(user_id),
-                month: Number(_date_fin_report.value.slice(-2)),
-                year: Number(_date_fin_report.value.slice(0, 4))
-            }
             try {
                 $loader.setLoader(true)
-                let response = await api.getFinanialReports(queryParametrs)
-                if(response.data.length > 0){
-                    _response_data_fin_report.value = response.data[0]
-                    current_report_id = response.data[0].id
+                const queryParams = {
+                    author: Number(user_id),
+                    month: Number(_date_fin_report.value.slice(-2)),
+                    year: Number(_date_fin_report.value.slice(0, 4))
                 }
-                $toast.success("Транзакции по текущему месяцу загружены", {
-                    timeout: 3000
-                })
-              
-                $loader.setLoader(false)
-            }
-            catch (err) {
-                $loader.setLoader(false)
-                $toast.error(`${err}`, {
-                    timeout: 4000
-                })
-            }
 
+                const [response, limits] = await Promise.all([
+                    api.getFinancialReports(queryParams),
+                    api.getTransactionsLimits(queryParams)
+                ])
+
+                if (response.data.length > 0) {
+                    const transactions = response.data[0].transactions
+                    const limitsData = limits.data
+
+                    transactions.forEach(transaction => {
+                        const match = limitsData.find(limit => limit.item === transaction.balance_sheet_item_info.id)
+                        transaction.limit = match?.limit ?? null
+                        transaction.name = transaction.balance_sheet_item_info.name
+                    })
+                    // Создаем массив уникальных элементов на основе свойства 'name' каждого объекта в массиве 'transactions'.
+                    // Для каждого уникального элемента мы находим соответствующий объект в исходном массиве 'transactions'.
+                    // Результат сохраняем в 'uniqueTransactions'.
+                    const uniqueTransactions = Array.from(
+                        new Set(transactions.map(transaction => transaction.name)),
+                        name => transactions.find(transaction => transaction.name === name)
+                    )
+
+                    expensesLabelLimit.value = uniqueTransactions
+                    _response_data_fin_report.value = transactions
+                    current_report_id = response.data[0].id
+                } else {
+                    _response_data_fin_report.value = []
+                }
+
+                $toast.success("Транзакции по текущему месяцу загружены", { timeout: 3000 })
+                $loader.setLoader(false)
+            } catch (err) {
+                $loader.setLoader(false)
+                $toast.error(`${err}`, { timeout: 4000 })
+            }
         })
 
-
-        const saveFinReport = async (values) => {
+        const saveFinReport = async () => {
 
             $loader.setLoader(true)
             await refreshToken()
@@ -183,6 +206,7 @@ export default {
             _type_report,
             incomeLabel,
             expensesLabel,
+            expensesLabelLimit,
             saveFinReport,
             _date_transaction,
             _comment_transaction,

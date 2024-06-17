@@ -1,11 +1,12 @@
 <template>
     <div>
-
-        <h4 >Транзакции за текущий месяц</h4>
-        <table>
+        <br>
+        <table class="table table-bordered table-hover table-sm">
+            <caption>Транзакции за текущий месяц</caption>
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th></th>
+                    <th>Дата</th>
                     <th>Наименование</th>
                     <th>Сумма</th>
                     <th>Комментарий</th>
@@ -13,12 +14,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item, index) in data_fin_report.transactions" :key="item.id">
+                <tr v-for="(item, index) in data_fin_report" :key="item.id">
                     <td>{{ index + 1 }}</td>
+                    <td>{{ item.on_date.split('-').reverse().join(".") }}</td>
                     <td>{{ item.balance_sheet_item_info.name }}</td>
                     <td>{{ item.amount }}</td>
                     <td>{{ item.comment }}</td>
-                    <td>{{ item.is_confirmed }}</td>
+                    <td>{{ item.is_confirmed ? 'Согласовано' : 'Не согласовано' }}</td>
                 </tr>
             </tbody>
         </table>
@@ -29,7 +31,7 @@
 export default {
     props: {
         data_fin_report: {
-            type: Array
+            type: Array, Object
         }
     },
     setup() {
@@ -40,3 +42,7 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+@import '../style/style-fin-report.scss';
+</style>
