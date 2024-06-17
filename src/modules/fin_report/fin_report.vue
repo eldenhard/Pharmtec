@@ -1,17 +1,10 @@
 <template>
     <div class="air_block">
-        <!-- <h5><b> -->
-
-
-        <!-- Финансовый отчет за период 01{{ new Date().toLocaleDateString().slice(2) }} - 29.02.{{ new
-                    Date().getFullYear() }} -->
-        <!-- </b></h5> -->
 
         <label for="">Выберите месяц и год отчета
             <input type="month" v-model="_date_fin_report">
         </label>
         <div class="air_block_body" v-show="Number(_date_fin_report.split('-')[1]) == new Date().getMonth() + 1">
-
 
             <section class="enterdata">
                 <div class="input-box">
@@ -27,11 +20,11 @@
                     <v-select v-model="_type_report" :options="expensesLabelLimit" label="name"
                         style="min-width: 20vw; width: auto;" />
                 </div>
-                <div class="input-box">
+                <div class="input-box" v-show="_type_report.limit">
                     <label style="font-size: 13px;">Остаток по статье, ₽</label>
-                    <!-- <input disabled :value="_type_report.amount"> -->
+                    <input disabled :value="remainceForItemsTransaction">
                 </div>
-                <div class="input-box">
+                <div class="input-box"  v-show="_type_report.limit">
                     <label style="font-size: 13px;">Лимит по статье, ₽</label>
                     <input :value="_type_report.limit" disabled>
                     <!-- <pre>{{ _type_report }}</pre> -->
@@ -52,15 +45,12 @@
             <br>
         </div>
         <early_transaction :data_fin_report="_response_data_fin_report" />
-
     </div>
 </template>
 
 <style scoped>
 @import './style/style-fin-report.scss';
 </style>
-
-
 
 <script>
 import buttonComponent from '../../ui/button/buttonComponent.vue';
@@ -167,12 +157,19 @@ export default {
                 $toast.error(`${err}`, { timeout: 4000 })
             }
         })
+        const remainceForItemsTransaction = computed(() => {
+            let arraySumByItemTransaction = _response_data_fin_report.value.reduce((acc, item) => {
+                if(item.name === _type_report.value.name){
+                    acc += item.amount
+                }
+                return acc
+            }, 0)
+          return _type_report.value?.limit - arraySumByItemTransaction
+        })
 
         const saveFinReport = async () => {
-
             $loader.setLoader(true)
             await refreshToken()
-
             let queryParametrs = {
                 on_date: _date_transaction.value,
                 amount: _inputValue.value,
@@ -183,7 +180,6 @@ export default {
             }
             try {
                 let response = await api.createNewTransaction(queryParametrs)
-                console.log(response)
                 $loader.setLoader(false)
                 $toast.success("Транзакция создана", {
                     timeout: 3000
@@ -194,11 +190,8 @@ export default {
                     timeout: 4000
                 })
             }
-
-            // $toast.info('Раздел в разработке. Сохранение невозможно', {
-            //     timeout: 3000
-            // })
         }
+
         return {
             _date_fin_report,
             amountRowFin,
@@ -214,6 +207,7 @@ export default {
             validateComment,
             _commentField,
             _response_data_fin_report,
+            remainceForItemsTransaction,
         };
     }
 };
