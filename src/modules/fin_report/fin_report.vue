@@ -20,14 +20,13 @@
                     <v-select v-model="_type_report" :options="expensesLabelLimit" label="name"
                         style="min-width: 20vw; width: auto;" />
                 </div>
-                <div class="input-box" v-show="_type_report.limit">
+                <div class="input-box" v-if="_type_report.limit">
                     <label style="font-size: 13px;">Остаток по статье, ₽</label>
                     <input disabled :value="remainceForItemsTransaction">
                 </div>
-                <div class="input-box"  v-show="_type_report.limit">
+                <div class="input-box"  v-if="_type_report.limit">
                     <label style="font-size: 13px;">Лимит по статье, ₽</label>
                     <input :value="_type_report.limit" disabled>
-                    <!-- <pre>{{ _type_report }}</pre> -->
                 </div>
             </section>
 
@@ -98,7 +97,7 @@ export default {
 
         const validateComment = (value) => {
             const formattedValue = _inputValue.value
-            if (formattedValue > _type_report.value.limit) {
+            if (formattedValue > _type_report.value.limit || remainceForItemsTransaction.value <= 0) {
                 if (!value) {
                     _commentField.value.focus()
                 }
@@ -112,6 +111,12 @@ export default {
         }
         // Получаем данные по текущему месяцу
         watch(_date_fin_report, async () => {
+            await getFinReport()
+        })
+        
+        // Получение данных по отчету и приведение транзакций
+        const getFinReport = async () => {
+        
             await refreshToken()
             try {
                 $loader.setLoader(true)
@@ -150,13 +155,14 @@ export default {
                     _response_data_fin_report.value = []
                 }
 
-                $toast.success("Транзакции по текущему месяцу загружены", { timeout: 3000 })
+                $toast.success("Данные загружены", { timeout: 3000 })
                 $loader.setLoader(false)
             } catch (err) {
                 $loader.setLoader(false)
                 $toast.error(`${err}`, { timeout: 4000 })
             }
-        })
+        }
+        // Получение остатка по статье
         const remainceForItemsTransaction = computed(() => {
             let arraySumByItemTransaction = _response_data_fin_report.value.reduce((acc, item) => {
                 if(item.name === _type_report.value.name){
@@ -174,16 +180,20 @@ export default {
                 on_date: _date_transaction.value,
                 amount: _inputValue.value,
                 comment: _comment_transaction.value,
-                balance_sheet_item: _type_report.value.id,
+                balance_sheet_item: _type_report.value.balance_sheet_item_info.id,
                 report: current_report_id
                 // balance_sheet_item: _type_report.value.id
             }
             try {
                 let response = await api.createNewTransaction(queryParametrs)
                 $loader.setLoader(false)
+                await getFinReport()
                 $toast.success("Транзакция создана", {
                     timeout: 3000
                 })
+                _inputValue.value = 0
+                _type_report.value = ""
+                _comment_transaction.value = ""
             } catch (err) {
                 $loader.setLoader(false)
                 $toast.error(`${err}`, {
@@ -201,6 +211,7 @@ export default {
             expensesLabel,
             expensesLabelLimit,
             saveFinReport,
+            getFinReport,
             _date_transaction,
             _comment_transaction,
             _inputValue,
