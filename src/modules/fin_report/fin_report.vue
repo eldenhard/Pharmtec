@@ -96,8 +96,10 @@ export default {
         })
 
         const validateComment = (value) => {
+            if(!type_report_.value.limit) return true
             const formattedValue = inputValue_.value
             if (formattedValue > type_report_.value.limit || remainceForItemsTransaction.value <= 0) {
+              
                 if (!value) {
                     commentField_.value.focus()
                 }
@@ -164,7 +166,7 @@ export default {
         }
         // Получение остатка по статье
         const remainceForItemsTransaction = computed(() => {
-            console.log(response_data_fin_report_.value, type_report_.value, 'computed')
+            // console.log(response_data_fin_report_.value, type_report_.value, 'computed')
 
             let arraySumByItemTransaction = response_data_fin_report_.value.reduce((acc, item) => {
                 if(item.balance_sheet_item_info.name === type_report_.value.name){
@@ -191,7 +193,7 @@ export default {
                 let response = await api.createNewTransaction(queryParametrs)
                 $loader.setLoader(false)
                 await getFinReport()
-                $toast.success("Транзакция создана", {
+                $toast.info("Транзакция создана", {
                     timeout: 3000
                 })
                 inputValue_.value = 0
