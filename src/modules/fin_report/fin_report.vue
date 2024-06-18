@@ -2,48 +2,48 @@
     <div class="air_block">
 
         <label for="">Выберите месяц и год отчета
-            <input type="month" v-model="_date_fin_report">
+            <input type="month" v-model="date_fin_report_">
         </label>
-        <div class="air_block_body" v-show="Number(_date_fin_report.split('-')[1]) == new Date().getMonth() + 1">
+        <div class="air_block_body" v-show="Number(date_fin_report_.split('-')[1]) == new Date().getMonth() + 1">
 
             <section class="enterdata">
                 <div class="input-box">
                     <label style="font-size: 13px;">Дата</label>
-                    <input type="date" v-model="_date_transaction">
+                    <input type="date" v-model="date_transaction_">
                 </div>
                 <div class="input-box">
                     <label style="font-size: 13px;">Сумма, ₽</label>
-                    <input type="number" v-model="_inputValue">
+                    <input type="number" v-model="inputValue_">
                 </div>
                 <div class="input-box">
                     <label style="font-size: 13px;">Статья прихода / расхода</label>
-                    <v-select v-model="_type_report" :options="expensesLabelLimit" label="name"
+                    <v-select v-model="type_report_" :options="expensesLabelLimit" label="name"
                         style="min-width: 20vw; width: auto;" />
                 </div>
-                <div class="input-box" v-if="_type_report.limit">
+                <div class="input-box" v-if="type_report_.limit">
                     <label style="font-size: 13px;">Остаток по статье, ₽</label>
                     <input disabled :value="remainceForItemsTransaction">
                 </div>
-                <div class="input-box"  v-if="_type_report.limit">
+                <div class="input-box"  v-if="type_report_.limit">
                     <label style="font-size: 13px;">Лимит по статье, ₽</label>
-                    <input :value="_type_report.limit" disabled>
+                    <input :value="type_report_.limit" disabled>
                 </div>
             </section>
 
             <Form @submit="saveFinReport">
-                <Field name="_comment_transaction" v-slot="{ field, errors }" :rules="validateComment">
-                    <textarea rows="2" class="textarea" placeholder="Комментарий" ref="_commentField"
-                        v-model="_comment_transaction" v-bind="field"></textarea>
+                <Field name="comment_transaction_" v-slot="{ field, errors }" :rules="validateComment">
+                    <textarea rows="2" class="textarea" placeholder="Комментарий" ref="commentField_"
+                        v-model="comment_transaction_" v-bind="field"></textarea>
                     <span class="error_message">{{ errors[0] }}</span>
                 </Field>
                 <buttonComponent type="submit"
-                    v-show="Number(_date_fin_report.split('-')[1]) == new Date().getMonth() + 1"> Сохранить
+                    v-show="Number(date_fin_report_.split('-')[1]) == new Date().getMonth() + 1"> Сохранить
                 </buttonComponent>
             </Form>
-
+           
             <br>
         </div>
-        <early_transaction :data_fin_report="_response_data_fin_report" />
+        <early_transaction :data_fin_report="response_data_fin_report_" />
     </div>
 </template>
 
@@ -73,17 +73,17 @@ export default {
         early_transaction,
     },
     setup() {
-        const _date_fin_report = ref("")
-        const _date_transaction = ref("new Date()")
-        const _comment_transaction = ref("")
-        const _inputValue = ref(0);
+        const date_fin_report_ = ref("")
+        const date_transaction_ = ref("new Date()")
+        const comment_transaction_ = ref("")
+        const inputValue_ = ref(0);
         const incomeLabel = []
         const $loader = useLoaderStore()
-        const _type_report = ref("")
-        const _commentField = ref(null)
+        const type_report_ = ref("")
+        const commentField_ = ref(null)
         const expensesLabel = ref(useBalanceItemsStore().balance_items)
-        const expensesLabelLimit = ref("")
-        const _response_data_fin_report = ref([])
+        const expensesLabelLimit = ref([])
+        const response_data_fin_report_ = ref([])
         const amountRowFin = ref(0)
         const $toast = useToast();
 
@@ -92,14 +92,14 @@ export default {
         let current_report_id = 0
 
         onMounted(() => {
-            _date_transaction.value = new Date().toISOString().slice(0, 10)
+            date_transaction_.value = new Date().toISOString().slice(0, 10)
         })
 
         const validateComment = (value) => {
-            const formattedValue = _inputValue.value
-            if (formattedValue > _type_report.value.limit || remainceForItemsTransaction.value <= 0) {
+            const formattedValue = inputValue_.value
+            if (formattedValue > type_report_.value.limit || remainceForItemsTransaction.value <= 0) {
                 if (!value) {
-                    _commentField.value.focus()
+                    commentField_.value.focus()
                 }
                 return value ? true : 'Комментарий обязателен при превышении суммы остатка или лимита';
             }
@@ -110,49 +110,49 @@ export default {
             return amountRowFin.value++
         }
         // Получаем данные по текущему месяцу
-        watch(_date_fin_report, async () => {
+        watch(date_fin_report_, async () => {
             await getFinReport()
         })
         
         // Получение данных по отчету и приведение транзакций
         const getFinReport = async () => {
-        
             await refreshToken()
             try {
                 $loader.setLoader(true)
                 const queryParams = {
                     author: Number(user_id),
-                    month: Number(_date_fin_report.value.slice(-2)),
-                    year: Number(_date_fin_report.value.slice(0, 4))
+                    month: Number(date_fin_report_.value.slice(-2)),
+                    year: Number(date_fin_report_.value.slice(0, 4))
                 }
 
                 const [response, limits] = await Promise.all([
                     api.getFinancialReports(queryParams),
                     api.getTransactionsLimits(queryParams)
                 ])
-
                 if (response.data.length > 0) {
                     const transactions = response.data[0].transactions
                     const limitsData = limits.data
 
-                    transactions.forEach(transaction => {
-                        const match = limitsData.find(limit => limit.item === transaction.balance_sheet_item_info.id)
-                        transaction.limit = match?.limit ?? null
-                        transaction.name = transaction.balance_sheet_item_info.name
+                    expensesLabel.value.forEach(balanceSheetItem => {
+                        const match = limitsData.find(limit => limit.item === balanceSheetItem.id)
+                        balanceSheetItem.limit = match?.limit ?? null
+                        balanceSheetItem.name = balanceSheetItem.name
                     })
-                    // Создаем массив уникальных элементов на основе свойства 'name' каждого объекта в массиве 'transactions'.
-                    // Для каждого уникального элемента мы находим соответствующий объект в исходном массиве 'transactions'.
+                    // Создаем массив уникальных элементов на основе свойства 'name' каждого объекта в массиве 'expensesLabel.value'.
+                    // Для каждого уникального элемента мы находим соответствующий объект в исходном массиве 'expensesLabel.value'.
                     // Результат сохраняем в 'uniqueTransactions'.
                     const uniqueTransactions = Array.from(
-                        new Set(transactions.map(transaction => transaction.name)),
-                        name => transactions.find(transaction => transaction.name === name)
+                        new Set(expensesLabel.value.map(transaction => transaction.name)),
+                        name => expensesLabel.value.find(transaction => transaction.name === name)
                     )
 
                     expensesLabelLimit.value = uniqueTransactions
-                    _response_data_fin_report.value = transactions
+                    response_data_fin_report_.value = transactions
                     current_report_id = response.data[0].id
+
+                   
                 } else {
-                    _response_data_fin_report.value = []
+                    response_data_fin_report_.value = []
                 }
 
                 $toast.success("Данные загружены", { timeout: 3000 })
@@ -164,60 +164,65 @@ export default {
         }
         // Получение остатка по статье
         const remainceForItemsTransaction = computed(() => {
-            let arraySumByItemTransaction = _response_data_fin_report.value.reduce((acc, item) => {
-                if(item.name === _type_report.value.name){
+            console.log(response_data_fin_report_.value, type_report_.value, 'computed')
+
+            let arraySumByItemTransaction = response_data_fin_report_.value.reduce((acc, item) => {
+                if(item.balance_sheet_item_info.name === type_report_.value.name){
                     acc += item.amount
                 }
                 return acc
             }, 0)
-          return _type_report.value?.limit - arraySumByItemTransaction
+            console.log(arraySumByItemTransaction, 'acc')
+          return type_report_.value?.limit - arraySumByItemTransaction
         })
 
         const saveFinReport = async () => {
             $loader.setLoader(true)
             await refreshToken()
-            let queryParametrs = {
-                on_date: _date_transaction.value,
-                amount: _inputValue.value,
-                comment: _comment_transaction.value,
-                balance_sheet_item: _type_report.value.balance_sheet_item_info.id,
-                report: current_report_id
-                // balance_sheet_item: _type_report.value.id
-            }
             try {
+                let queryParametrs = {
+                on_date: date_transaction_.value,
+                amount: inputValue_.value,
+                comment: comment_transaction_.value,
+                balance_sheet_item: type_report_.value.id,
+                report: current_report_id
+                // balance_sheet_item: type_report_.value.id
+            }
                 let response = await api.createNewTransaction(queryParametrs)
                 $loader.setLoader(false)
                 await getFinReport()
                 $toast.success("Транзакция создана", {
                     timeout: 3000
                 })
-                _inputValue.value = 0
-                _type_report.value = ""
-                _comment_transaction.value = ""
+                inputValue_.value = 0
+                type_report_.value = ""
+                comment_transaction_.value = ""
             } catch (err) {
                 $loader.setLoader(false)
                 $toast.error(`${err}`, {
                     timeout: 4000
                 })
+            } finally{
+                $loader.setLoader(false)
             }
         }
 
         return {
-            _date_fin_report,
+            date_fin_report_,
             amountRowFin,
             countNewRowFin,
-            _type_report,
+            type_report_,
             incomeLabel,
             expensesLabel,
             expensesLabelLimit,
             saveFinReport,
             getFinReport,
-            _date_transaction,
-            _comment_transaction,
-            _inputValue,
+            date_transaction_,
+            comment_transaction_,
+            inputValue_,
             validateComment,
-            _commentField,
-            _response_data_fin_report,
+            commentField_,
+            response_data_fin_report_,
             remainceForItemsTransaction,
         };
     }

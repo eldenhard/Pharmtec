@@ -41,6 +41,7 @@ export default {
       }
     
       $balanceItemsStore.getAllBalanceItems()
+      console.log('1')
       $current_user_id_store.setCurrentUserId()
     })
 
