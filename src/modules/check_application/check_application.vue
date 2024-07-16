@@ -73,7 +73,16 @@ export default {
                     year: Number(new Date().getFullYear())
                 }
                 let response = await apiFin.getFinancialReports(queryParams)
-                response_data_transaction_by_user_.value = response.data[0].transactions.filter((item) => item.is_confirmed === false)
+                if(response.data.length > 0){
+                    toast.success(`Данные получены`, {
+                        timeout: 2500
+                    })
+                    response_data_transaction_by_user_.value = response?.data[0]?.transactions.filter((item) => item.is_confirmed === false)
+                } else {
+                    toast.warning(`Данные по выбранному пользователю отсутствуют`, {
+                        timeout: 3000
+                    })
+                }
                 
             } catch (err) {
                 console.log(err)
