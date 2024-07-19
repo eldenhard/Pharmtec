@@ -23,7 +23,7 @@
                     <li @click="selectTab('forManagment', $event.target)">Для руководителя</li>
                     <!-- <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li> -->
                     <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
-                    <li @click="selectTab('informationAboutProducts', $event.target)">Зарегистрированные товарные знаки</li>
+                    <li @click="selectTab('informationAboutProducts', $event.target)">Товарные знаки</li>
                     <li @click="selectTab('UserStatus', $event.target)">Статус пользователя</li>
                 </ul>
 
