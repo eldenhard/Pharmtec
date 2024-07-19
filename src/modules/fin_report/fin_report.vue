@@ -24,7 +24,7 @@
                     <label style="font-size: 13px;">Остаток по статье, ₽</label>
                     <input disabled :value="remainceForItemsTransaction">
                 </div>
-                <div class="input-box"  v-if="type_report_.limit">
+                <div class="input-box" v-if="type_report_.limit">
                     <label style="font-size: 13px;">Лимит по статье, ₽</label>
                     <input :value="type_report_.limit" disabled>
                 </div>
@@ -40,7 +40,7 @@
                     v-show="Number(date_fin_report_.split('-')[1]) == new Date().getMonth() + 1"> Сохранить
                 </buttonComponent>
             </Form>
-           
+
             <br>
         </div>
         <early_transaction :data_fin_report="response_data_fin_report_" />
@@ -96,15 +96,23 @@ export default {
         })
 
         const validateComment = (value) => {
-            if(!type_report_.value.limit) return true
+            if (type_report_.value.name == 'Прочие расходы (с комментариями)') {
+                console.log('123')
+                if (!value) {
+                    commentField_.value.focus()
+                }
+                return value ? true : 'Комментарий обязателен для выбранной статьи';
+            }
+            if (!type_report_.value.limit) return true
             const formattedValue = inputValue_.value
             if (formattedValue > type_report_.value.limit || remainceForItemsTransaction.value <= 0) {
-              
+
                 if (!value) {
                     commentField_.value.focus()
                 }
                 return value ? true : 'Комментарий обязателен при превышении суммы остатка или лимита';
             }
+
             return true;
         };
 
@@ -115,12 +123,13 @@ export default {
         watch(date_fin_report_, async () => {
             await getFinReport()
         })
-        
+
         // Получение данных по отчету и приведение транзакций
         const getFinReport = async () => {
             await refreshToken()
             try {
                 $loader.setLoader(true)
+                response_data_fin_report_.value = []
                 const queryParams = {
                     author: Number(user_id),
                     month: Number(date_fin_report_.value.slice(-2)),
@@ -131,6 +140,15 @@ export default {
                     api.getFinancialReports(queryParams),
                     api.getTransactionsLimits(queryParams)
                 ])
+                if(response.data.length == 0) {
+                    $loader.setLoader(false)
+                    $toast.error('Финансовый отчет не найден.\nСообщите в тех.поддержку', {
+                        timeout: 3500
+                    })
+                    return
+                }
+                    
+                console.log('response.data[0].id', response.data)
                 if (response.data.length > 0) {
                     const transactions = response.data[0].transactions
                     const limitsData = limits.data
@@ -147,16 +165,15 @@ export default {
                         new Set(expensesLabel.value.map(transaction => transaction.name)),
                         name => expensesLabel.value.find(transaction => transaction.name === name)
                     )
-
-                    expensesLabelLimit.value = uniqueTransactions
+                    expensesLabelLimit.value = uniqueTransactions.sort((a, b) => a.name.localeCompare(b.name))
                     response_data_fin_report_.value = transactions
                     current_report_id = response.data[0].id
 
-                   
-                } else {
-                    response_data_fin_report_.value = []
-                }
 
+                } else {
+                    response_data_fin_report_.value = [],
+                        expensesLabelLimit.value = expensesLabel.value.sort((a, b) => a.name.localeCompare(b.name))
+                }
                 $toast.success("Данные загружены", { timeout: 3000 })
                 $loader.setLoader(false)
             } catch (err) {
@@ -167,15 +184,14 @@ export default {
         // Получение остатка по статье
         const remainceForItemsTransaction = computed(() => {
             // console.log(response_data_fin_report_.value, type_report_.value, 'computed')
-
             let arraySumByItemTransaction = response_data_fin_report_.value.reduce((acc, item) => {
-                if(item.balance_sheet_item_info.name === type_report_.value.name){
+                if (item.balance_sheet_item_info.name === type_report_.value.name) {
                     acc += item.amount
                 }
                 return acc
             }, 0)
             console.log(arraySumByItemTransaction, 'acc')
-          return type_report_.value?.limit - arraySumByItemTransaction
+            return type_report_.value?.limit - arraySumByItemTransaction
         })
 
         const saveFinReport = async () => {
@@ -183,13 +199,13 @@ export default {
             await refreshToken()
             try {
                 let queryParametrs = {
-                on_date: date_transaction_.value,
-                amount: inputValue_.value,
-                comment: comment_transaction_.value,
-                balance_sheet_item: type_report_.value.id,
-                report: current_report_id
-                // balance_sheet_item: type_report_.value.id
-            }
+                    on_date: date_transaction_.value,
+                    amount: inputValue_.value,
+                    comment: comment_transaction_.value,
+                    balance_sheet_item: type_report_.value.id,
+                    report: current_report_id
+                    // balance_sheet_item: type_report_.value.id
+                }
                 let response = await api.createNewTransaction(queryParametrs)
                 $loader.setLoader(false)
                 await getFinReport()
@@ -204,7 +220,7 @@ export default {
                 $toast.error(`${err}`, {
                     timeout: 4000
                 })
-            } finally{
+            } finally {
                 $loader.setLoader(false)
             }
         }

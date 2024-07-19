@@ -49,6 +49,7 @@ img {
 }
 label{
     color: rgb(87, 87, 87);
+    cursor: pointer;
 }
 
 .vs__dropdown-toggle{

@@ -14,17 +14,9 @@
 
                 </ul>
                 <ul>
-                    <li @click="selectTab('companyStructure', $event.target)" class="first">Структура компании</li>
-                    <li @click="selectTab('staff', $event.target)">Сотрудники</li>
-                    <li @click="selectTab('Applications', $event.target)">Заявки</li>
-                    <li @click="selectTab('FinReport', $event.target)">Финансовый отчет</li>
-                    <li @click="selectTab('createLimits', $event.target)">Статьи баланса</li>
-                    <li @click="selectTab('booking', $event.target)">Бронирование переговорной</li>
-                    <li @click="selectTab('forManagment', $event.target)">Для руководителя</li>
-                    <!-- <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li> -->
-                    <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
-                    <li @click="selectTab('informationAboutProducts', $event.target)">Зарегистрированные товарные знаки</li>
-                    <li @click="selectTab('UserStatus', $event.target)">Статус пользователя</li>
+
+                    <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li>
+
                 </ul>
 
             </div>
@@ -65,7 +57,7 @@ export default {
             isActive.value = true
             setTimeout(() => isActive.value = false, 1500)
             document.querySelector('.first').classList.add('activeItem')
-            context.emit('someEvent', 'companyStructure');
+            context.emit('someEvent', 'ApproveApplication');
         })
         return {
             selectTab,

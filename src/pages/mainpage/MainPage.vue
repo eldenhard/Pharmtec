@@ -76,9 +76,12 @@ import staff_element from '../../modules/staff_module/staff_element.vue';
 import user_status from '@/pages/lk_page/modules/UserStatus.vue'
 import { useActiveTabStore } from '../../store/ActiveTabStore'
 import products_company from '../../modules/products_company/products_company.vue';
+import create_limits from '../../modules/all_staff/create_limits/create_limits.vue';
 export default {
-  components: { navbar, sidebar, workspace, Transition, order, for_manager, for_admin, news, sheduleElement, fin_report, check_application, company_structure, 
-    products_company, staff_element },
+  components: {
+    navbar, sidebar, workspace, Transition, order, for_manager, for_admin, news, sheduleElement, fin_report, check_application, company_structure,
+    products_company, staff_element, create_limits
+  },
   setup() {
     onMounted(() => {
 
@@ -88,11 +91,13 @@ export default {
     })
     const receivedData = ref('');
     const currentTabComponent = computed(() => {
-      switch(receivedData.value) {
+      switch (receivedData.value) {
         case 'companyStructure':
           return company_structure
         case 'staff':
           return staff_element
+        case 'createLimits':
+          return create_limits
         case 'FinReport':
           return fin_report
         case 'booking':

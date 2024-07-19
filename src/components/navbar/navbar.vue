@@ -163,7 +163,9 @@
               </div>
             </div>
 
-            <router-link to="/lk" @click="closeElement" style="width: 100%;">
+            <router-link to="/lk" @click="closeElement"
+              style="width: 100%; position: relative;box-sizing: border-box; display: flex; align-items: center; justify-content: center; outline: none !important;
+    text-decoration: none;">
               <button class="button_border">Перейти в личный кабинет</button>
             </router-link>
 
@@ -189,7 +191,11 @@
               <button class="tab_button">Все сотрудники</button>
             </router-link>
           </li>
-          <li><button class="tab_button">Служебные заявки</button></li>
+          <li>
+            <router-link to="/service_requests" style="outline: none !important; text-decoration: none !important;">
+              <button class="tab_button">Служебные заявки</button>
+            </router-link>
+          </li>
           <li><button class="tab_button">Техподдержка</button></li>
         </ul>
       </div>
@@ -223,7 +229,7 @@ export default {
 
 
     const closeElement = () => {
-        isVisibleUserMenu.value = false
+      isVisibleUserMenu.value = false
     }
 
 
