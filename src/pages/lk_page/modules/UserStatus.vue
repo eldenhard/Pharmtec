@@ -13,6 +13,7 @@
                     <option value="Больничный">Больничный</option>
                     <option value="Командировка">Командировка</option>
                     <option value="Отпуск">Отпуск</option>
+                    <option value="Работает">Работает</option>
                 </select>
             </div>
             <div class="users_block">
@@ -48,7 +49,7 @@ export default {
         const current_user = ref([])
         const substitute_person = ref('')
         const full_name_current_user = ref('')
-        const user_status = ref('Больничный')
+        const user_status = ref('')
 
         const $STORE = useCurrentUserId()
         const { current_user_id } = storeToRefs($STORE)
@@ -58,6 +59,7 @@ export default {
             try {
                 let user_by_id = await api.getUserById(current_user_id.value)
                 current_user.value = user_by_id.data
+                user_status.value = user_by_id.data.status
                 full_name_current_user.value = `
                     ${user_by_id.data.last_name || ""} 
                     ${user_by_id.data.first_name || ""} 
@@ -85,7 +87,14 @@ export default {
         const saveNewStatusUser = async () => {
             try {
                 useLoaderStore().setLoader(true)
-                let response = api.putUserById(current_user_id.value, { vice: substitute_person.value.id, status: user_status.value })
+                let queryParams
+                if(user_status.value === "Работает"){
+                    queryParams =  {  status: user_status.value }
+                } else {
+                    queryParams =  {  status: user_status.value, vice: substitute_person.value.id }
+                }
+
+                let response = api.putUserById(current_user_id.value, queryParams)
                 $toast.success("Статус пользователя изменен", {
                     timeout: 2000
                 })

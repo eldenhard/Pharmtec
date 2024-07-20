@@ -21,7 +21,7 @@
                             <i class="bi bi-circle-fill" style="font-size: 1vh !important;"
                                 :class="currentColorClass"></i>
                             <span style="color: #7F7F7F;">
-                                {{ _user_data?.status || "Работает" }} до
+                                {{ _user_data?.status || "Работает" }}
                             </span>
                         </p>
                         <a style="color: #14949C">Редактировать</a>

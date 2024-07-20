@@ -7,7 +7,7 @@
             </label>
         </div>
         <div class="filter_block"  v-show="date_limits">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
             <label class="form-check-label" for="flexCheckDefault">
                  Подгрузить лимиты прошлого месяца
             </label>
@@ -24,7 +24,7 @@
                 <tbody v-show="date_limits">
                     <tr v-for="item in balance_items" :key="item.id">
                         <td style="width: 40%;">{{ item.name }}</td>
-                        <td><input type="number"></td>
+                        <td><input type="number" style="border: none; border-radius: 0;"></td>
                         <td style="width: 40%;">
                             <v-select :id="item.id" v-model="selectedUsers[item.id]" :options="formatedUsers"
                                 label="full_name" multiple />
