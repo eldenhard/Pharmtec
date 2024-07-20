@@ -6,7 +6,12 @@
                 <input type="month" v-model="date_limits">
             </label>
         </div>
-
+        <div class="filter_block"  v-show="date_limits">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                 Подгрузить лимиты прошлого месяца
+            </label>
+        </div>
         <div class="table_block">
             <table class="table table-bordered table-hover table-sm">
                 <thead>
@@ -20,8 +25,9 @@
                     <tr v-for="item in balance_items" :key="item.id">
                         <td style="width: 40%;">{{ item.name }}</td>
                         <td><input type="number"></td>
-                        <td>
-                            <v-select :id="item.id" v-model="selectedUsers[item.id]" :options="formatedUsers" label="full_name" multiple />
+                        <td style="width: 40%;">
+                            <v-select :id="item.id" v-model="selectedUsers[item.id]" :options="formatedUsers"
+                                label="full_name" multiple />
                         </td>
                     </tr>
                 </tbody>
@@ -34,7 +40,7 @@
 
 
 <script setup>
-import { ref, watch,computed, reactive } from 'vue'
+import { ref, watch, computed, reactive } from 'vue'
 import buttonComponent from "../../../ui/button/buttonComponent.vue";
 import { useBalanceItemsStore } from '@/store/BalanceItemsStore'
 import { useLoaderStore } from '@/store/LoaderStore'
@@ -57,7 +63,7 @@ const name_user = computed(() => {
 const formatedUsers = computed(() => {
     return all_users.value.map(user => {
         return {
-            full_name: user.last_name + " " + user.first_name ,
+            full_name: user.last_name + " " + user.first_name,
             id: user.id
         }
     })
@@ -67,7 +73,7 @@ const formatedUsers = computed(() => {
 watch(date_limits, async () => {
     console.log(date_limits.value)
     try {
-       useLoaderStore().setLoader(true)
+        useLoaderStore().setLoader(true)
         await refreshToken()
         let response = await api.getAllUsers()
         console.log(response.data)
@@ -78,7 +84,7 @@ watch(date_limits, async () => {
         toast.error(`Ошибка! Данные не получены\n${err}`, {
             timeout: 3500
         })
-    } finally{
+    } finally {
         useLoaderStore().setLoader(false)
     }
 })
