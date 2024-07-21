@@ -24,7 +24,7 @@
                     <!-- <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li> -->
                     <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
                     <li @click="selectTab('informationAboutProducts', $event.target)">Товарные знаки</li>
-                    <li @click="selectTab('UserStatus', $event.target)">Статус пользователя</li>
+                    <li @click="navigateTo('lk')">Статус пользователя</li>
                 </ul>
 
             </div>
@@ -41,13 +41,14 @@
 <script>
 import { ref, onMounted, defineEmits } from 'vue';
 import miniloader from '../../ui/miniloader/miniloader.vue';
+import { useRoute, useRouter } from 'vue-router';
 export default {
     components: {
         miniloader,
     },
     setup(props, context) {
         const isActive = ref(Boolean)
-
+        const route = useRouter();
         const selectTab = (data, el) => {
             document.querySelectorAll('.sidebar_block__list li').forEach(item => {
                 item.classList.remove('activeItem');
@@ -61,6 +62,9 @@ export default {
             context.emit('someEvent', data);
 
         };
+        const navigateTo = (name) => {
+            route.push(name)
+        }
         onMounted(() => {
             isActive.value = true
             setTimeout(() => isActive.value = false, 1500)
@@ -69,7 +73,7 @@ export default {
         })
         return {
             selectTab,
-
+            navigateTo,
             isActive
         };
     }

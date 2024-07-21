@@ -17,14 +17,14 @@
                 <thead>
                     <tr>
                         <th style="width: 40%;">Статья</th>
-                        <th>Лимит</th>
+                        <th>Лимит, руб</th>
                         <th>Сотрудники</th>
                     </tr>
                 </thead>
                 <tbody v-show="date_limits">
                     <tr v-for="item in balance_items" :key="item.id">
                         <td style="width: 40%;">{{ item.name }}</td>
-                        <td><input type="number" style="border: none; border-radius: 0;"></td>
+                        <td><input type="number" style="border: none; border-radius: 0;" v-model="item.limit"></td>
                         <td style="width: 40%;">
                             <v-select :id="item.id" v-model="selectedUsers[item.id]" :options="formatedUsers"
                                 label="full_name" multiple />
@@ -34,10 +34,9 @@
             </table>
 
         </div>
-        <buttonComponent>Сохранить</buttonComponent>
+        <buttonComponent @click="saveData" disabled>Сохранить</buttonComponent>
     </div>
 </template>
-
 
 <script setup>
 import { ref, watch, computed, reactive } from 'vue'
@@ -47,39 +46,62 @@ import { useLoaderStore } from '@/store/LoaderStore'
 import api from '@/api/user'
 import api_fin from '@/api/fin_report.js'
 
+import {useGetAllUsers} from '@/store/AllUsers'
 import { useToast } from "vue-toastification";
 import { refreshToken } from '@/mixins/refreshToken'
 
+
 const date_limits = ref("")
-const balance_items = useBalanceItemsStore().balance_items.sort((a, b) => a.name.localeCompare(b.name))
+const balanceItemsStore = useBalanceItemsStore()
+const balance_items = reactive(JSON.parse(JSON.stringify(balanceItemsStore.balance_items)).sort((a, b) => a.name.localeCompare(b.name)))
 const all_users = ref([])
 const selectedUsers = reactive({})
 const toast = useToast();
 const current_year_and_mount = new Date().toISOString().slice(0, 7)
 const checkedLastLimit = ref(false)
 
-
 watch(checkedLastLimit, async () => {
-   if(!checkedLastLimit.value) return
+    if (!checkedLastLimit.value) {
+        toast.info(`Лимиты прошлого месяца сброшены`, {
+        timeout: 3500
+    })
+        balance_items.forEach((item) => {
+            delete item.limit
+        })
+        return
+    }
     const queryParams = {
         month: Number(date_limits.value.slice(-2) - 1),
         year: Number(date_limits.value.slice(0, 4))
     }
     const limits = await api_fin.getTransactionsLimits(queryParams)
-   
+
     limits.data.forEach((item) => {
-        console.log(item)
         item.name_value = balance_items.find((val) => val.id === item.item).name
     })
-
-    console.log('limits', limits.data)
+    for(let item of balance_items){
+        limits.data.forEach((limit) => {
+            if(item.name === limit.name_value){
+                item.limit = limit.limit
+                console.log('проверка на юзера', limit, all_users.value)
+                // selectedUsers[item.id] = limit.users.map(userId => formatedUsers.value.find(user => user.id === userId))
+            }
+        })
+    }
+    toast.info(`Лимиты прошлого месяца установлены`, {
+        timeout: 3500
+    })
+    console.log('лимиты: ',limits.data, 'balance_items: ', balance_items)
 })
+
+
+
 balance_items.forEach(item => {
     selectedUsers[item.id] = []
 })
-const name_user = computed(() => {
-    return balance_items
-})
+
+
+
 const formatedUsers = computed(() => {
     return all_users.value.map(user => {
         return {
@@ -89,14 +111,16 @@ const formatedUsers = computed(() => {
     })
 })
 
-
 watch(date_limits, async () => {
-    console.log(date_limits.value)
+    checkedLastLimit.value = false
+    balance_items.forEach((item, index) => {
+        delete item.limit
+    })
     try {
         useLoaderStore().setLoader(true)
         await refreshToken()
         let response = await api.getAllUsers()
-        console.log(response.data)
+
         all_users.value = response.data
         useLoaderStore().setLoader(false)
     } catch (err) {
@@ -109,6 +133,9 @@ watch(date_limits, async () => {
     }
 })
 
+function saveData() {
+    console.log(selectedUsers)
+}
 </script>
 
 

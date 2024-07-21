@@ -25,13 +25,13 @@
                         <td>{{ item.balance_sheet_item_info.name }}</td>
                         <td>{{ item.amount }}</td>
                         <td>{{ item.comment }}</td>
-                  
+
                         <td><input type="checkbox"></td>
                         <td><input type="text"></td>
                     </tr>
                 </tbody>
             </table>
-          
+
         </div>
     </div>
 </template>
@@ -67,23 +67,24 @@ export default {
         })
         watch(currentUser_, async () => {
             try {
-                const queryParams = {
-                    author: Number(currentUser_.value.id),
-                    month: Number(new Date().getMonth() + 1),
-                    year: Number(new Date().getFullYear())
+                if (currentUser_.value !== null) {
+                    const queryParams = {
+                        author: Number(currentUser_.value.id),
+                        month: Number(new Date().getMonth() + 1),
+                        year: Number(new Date().getFullYear())
+                    }
+                    let response = await apiFin.getFinancialReports(queryParams)
+                    if (response.data.length > 0) {
+                        toast.success(`Данные получены`, {
+                            timeout: 2500
+                        })
+                        response_data_transaction_by_user_.value = response?.data[0]?.transactions.filter((item) => item.is_confirmed === false)
+                    } else {
+                        toast.warning(`Данные по выбранному пользователю отсутствуют`, {
+                            timeout: 3000
+                        })
+                    }
                 }
-                let response = await apiFin.getFinancialReports(queryParams)
-                if(response.data.length > 0){
-                    toast.success(`Данные получены`, {
-                        timeout: 2500
-                    })
-                    response_data_transaction_by_user_.value = response?.data[0]?.transactions.filter((item) => item.is_confirmed === false)
-                } else {
-                    toast.warning(`Данные по выбранному пользователю отсутствуют`, {
-                        timeout: 3000
-                    })
-                }
-                
             } catch (err) {
                 console.log(err)
                 toast.error(`Ошибка! Данные не получены`, {

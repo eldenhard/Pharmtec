@@ -1,7 +1,7 @@
 <template>
     <div class="hot_keys_group">
-        <hot_key_blue :figcaption="'Все сотрудники'" :classSize="'l_size'"><img src="../assets/circle.png"/></hot_key_blue>
-        <hot_key_green :figcaption="'Служебные заявки'" :classSize="'l_size'"><img src="../assets/check2.png" alt=""></hot_key_green>
+        <hot_key_blue :figcaption="'Все сотрудники'" :classSize="'l_size'" @click="navigateTo('workspace')"><img src="../assets/circle.png"/></hot_key_blue>
+        <hot_key_green :figcaption="'Служебные заявки'" :classSize="'l_size'" @click="navigateTo('service_requests')"><img src="../assets/check2.png" alt=""></hot_key_green>
         <hot_key_blue :figcaption="'Финансовый отчет'" :classSize="'l_size'"><img src="../assets/rub3.png" alt=""></hot_key_blue>
         <hot_key_green :figcaption="'Служебные автомобили'" :classSize="'l_size'"><img src="../assets/wheel.png" alt="автомобили"></hot_key_green>
         <hot_key_blue :figcaption="'Обучение'" :classSize="'l_size'"><img src="../assets/graduation.png" alt="обучение"></hot_key_blue>
@@ -22,13 +22,23 @@
 <script>
 import hot_key_blue from '../ui/hot_key_blue_ui.vue'
 import hot_key_green from '../ui/hot_key_green_ui.vue'
+import { useRouter } from 'vue-router';
+
+
 export default {
     components: {
         hot_key_blue,
         hot_key_green
     },
     setup() {
-        
+        const router = useRouter();
+        const navigateTo = (name) => {
+            router.push(name)
+        }
+
+        return{
+            navigateTo
+        }
     },
 }
 </script>

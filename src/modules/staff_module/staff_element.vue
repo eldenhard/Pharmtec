@@ -61,7 +61,7 @@
                 <tbody>
 
                     <template v-if="currentColor == 'list'">
-                        <tr v-for="user in filteredUsersList" :key="user.id" :class="{ 'table-warning': user.status }">
+                        <tr v-for="user in filteredUsersList" :key="user.id" :class="{ 'table-warning': user.status && user.vice_info }">
                             <!--  v-tippy="user.status" -->
                             <td class="bookmark_block">{{ user.last_name }}</td>
                             <td>{{ user.first_name }}</td>

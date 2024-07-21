@@ -118,9 +118,9 @@
 
         <div class="mini_menu" ref="miniMenuRef" v-show="isVisibleMiniMenu">
           <div class="hot_keys_group">
-            <hot_key_blue :figcaption="'Все\nсотрудники'" :classSize="'s_size'"><img
+            <hot_key_blue :figcaption="'Все\nсотрудники'"  @click="navigateTo('workspace')" :classSize="'s_size'"><img
                 src="@/pages/new_start_page/assets/circle.png" style="width: 70%; margin: 0 auto;" /></hot_key_blue>
-            <hot_key_green :figcaption="'Служебные заявки'" :classSize="'s_size'"><img
+            <hot_key_green :figcaption="'Служебные заявки'" @click="navigateTo('service_requests')" :classSize="'s_size'"><img
                 src="@/pages/new_start_page/assets/check2.png" style="width: 70%; margin: 0 auto;" alt="">
             </hot_key_green>
             <hot_key_blue :figcaption="'Финансовый отчет'" :classSize="'s_size'"><img
@@ -214,6 +214,7 @@ import { ref, onMounted, onUnmounted, watchEffect, watch } from 'vue';
 import hot_key_blue from '@/pages/new_start_page/ui/hot_key_blue_ui.vue';
 import hot_key_green from '@/pages/new_start_page/ui/hot_key_green_ui.vue';
 import { onClickOutside } from '@vueuse/core'
+import {useRouter} from 'vue-router'
 export default {
   components: {
     hot_key_blue,
@@ -226,13 +227,16 @@ export default {
     const isVisibleUserMenu = ref(false)
     const miniMenuRef = ref(null);
     const userMenuRef = ref(null);
-
+    const router  = useRouter()
 
     const closeElement = () => {
       isVisibleUserMenu.value = false
     }
 
-
+    const navigateTo = (name) => {
+      isVisibleMiniMenu.value = false
+      router.push(name)
+    }
     // onClickOutside(miniMenuRef, event => isVisibleMiniMenu.value = false)
     // onClickOutside(userMenuRef, event => isVisibleUserMenu.value = false)
 
@@ -284,6 +288,7 @@ export default {
       closeElement,
       miniMenuRef,
       userMenuRef,
+      navigateTo,
 
     };
   }

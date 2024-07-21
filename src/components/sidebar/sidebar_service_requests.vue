@@ -15,7 +15,7 @@
                 </ul>
                 <ul>
 
-                    <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li>
+                    <li @click="selectTab('ApproveApplication', $event.target)" class="first">Подтверждение заявок</li>
 
                 </ul>
 
@@ -56,7 +56,7 @@ export default {
         onMounted(() => {
             isActive.value = true
             setTimeout(() => isActive.value = false, 1500)
-            document.querySelector('.first').classList.add('activeItem')
+            document.querySelector('.first')?.classList.add('activeItem')
             context.emit('someEvent', 'ApproveApplication');
         })
         return {
