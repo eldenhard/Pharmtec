@@ -102,7 +102,9 @@ export default {
                     commentField_.value.focus()
                 }
                 return value ? true : 'Комментарий обязателен для выбранной статьи';
+
             }
+            
             if (!type_report_.value.limit) return true
             const formattedValue = inputValue_.value
             if (formattedValue > type_report_.value.limit || remainceForItemsTransaction.value <= 0) {

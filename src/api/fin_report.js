@@ -19,7 +19,7 @@ const getBalanceItems = (data) => {
 }
 
 const getTransactionsLimits = (data) => {
-    return api.get(`${items_limits}/`, data)
+    return api.get(`${items_limits}/`, {params: data})
 }
 export default {
     getFinancialReports,
