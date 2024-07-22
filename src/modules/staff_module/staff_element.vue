@@ -54,6 +54,7 @@
                         <th>Должность</th>
                         <th>Почта</th>
                         <th>Компания</th>
+                        <th>Руководитель</th>
                         <th>Статус</th>
                         <th>Заменяющий</th>
                     </tr>
@@ -69,6 +70,7 @@
                             <td>{{ user.job_info.name ?? 'Нет должности' }}</td>
                             <td @click="copyEmail(user.email)" class="email">{{ user.email }}</td>
                             <td>{{ user.company }}</td>
+                            <td>{{ user.department_info?.manager ?? "" }}</td>
                             <td>{{ user.status }}</td>
                             <td>{{ viceInfoShort(user.vice_info) }}</td>
                         </tr>
@@ -149,6 +151,7 @@ export default {
             filteredUsersList.value = users.value.filter(user =>
                 user.last_name.toLowerCase().includes(query) ||
                 user.first_name.toLowerCase().includes(query) ||
+                ( user.department_info &&  user.department_info?.manager?.toLowerCase().includes(query)) ||
                 (user.company && user.company.toLowerCase().includes(query)) ||
                 (user.job_info && user.job_info.name.toLowerCase().includes(query)) || // Проверяем, существует ли job_info и name
                 user.email.toLowerCase().includes(query)
