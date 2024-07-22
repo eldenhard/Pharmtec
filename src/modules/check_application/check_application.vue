@@ -56,7 +56,13 @@ export default {
 
         onMounted(async () => {
             try {
-                let response = await api.getAllUsers()
+                let queryParams = {
+                    department_info: {
+                        id: 3,
+                        manager: "Кораблева Екатерина Георгиевна"
+                    }
+                }
+                let response = await api.getAllUsers(queryParams)
                 allStaffByManager.value = response.data
             } catch (err) {
                 console.log(err)

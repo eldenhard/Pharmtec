@@ -25,8 +25,8 @@ const getDepartments = () => {
     return api.get(`${resourse}/departments/`)
 }
 
-const getAllUsers = () => {
-    return api.get(`${users}/`)
+const getAllUsers = (data) => {
+    return api.get(`${users}/`, {params: data})
 }
 const getFullDataUserById = (id) => {
     return api.get(`${users}/${id}`)
