@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in data_fin_report" :key="item.id">
+                    <tr v-for="(item, index) in data_fin_report" :key="item.id" :class="{notConfirm: !item.is_confirmed}">
                         <td>{{ index + 1 }}</td>
                         <td>{{ item.on_date.split('-').reverse().join(".") }}</td>
                         <td>{{ item.balance_sheet_item_info.name }}</td>

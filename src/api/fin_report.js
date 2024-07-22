@@ -7,6 +7,9 @@ export const items_limits = 'items-limits'
 const getFinancialReports = (data) => {
     return api.get(`${resourse}/`, {params: data})
 }
+const confirmFinancialEntry = (id,data) => {
+    return api.post(`${transaction}/${id}/confirm/`, data)
+}
 const createNewFinReport = (data) => {
     return api.post(`${resourse}/`, data)
 }
@@ -23,6 +26,7 @@ const getTransactionsLimits = (data) => {
 }
 export default {
     getFinancialReports,
+    confirmFinancialEntry,
     createNewTransaction,
     createNewFinReport,
     getBalanceItems,

@@ -27,6 +27,12 @@
 th,td{
   text-align: center;
 }
+.notConfirm{
+  td{
+
+    background: var(--colorRed);
+  }
+}
 .enterdata {
     display: flex;
     justify-content: space-between;
