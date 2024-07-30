@@ -3,7 +3,8 @@
         <h4 class="air_block_header">Подтверждение заявок</h4>
         <div class="air_block_body">
             <label for="" style="width: 50%;">Мои сотрудники
-                <v-select :options="allStaffByManager" label="email" v-model="currentUser_">
+                <v-select  :options="formatedUsers" label="full_name"
+                    v-model="currentUser_">
                     <template #no-options>
                         Сотрудники не найдены
                     </template>
@@ -43,7 +44,7 @@ import vSelect from "vue-select";
 import { useToast } from "vue-toastification";
 import api from '@/api/user.js'
 import api_fin from '@/api/fin_report.js'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, computed } from 'vue'
 import { refreshToken } from '@/mixins/refreshToken'
 export default {
     components: {
@@ -54,7 +55,7 @@ export default {
         const toast = useToast()
         const response_data_transaction_by_user_ = ref([])
         const currentUser_ = ref("")
-        
+
         onMounted(async () => {
             try {
                 await refreshToken()
@@ -70,8 +71,16 @@ export default {
         watch(currentUser_, async () => {
             await getFinancialReports()
         })
-       async function getFinancialReports (){
-        try {
+        const formatedUsers = computed(() => {
+            return allStaffByManager.value.map(user => {
+                return {
+                    full_name: user.last_name + " " + user.first_name,
+                    id: user.id
+                }
+            }).sort((a, b) => a.full_name.localeCompare(b.full_name))
+        })
+        async function getFinancialReports() {
+            try {
                 if (currentUser_.value !== null) {
                     const queryParams = {
                         author: Number(currentUser_.value.id),
@@ -98,7 +107,7 @@ export default {
                 })
             }
         }
-        async function confirmFinEntry(item, index){
+        async function confirmFinEntry(item, index) {
             try {
                 const queryParams = {
                     "balance_sheet_item": item?.balance_sheet_item_info.id,
@@ -107,7 +116,7 @@ export default {
                     "comment": item.manager_comment,
                     "is_confirmed": true,
                     "report": item.report
-                    }
+                }
                 await api_fin.confirmFinancialEntry(item.id, queryParams)
                 toast.success(`Заявка  подтверждена`, {
                     timeout: 2500
@@ -126,6 +135,7 @@ export default {
             currentUser_,
             confirmFinEntry,
             getFinancialReports,
+            formatedUsers,
         }
     },
 }
