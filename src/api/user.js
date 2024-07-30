@@ -28,6 +28,9 @@ const getDepartments = () => {
 const getAllUsers = (data) => {
     return api.get(`${users}/`, {params: data})
 }
+const getStaffByManagerUsers = (id,data) => {
+    return api.get(`${users}/staff/`, {params: data})
+}
 const getFullDataUserById = (id) => {
     return api.get(`${users}/${id}`)
 }
@@ -49,6 +52,7 @@ export default{
     refreshUserJWTToken,
     getDepartments,
     getAllUsers,
+    getStaffByManagerUsers,
     getUserById,
     putUserById,
     changePassword,

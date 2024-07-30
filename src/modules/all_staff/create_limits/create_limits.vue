@@ -41,7 +41,7 @@
             </table>
 
         </div>
-        <buttonComponent @click="saveData" disabled>Сохранить</buttonComponent>
+        <buttonComponent @click="saveData" >Сохранить</buttonComponent>
     </div>
 </template>
 
@@ -154,6 +154,7 @@ async function saveData() {
     await refreshToken()
     let data = [];
     useLoaderStore().setLoader(true)
+    // Разбиение где каждый клиент это отедльный запрос
     balance_items.forEach(item => {
         if (selectedUsers[item.id].length > 0) {
             selectedUsers[item.id].forEach(user => {
@@ -166,25 +167,19 @@ async function saveData() {
                     item: item.id
                 });
             });
-        } else {
-            data.push({
-                month: date_limits.value.split('-')[1],
-                year: date_limits.value.split('-')[0],
-                limit: item.limit,
-                comment: "",
-                user: null, // Если нет пользователей
-                item: item.id
-            });
-        }
+        } 
     });
+
+
     try {
-        let promises = data.map(item => api_fin.createNewTransactionLimits(item))
+        let promises = data.map(item => api_fin.createNewTransactionLimits([item]))
         await Promise.all(promises)
         useLoaderStore().setLoader(false)
 
         toast.success(`Лимиты сохранены`, {
             timeout: 3500
         })
+        date_limits.value = ""
     } catch (err) {
         useLoaderStore().setLoader(false)
 

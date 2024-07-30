@@ -59,7 +59,8 @@ export default {
         onMounted(async () => {
             try {
                 await refreshToken()
-                let response = await api.getAllUsers()
+                let id = localStorage.getItem('id')
+                let response = await api.getStaffByManagerUsers()
                 allStaffByManager.value = response.data
             } catch (err) {
                 console.log(err)
@@ -72,10 +73,11 @@ export default {
             await getFinancialReports()
         })
         const formatedUsers = computed(() => {
+            console.log(allStaffByManager.value)
             return allStaffByManager.value.map(user => {
                 return {
-                    full_name: user.last_name + " " + user.first_name,
-                    id: user.id
+                    full_name: user.user.fio,
+                    id: user.user.id
                 }
             }).sort((a, b) => a.full_name.localeCompare(b.full_name))
         })
