@@ -24,9 +24,13 @@ const getBalanceItems = (data) => {
 const getTransactionsLimits = (data) => {
     return api.get(`${items_limits}/`, {params: data})
 }
+const createNewTransactionLimits = (data) => {
+    return api.post(`${items_limits}/`, data)
+}
 export default {
     getFinancialReports,
     confirmFinancialEntry,
+    createNewTransactionLimits,
     createNewTransaction,
     createNewFinReport,
     getBalanceItems,

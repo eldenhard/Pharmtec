@@ -19,15 +19,22 @@
                         <th style="width: 40%;">Статья</th>
                         <th>Лимит, руб</th>
                         <th>Сотрудники</th>
+                        <th>Действие</th>
                     </tr>
                 </thead>
                 <tbody v-show="date_limits">
                     <tr v-for="item in balance_items" :key="item.id">
-                        <td style="width: 40%;">{{ item.name }}</td>
+                        <td style="width: 20% !important;">{{ item.name }}</td>
                         <td><input type="number" style="border: none; border-radius: 0;" v-model="item.limit"></td>
-                        <td style="width: 40%;">
+                        <td style="width: 30%;">
                             <v-select :id="item.id" v-model="selectedUsers[item.id]" :options="formatedUsers"
-                                label="full_name" multiple />
+                                label="full_name" multiple style="height: 100%;"/>
+                         
+                        </td>
+                        <td >
+                            <buttonComponent @click="toggleSelectUsers(item.id)" style="margin: 0;">
+                                {{ allSelected[item.id] ? 'Удалить всех' : 'Выбрать всех' }}
+                            </buttonComponent>
                         </td>
                     </tr>
                 </tbody>
@@ -46,7 +53,7 @@ import { useLoaderStore } from '@/store/LoaderStore'
 import api from '@/api/user'
 import api_fin from '@/api/fin_report.js'
 
-import {useGetAllUsers} from '@/store/AllUsers'
+import { useGetAllUsers } from '@/store/AllUsers'
 import { useToast } from "vue-toastification";
 import { refreshToken } from '@/mixins/refreshToken'
 
@@ -56,15 +63,18 @@ const balanceItemsStore = useBalanceItemsStore()
 const balance_items = reactive(JSON.parse(JSON.stringify(balanceItemsStore.balance_items)).sort((a, b) => a.name.localeCompare(b.name)))
 const all_users = ref([])
 const selectedUsers = reactive({})
+const allSelected = reactive({});
 const toast = useToast();
 const current_year_and_mount = new Date().toISOString().slice(0, 7)
 const checkedLastLimit = ref(false)
 
+
+
 watch(checkedLastLimit, async () => {
     if (!checkedLastLimit.value) {
         toast.info(`Лимиты прошлого месяца сброшены`, {
-        timeout: 3500
-    })
+            timeout: 3500
+        })
         balance_items.forEach((item) => {
             delete item.limit
         })
@@ -79,11 +89,10 @@ watch(checkedLastLimit, async () => {
     limits.data.forEach((item) => {
         item.name_value = balance_items.find((val) => val.id === item.item).name
     })
-    for(let item of balance_items){
+    for (let item of balance_items) {
         limits.data.forEach((limit) => {
-            if(item.name === limit.name_value){
+            if (item.name === limit.name_value) {
                 item.limit = limit.limit
-                console.log('проверка на юзера', limit, all_users.value)
                 // selectedUsers[item.id] = limit.users.map(userId => formatedUsers.value.find(user => user.id === userId))
             }
         })
@@ -91,14 +100,15 @@ watch(checkedLastLimit, async () => {
     toast.info(`Лимиты прошлого месяца установлены`, {
         timeout: 3500
     })
-    console.log('лимиты: ',limits.data, 'balance_items: ', balance_items)
+    console.log('лимиты: ', limits.data, 'balance_items: ', balance_items)
 })
 
 
 
 balance_items.forEach(item => {
-    selectedUsers[item.id] = []
-})
+  selectedUsers[item.id] = [];
+  allSelected[item.id] = false;
+});
 
 
 
@@ -108,7 +118,7 @@ const formatedUsers = computed(() => {
             full_name: user.last_name + " " + user.first_name,
             id: user.id
         }
-    })
+    }).sort((a, b) => a.full_name.localeCompare(b.full_name))
 })
 
 watch(date_limits, async () => {
@@ -132,9 +142,59 @@ watch(date_limits, async () => {
         useLoaderStore().setLoader(false)
     }
 })
+function toggleSelectUsers(itemId) {
+  if (allSelected[itemId]) {
+    selectedUsers[itemId] = [];
+  } else {
+    selectedUsers[itemId] = formatedUsers.value.slice();
+  }
+  allSelected[itemId] = !allSelected[itemId];
+}
+async function saveData() {
+    await refreshToken()
+    let data = [];
+    useLoaderStore().setLoader(true)
+    balance_items.forEach(item => {
+        if (selectedUsers[item.id].length > 0) {
+            selectedUsers[item.id].forEach(user => {
+                data.push({
+                    month: date_limits.value.split('-')[1],
+                    year: date_limits.value.split('-')[0],
+                    limit: item.limit,
+                    comment: "",
+                    user: user.id, // ID пользователя
+                    item: item.id
+                });
+            });
+        } else {
+            data.push({
+                month: date_limits.value.split('-')[1],
+                year: date_limits.value.split('-')[0],
+                limit: item.limit,
+                comment: "",
+                user: null, // Если нет пользователей
+                item: item.id
+            });
+        }
+    });
+    try {
+        let promises = data.map(item => api_fin.createNewTransactionLimits(item))
+        await Promise.all(promises)
+        useLoaderStore().setLoader(false)
 
-function saveData() {
-    console.log(selectedUsers)
+        toast.success(`Лимиты сохранены`, {
+            timeout: 3500
+        })
+    } catch (err) {
+        useLoaderStore().setLoader(false)
+
+        toast.error(`Ошибка сохранения лимитов\n${err}`, {
+            timeout: 3500
+        })
+    } finally {
+        useLoaderStore().setLoader(false)
+
+    }
 }
 </script>
 
