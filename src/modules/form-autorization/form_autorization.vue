@@ -124,7 +124,11 @@ export default {
                 localStorage.setItem('refreshToken', JSON.stringify(response.data.refresh));
                 current_user_id_store.setCurrentUserId()
                 localStorage.setItem('id', JSON.stringify(current_user_id_store.current_user_id))
-                router.push({ path: 'main' });
+               
+                router.push({ path: 'main' }).then(() => {
+                    window.location.reload(); // Перезагрузка страницы после перехода
+                });
+                
             } catch (err) {
                 toast.error(`Не найдено активной учетной записи с указанными данными`, {
                     timeout: 3000
