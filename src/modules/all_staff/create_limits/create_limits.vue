@@ -32,9 +32,9 @@
                          
                         </td>
                         <td >
-                            <buttonComponent @click="toggleSelectUsers(item.id)" style="margin: 0;">
+                            <button @click="toggleSelectUsers(item.id)"  type="button" class="btn btn-outline-dark" style="width: 100%;">
                                 {{ allSelected[item.id] ? 'Удалить всех' : 'Выбрать всех' }}
-                            </buttonComponent>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
