@@ -57,11 +57,13 @@ label{
     border: black ;
 }
 .air_block {
-    width: 85%;
+    width: 95%;
     margin: 2% auto;
+
     border-radius: 8px;
     box-shadow: 3px 4px 6px grey;
     padding: 4%;
+    box-sizing: border-box;
 
   }
 

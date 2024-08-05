@@ -45,7 +45,7 @@
         </div>
         <div class="air_block__table">
 
-            <table class="table table-hover table-bordered">
+            <table class="table table-hover table-sm table-bordered">
                 <thead v-if="currentColor == 'list'">
                     <tr>
                         <th>Фамилия</th>
@@ -53,10 +53,10 @@
                         <th>Отчество</th>
                         <th>Должность</th>
                         <th>Почта</th>
-                        <th>Компания</th>
                         <th>Руководитель</th>
                         <th>Статус</th>
                         <th>Заменяющий</th>
+                        <th>Компания</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,15 +64,15 @@
                     <template v-if="currentColor == 'list'">
                         <tr v-for="user in filteredUsersList" :key="user.id" :class="{ 'table-warning': user.status && user.vice_info }">
                             <!--  v-tippy="user.status" -->
-                            <td class="bookmark_block">{{ user.last_name }}</td>
+                            <td >{{ user.last_name }}</td>
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.middle_name }}</td>
                             <td>{{ user.job_info.name ?? 'Нет должности' }}</td>
                             <td @click="copyEmail(user.email)" class="email">{{ user.email }}</td>
-                            <td>{{ user.company }}</td>
                             <td>{{ user.department_info?.manager ?? "" }}</td>
                             <td>{{ user.status }}</td>
                             <td>{{ viceInfoShort(user.vice_info) }}</td>
+                            <td>{{ user.company }}</td>
                         </tr>
                     </template>
 

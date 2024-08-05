@@ -18,7 +18,14 @@ tr {
   cursor: pointer;
 }
 td{
-  white-space: nowrap;
+  // white-space: nowrap;
+  font-size: 14px;
+  // display: flex;
+  align-items: center;
+  vertical-align: middle;
+}
+th{
+  font-size: 14px;
 }
 .air_block__table {
   height: 58vh;
