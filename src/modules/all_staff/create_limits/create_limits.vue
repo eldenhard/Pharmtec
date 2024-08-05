@@ -16,23 +16,25 @@
             <table class="table table-bordered table-hover table-sm">
                 <thead>
                     <tr>
-                        <th style="width: 40%;">Статья</th>
+                        <th style="width: 30%; background: #D6F5FF; cursor: pointer;"  @click="openSearch" ref="search_element">
+                            <span v-show="!isSearch">Статья</span>
+                            <input type="text" v-model="search" v-show="isSearch" placeholder="Поиск..." ref="search_input">
+                        </th>
                         <th>Лимит, руб</th>
                         <th>Сотрудники</th>
                         <th>Действие</th>
                     </tr>
                 </thead>
                 <tbody v-show="date_limits">
-                    <tr v-for="item in balance_items" :key="item.id">
+                    <tr v-for="item in filteredBalanceItems" :key="item.id">
                         <td style="width: 20% !important;">{{ item.name }}</td>
                         <td><input type="number" style="border: none; border-radius: 0;" v-model="item.limit"></td>
                         <td style="width: 30%;">
                             <v-select :id="item.id" v-model="selectedUsers[item.id]" :options="formatedUsers"
                                 label="full_name" multiple style="height: 100%;"/>
-                         
                         </td>
-                        <td >
-                            <button @click="toggleSelectUsers(item.id)"  type="button" class="btn btn-outline-dark" style="width: 100%;">
+                        <td>
+                            <button @click="toggleSelectUsers(item.id)"  type="button"  class="btn btn-outline-dark  btn-sm" style="width: 100%; height: 100%">
                                 {{ allSelected[item.id] ? 'Удалить всех' : 'Выбрать всех' }}
                             </button>
                         </td>
@@ -46,7 +48,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, reactive } from 'vue'
+import { ref, watch, computed, reactive,nextTick  } from 'vue'
 import buttonComponent from "../../../ui/button/buttonComponent.vue";
 import { useBalanceItemsStore } from '@/store/BalanceItemsStore'
 import { useLoaderStore } from '@/store/LoaderStore'
@@ -56,7 +58,7 @@ import api_fin from '@/api/fin_report.js'
 import { useGetAllUsers } from '@/store/AllUsers'
 import { useToast } from "vue-toastification";
 import { refreshToken } from '@/mixins/refreshToken'
-
+import { onClickOutside } from '@vueuse/core'
 
 const date_limits = ref("")
 const balanceItemsStore = useBalanceItemsStore()
@@ -67,7 +69,25 @@ const allSelected = reactive({});
 const toast = useToast();
 const current_year_and_mount = new Date().toISOString().slice(0, 7)
 const checkedLastLimit = ref(false)
+const isSearch = ref(false)
+const search = ref("")
+const search_element = ref(null)
+const search_input = ref(null)
 
+const filteredBalanceItems = computed(() => {
+    return balance_items.filter(item => item.name.toLowerCase().includes(search.value.toLowerCase()))
+})
+const openSearch = async () => {
+    isSearch.value = true
+    await nextTick()
+    search_input.value.focus()
+}
+
+onClickOutside(search_element, event =>  {
+    search.value = ""
+    if(isSearch.value) isSearch.value = false
+    
+})
 
 
 watch(checkedLastLimit, async () => {

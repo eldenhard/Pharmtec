@@ -1,5 +1,19 @@
 <template>
     <div class="air_block">
+        <div class="header_element">
+            <section>
+                <span class="description">Финансовый отчет сотрудника: </span>
+                <span>
+                    {{ info_about_fin_report[0]?.author_info.last_name }}
+                    {{ info_about_fin_report[0]?.author_info.first_name }}
+                </span>
+            </section>
+            <section>
+                <span>Остаток на начало: {{ formatAmount(info_about_fin_report[0]?.balance_on_begin) }} ₽</span>
+                <span>Остаток на конец: {{ formatAmount(info_about_fin_report[0]?.balance_on_end) }} ₽</span>
+            </section>
+        </div>
+        <hr>
 
         <label for="">Выберите месяц и год отчета
             <input type="month" v-model="date_fin_report_">
@@ -86,6 +100,7 @@ export default {
         const response_data_fin_report_ = ref([])
         const amountRowFin = ref(0)
         const $toast = useToast();
+        const info_about_fin_report = ref([])
 
         const user_id = localStorage.getItem('id')
 
@@ -94,7 +109,18 @@ export default {
         onMounted(() => {
             date_transaction_.value = new Date().toISOString().slice(0, 10)
         })
-
+        const formatAmount = (value) => {
+         
+            if (value != "" && !!value) {
+                if (Number.isFinite(value)) {
+                    let TwoSignNum = value?.toFixed(0)
+                    return String(TwoSignNum).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, "$1 ");
+                } else {
+                    return 0;
+                }
+            }
+            return value
+        }
         const validateComment = (value) => {
             if (type_report_.value.name == 'Прочие расходы (с комментариями)') {
                 console.log('123')
@@ -104,7 +130,7 @@ export default {
                 return value ? true : 'Комментарий обязателен для выбранной статьи';
 
             }
-            
+
             if (!type_report_.value.limit) return true
             const formattedValue = inputValue_.value
             if (formattedValue > type_report_.value.limit || remainceForItemsTransaction.value <= 0) {
@@ -132,6 +158,7 @@ export default {
             try {
                 $loader.setLoader(true)
                 response_data_fin_report_.value = []
+                info_about_fin_report.value = []
                 const queryParams = {
                     author: Number(user_id),
                     month: Number(date_fin_report_.value.slice(-2)),
@@ -142,15 +169,16 @@ export default {
                     api.getFinancialReports(queryParams),
                     api.getTransactionsLimits(queryParams)
                 ])
-                if(response.data.length == 0) {
+                info_about_fin_report.value = response.data
+                if (response.data.length == 0) {
                     $loader.setLoader(false)
                     $toast.error('Финансовый отчет не найден.\nСообщите в тех.поддержку', {
                         timeout: 3500
                     })
                     return
                 }
-                    
-                console.log('response.data[0].id', response.data)
+
+
                 if (response.data.length > 0) {
                     const transactions = response.data[0].transactions
                     const limitsData = limits.data
@@ -244,6 +272,8 @@ export default {
             commentField_,
             response_data_fin_report_,
             remainceForItemsTransaction,
+            info_about_fin_report,
+            formatAmount,
         };
     }
 };

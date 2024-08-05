@@ -52,7 +52,9 @@ label{
     color: rgb(87, 87, 87);
     cursor: pointer;
 }
-
+input,select, button{
+    cursor: pointer;
+}
 .vs__dropdown-toggle{
     border: black ;
 }
@@ -66,10 +68,23 @@ label{
     box-sizing: border-box;
 
   }
-
-  .header_element{
+.header_element{
+    display: flex;
+    justify-content: space-between;
+}
+.header_element section{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.description{
     font-weight: bold;
-    font-size: 2.2vh;
+    color: rgb(73, 73, 73);
+    font-size: 16px;
+}
+.header_element span:nth-child(2){
+    color: rgb(34, 34, 34);
+    
 }
 .textarea{
     border: 1.2px solid var(--ColorDisabled);
