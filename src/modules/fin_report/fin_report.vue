@@ -15,10 +15,17 @@
         </div>
         <hr>
 
-        <label for="">Выберите месяц и год отчета
-            <input type="month" v-model="date_fin_report_">
-        </label>
-        <div class="air_block_body" v-show="Number(date_fin_report_.split('-')[1]) == new Date().getMonth() + 1">
+        <div class="f_block" style="display: flex; justify-content: space-between">
+            <label for="">Выберите месяц и год отчета
+                <input type="month" v-model="date_fin_report_">
+            </label>
+            <span style="color: grey; cursor: pointer"
+             @click="isEnterData = !isEnterData"
+             v-if="Number(date_fin_report_.split('-')[1]) !== new Date().getMonth()"
+             >
+             {{isEnterData ? 'Свернуть' : 'Развернуть'}}</span>
+        </div>
+        <div class="air_block_body" v-show="Number(date_fin_report_.split('-')[1]) == new Date().getMonth() + 1 && isEnterData">
 
             <section class="enterdata">
                 <div class="input-box">
@@ -34,11 +41,11 @@
                     <v-select v-model="type_report_" :options="expensesLabelLimit" label="name"
                         style="min-width: 20vw; width: auto;" />
                 </div>
-                <div class="input-box" v-if="type_report_.limit">
+                <!-- <div class="input-box" v-if="type_report_?.limit">
                     <label style="font-size: 13px;">Остаток по статье, ₽</label>
                     <input disabled :value="remainceForItemsTransaction">
-                </div>
-                <div class="input-box" v-if="type_report_.limit">
+                </div> -->
+                <div class="input-box" v-if="type_report_?.limit">
                     <label style="font-size: 13px;">Лимит по статье, ₽</label>
                     <input :value="type_report_.limit" disabled>
                 </div>
@@ -101,7 +108,8 @@ export default {
         const amountRowFin = ref(0)
         const $toast = useToast();
         const info_about_fin_report = ref([])
-
+        const isEnterData = ref(false)
+        
         const user_id = localStorage.getItem('id')
 
         let current_report_id = 0
@@ -133,7 +141,7 @@ export default {
 
             if (!type_report_.value.limit) return true
             const formattedValue = inputValue_.value
-            if (formattedValue > type_report_.value.limit || remainceForItemsTransaction.value <= 0) {
+            if (formattedValue > type_report_.value.limit ) {
 
                 if (!value) {
                     commentField_.value.focus()
@@ -211,18 +219,7 @@ export default {
                 $toast.error(`${err}`, { timeout: 4000 })
             }
         }
-        // Получение остатка по статье
-        const remainceForItemsTransaction = computed(() => {
-            // console.log(response_data_fin_report_.value, type_report_.value, 'computed')
-            let arraySumByItemTransaction = response_data_fin_report_.value.reduce((acc, item) => {
-                if (item.balance_sheet_item_info.name === type_report_.value.name) {
-                    acc += item.amount
-                }
-                return acc
-            }, 0)
-            console.log(arraySumByItemTransaction, 'acc')
-            return type_report_.value?.limit - arraySumByItemTransaction
-        })
+
 
         const saveFinReport = async () => {
             $loader.setLoader(true)
@@ -255,6 +252,7 @@ export default {
             }
         }
 
+
         return {
             date_fin_report_,
             amountRowFin,
@@ -271,9 +269,9 @@ export default {
             validateComment,
             commentField_,
             response_data_fin_report_,
-            remainceForItemsTransaction,
             info_about_fin_report,
             formatAmount,
+            isEnterData,
         };
     }
 };

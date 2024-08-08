@@ -16,7 +16,7 @@
                 <ul>
 
                     <li @click="selectTab('ApproveApplication', $event.target)" class="first">Подтверждение заявок</li>
-
+                    <li @click="selectTab('ApproveApplicationBookkeeping', $event.target)">Подтверждение заявок (бухгалетрия)</li>
                 </ul>
 
             </div>
