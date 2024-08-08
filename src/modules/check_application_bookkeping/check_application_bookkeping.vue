@@ -8,14 +8,14 @@
                     <template #no-options>
                         Сотрудники не найдены
                     </template>
-                </v-select>
-            </label> -->
+</v-select>
+</label> -->
             <br> <br>
             <table class="table table-bordered table-hover table-sm">
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Дата</th>
+                        <th>ФИО</th>
                         <th>Наименование</th>
                         <th>Сумма</th>
                         <th>Комментарий сотрудника</th>
@@ -24,15 +24,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in response_data_transaction_by_user_" :key="index">
-                        <td>{{ index + 1 }}</td>
-                        <td>{{ item.on_date.split('-').reverse().join('.') }}</td>
-                        <td>{{ item.balance_sheet_item_info.name }}</td>
-                        <td>{{ item.amount }}</td>
-                        <td>{{ item.comment }}</td>
-                        <td><input type="checkbox" @change="confirmFinEntry(item, index)"></td>
-                        <td><input type="text" v-model="item.manager_comment"></td>
-                    </tr>
+                    <template v-for="(item, index) in allTransactions">
+                        <tr v-for="j in item.transactions" :key="j.id">
+                            <template v-if="!j.is_confirmed">
+                                <td>{{ j.on_date.split("-").reverse().join(".") }}</td>
+                                <td>{{ item.author.first_name }} {{ item.author.last_name }}</td>
+                                <td>{{ j.balance_sheet_item_info.name }}</td>
+                                <td>{{ j.amount }}</td>
+                                <td>{{ j.comment }}</td>
+                                <td>
+                                    <select name="" id="">
+                                        <option value="1">1</option>
+                                    </select>
+
+                                </td>
+                            </template>
+                        </tr>
+                    </template>
                 </tbody>
             </table>
         </div>
@@ -55,6 +63,7 @@ export default {
         const toast = useToast()
         const response_data_transaction_by_user_ = ref([])
         const currentUser_ = ref("")
+        const allTransactions = ref([])
 
         onMounted(async () => {
             try {
@@ -70,7 +79,7 @@ export default {
                 })
             }
         })
- 
+
         const formatedUsers = computed(() => {
             console.log(allStaffByManager.value)
             return allStaffByManager.value.map(user => {
@@ -94,11 +103,11 @@ export default {
                             timeout: 2500
                         })
 
-                    let data = []
-                    response.data.forEach((item) => {
-                        data.push({author: item.author_info,transactions: item.transactions})
-                    })
-                    console.log('data', data)
+
+                        response.data.forEach((item) => {
+                            allTransactions.value.push({ author: item.author_info, transactions: item.transactions })
+                        })
+                        console.log('data', allTransactions.value)
                         // response_data_transaction_by_user_.value = response?.data[0]?.transactions.filter((item) => item.is_confirmed === false)
                         // response_data_transaction_by_user_.value.forEach(item => item.manager_comment = "")
                     } else {
@@ -143,6 +152,7 @@ export default {
             confirmFinEntry,
             getFinancialReports,
             formatedUsers,
+            allTransactions,
         }
     },
 }
