@@ -24,8 +24,13 @@
     
     }
   }
+  .warning{
+    background: var(--colorRed);
+  }
 th,td{
   text-align: center;
+ 
+  vertical-align: middle;
 }
 .enterdata {
     display: flex;

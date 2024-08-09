@@ -29,9 +29,9 @@
                         <td>{{ item.on_date.split('-').reverse().join('.') }}</td>
                         <td>{{ item.balance_sheet_item_info.name }}</td>
                         <td>{{ item.amount }}</td>
-                        <td>{{ item.comment }}</td>
+                        <td>{{ item.staff_comment }}</td>
                         <td><input type="checkbox" @change="confirmFinEntry(item, index)"></td>
-                        <td><input type="text" v-model="item.manager_comment"></td>
+                        <td><input type="text" v-model="item.comment"></td>
                     </tr>
                 </tbody>
             </table>
@@ -95,7 +95,7 @@ export default {
                             timeout: 2500
                         })
                         response_data_transaction_by_user_.value = response?.data[0]?.transactions.filter((item) => item.is_confirmed === false)
-                        response_data_transaction_by_user_.value.forEach(item => item.manager_comment = "")
+                        response_data_transaction_by_user_.value.forEach(item => item.comment = "")
                     } else {
                         toast.warning(`Данные по выбранному пользователю отсутствуют`, {
                             timeout: 3000
@@ -115,9 +115,10 @@ export default {
                     "balance_sheet_item": item?.balance_sheet_item_info.id,
                     "on_date": item.on_date,
                     "amount": item.amount,
-                    "comment": item.manager_comment,
+                    "comment": item.comment,
                     "is_confirmed": true,
-                    "report": item.report
+                    "report": item.report,
+                    'staff_comment': item.staff_comment
                 }
                 await api_fin.confirmFinancialEntry(item.id, queryParams)
                 toast.success(`Заявка  подтверждена`, {

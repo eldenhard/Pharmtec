@@ -228,7 +228,7 @@ export default {
                 let queryParametrs = {
                     on_date: date_transaction_.value,
                     amount: inputValue_.value,
-                    comment: comment_transaction_.value,
+                    staff_comment: comment_transaction_.value,
                     balance_sheet_item: type_report_.value.id,
                     report: current_report_id
                     // balance_sheet_item: type_report_.value.id
