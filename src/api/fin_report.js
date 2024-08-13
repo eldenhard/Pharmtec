@@ -10,6 +10,9 @@ const getFinancialReports = (data) => {
 const confirmFinancialEntry = (id,data) => {
     return api.post(`${transaction}/${id}/confirm/`, data)
 }
+const editFinancialEntry = (id,data) => {
+    return api.patch(`${transaction}/${id}/`, data)
+}
 const createNewFinReport = (data) => {
     return api.post(`${resourse}/`, data)
 }
@@ -30,6 +33,7 @@ const createNewTransactionLimits = (data) => {
 export default {
     getFinancialReports,
     confirmFinancialEntry,
+    editFinancialEntry,
     createNewTransactionLimits,
     createNewTransaction,
     createNewFinReport,

@@ -23,7 +23,7 @@
              @click="isEnterData = !isEnterData"
              v-if="Number(date_fin_report_.split('-')[1]) !== new Date().getMonth()"
              >
-             {{isEnterData ? 'Свернуть' : 'Развернуть'}}</span>
+             {{isEnterData  ? 'Свернуть' : 'Развернуть'}}</span>
         </div>
         <div class="air_block_body" v-show="Number(date_fin_report_.split('-')[1]) == new Date().getMonth() + 1 && isEnterData">
 
@@ -108,7 +108,7 @@ export default {
         const amountRowFin = ref(0)
         const $toast = useToast();
         const info_about_fin_report = ref([])
-        const isEnterData = ref(false)
+        const isEnterData = ref(true)
         
         const user_id = localStorage.getItem('id')
 

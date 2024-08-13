@@ -18,7 +18,7 @@
                 <tbody>
                     <template v-for="(item, index) in allTransactions">
                         <tr v-for="j in item.transactions" :key="j.id">
-                            <template v-if="!j.is_confirmed">
+                            <template v-if="j.is_confirmed == true && !j.is_accounting_confirmed">
                                 <td>{{ j.on_date.split("-").reverse().join(".") }}</td>
                                 <td>{{ item.author.first_name }} {{ item.author.last_name }}</td>
                                 <td>{{ j.balance_sheet_item_info.name }}</td>
@@ -162,17 +162,18 @@ export default {
                 console.log('item', item)
                 // Логика сохранения транзакции
                 const queryParams = {
-                    "balance_sheet_item": item?.balance_sheet_item_info.id,
-                    "on_date": item.on_date,
-                    "amount": item.amount,
+                    // "balance_sheet_item": item?.balance_sheet_item_info.id,
+                    // "on_date": item.on_date,
+                    // "amount": item.amount,
                     // "comment": item.comment,
-                    "is_accounting_confirmed": true,
-                    "report": item.report,
+                    "is_accounting_confirmed":  item.is_accounting_confirmed,
+                    // "report": item.report,
                     "accounting_comment": item.comment_bookkeeping,
-                    'staff_comment': item.staff_comment
+                    // "staff_comment" : item.staff_comment,
+                    // "is_confirmed": item.is_confirmed
                 }
                 console.log('Параметры запроса:', queryParams);
-                await api_fin.confirmFinancialEntry(item.id, queryParams)
+                await api_fin.editFinancialEntry(item.id, queryParams)
                 toast.success(`Действие по заявке сохранено`, {
                     timeout: 2500
                 })

@@ -13,6 +13,8 @@
                         <th>Сумма</th>
                         <th>Комментарий</th>
                         <th>Подтверждение</th>
+                        <th>Подтверждение бух.</th>
+                        <th>Коммент. бух.</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,6 +25,8 @@
                         <td>{{ item.amount }}</td>
                         <td>{{ item.comment }}</td>
                         <td>{{ item.is_confirmed ? 'Согласовано' : 'Не согласовано' }}</td>
+                        <td>{{ item.is_accounting_confirmed ? 'Согласовано' : 'Не согласовано' }}</td>
+                        <td>{{ item.accounting_comment  }}</td>
                     </tr>
                 </tbody>
             </table>
