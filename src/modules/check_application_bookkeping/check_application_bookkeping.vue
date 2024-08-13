@@ -110,6 +110,7 @@ export default {
 
         async function getFinancialReports() {
             try {
+                allTransactions.value = []
                 if (currentUser_.value !== null) {
                     const queryParams = {
                         month: Number(new Date().getMonth() + 1),
