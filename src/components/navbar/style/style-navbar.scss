@@ -291,7 +291,7 @@
 .user_menu{
   background: white;
   box-shadow: 2px 2px 5px grey;
-  min-height: 25vh;
+  min-height: 22vh;
   height: auto;
   min-width: 20vw;
   position: absolute;
@@ -331,6 +331,7 @@
 
 .active_block{
   background: #F9F9F9;
+  // background: red;
   // background: grey;
   margin: 4%;
   border-radius: 22px;
@@ -343,6 +344,7 @@
   .f_line{
     display: flex;
     justify-content: space-between;
+    margin-right: auto;
     align-items: center;
     vertical-align: baseline;
     h5{

@@ -158,8 +158,8 @@
             <div class="f_line">
               <img src="./assets/user.png" alt="логотип сотрудника" style="width: 20%; height: 20%;">
               <div class="description">
-                <h5>Балина Светлана</h5>
-                <span>Менеджер по маркетинговым коммуникациям</span>
+                <h5>Фамилия Имя </h5>
+                <span>Должность сотрудника</span>
               </div>
             </div>
 
