@@ -68,7 +68,7 @@
                                 <div>
                                     <p>День рождения: <span>{{ _user_data?.birth_date?.split("-").reverse().join('.')
                                             }}</span></p>
-                                    <p>Стаж работы: <span></span></p>
+                                    <p>Дата начало работы: <span></span></p>
                                 </div>
                             </div>
                             <hr>

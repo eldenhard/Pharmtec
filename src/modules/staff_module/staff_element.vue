@@ -52,6 +52,7 @@
                         <th>Имя</th>
                         <th>Отчество</th>
                         <th>Должность</th>
+                        <th>Стаж</th>
                         <th>Почта</th>
                         <th>Департамент</th>
                         <th>Город</th>
@@ -70,6 +71,7 @@
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.middle_name }}</td>
                             <td>{{ user.job_info.name ?? 'Нет должности' }}</td>
+                            <td></td>
                             <td @click="copyEmail(user.email)" class="email">{{ user.email }}</td>
                             <td></td>
                             <td></td>

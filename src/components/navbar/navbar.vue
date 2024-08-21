@@ -185,7 +185,7 @@
               <button class="tab_button">Главная</button>
             </router-link>
           </li>
-          <li><button class="tab_button">О компании</button></li>
+          <li><button class="tab_button" @click="page_404('О компании')">О компании</button></li>
           <li>
             <router-link to="/workspace" style="outline: none !important; text-decoration: none !important;">
               <button class="tab_button">Все сотрудники</button>
@@ -196,7 +196,11 @@
               <button class="tab_button">Полезные сервисы</button>
             </router-link>
           </li>
-          <li><button class="tab_button">Техподдержка</button></li>
+          <li>
+            <router-link to="/support" style="outline: none !important; text-decoration: none !important;">
+              <button class="tab_button">Техподдержка</button>
+            </router-link>
+         </li>
         </ul>
       </div>
     </div>
@@ -215,6 +219,7 @@ import hot_key_blue from '@/pages/new_start_page/ui/hot_key_blue_ui.vue';
 import hot_key_green from '@/pages/new_start_page/ui/hot_key_green_ui.vue';
 import { onClickOutside } from '@vueuse/core'
 import {useRouter} from 'vue-router'
+import { useToast } from "vue-toastification";
 export default {
   components: {
     hot_key_blue,
@@ -228,11 +233,16 @@ export default {
     const miniMenuRef = ref(null);
     const userMenuRef = ref(null);
     const router  = useRouter()
+    const toast = useToast()
 
     const closeElement = () => {
       isVisibleUserMenu.value = false
     }
-
+    const page_404 = (val) => {
+      toast.error(`Страница "${val}" находится в разработке`, {
+        timeout: 4000
+      })
+    }
     const navigateTo = (name) => {
       isVisibleMiniMenu.value = false
       router.push(name)
@@ -289,6 +299,7 @@ export default {
       miniMenuRef,
       userMenuRef,
       navigateTo,
+      page_404,
 
     };
   }

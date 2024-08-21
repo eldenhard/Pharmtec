@@ -14,10 +14,7 @@
 
                 </ul>
                 <ul>
-                    <li @click="selectTab('companyStructure', $event.target)" class="first">Структура компании</li>
-                    <li @click="selectTab('staff', $event.target)">Список сотрудников</li>
-                    <li @click="selectTab('forManagment', $event.target)">Для руководителя</li>
-                    <!-- <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li> -->
+                    <li @click="selectTab('it_support', $event.target)" class="first">Заявка в IT службу</li>
             
                 </ul>
 
@@ -56,9 +53,7 @@ export default {
             context.emit('someEvent', data);
 
         };
-        const navigateTo = (name) => {
-            route.push(name)
-        }
+    
         onMounted(() => {
             isActive.value = true
             setTimeout(() => isActive.value = false, 1500)
@@ -67,7 +62,6 @@ export default {
         })
         return {
             selectTab,
-            navigateTo,
             isActive
         };
     }
