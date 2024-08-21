@@ -45,7 +45,7 @@
                             <option value="Работает">Работает</option>
                         </select>
                         <a style="color: #14949C" @click="editUserProfile = !editUserProfile">{{ !editUserProfile ?
-                            'Сохранить' : 'Редактировать' }}</a>
+                            'Сохранить' : 'Изменить статус' }}</a>
                     </div>
                     <div class="s_line">
                         <div class="img_block">

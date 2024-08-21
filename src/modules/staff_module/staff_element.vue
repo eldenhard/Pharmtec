@@ -53,6 +53,8 @@
                         <th>Отчество</th>
                         <th>Должность</th>
                         <th>Почта</th>
+                        <th>Департамент</th>
+                        <th>Город</th>
                         <th>Руководитель</th>
                         <th>Статус</th>
                         <th>Заменяющий</th>
@@ -69,6 +71,8 @@
                             <td>{{ user.middle_name }}</td>
                             <td>{{ user.job_info.name ?? 'Нет должности' }}</td>
                             <td @click="copyEmail(user.email)" class="email">{{ user.email }}</td>
+                            <td></td>
+                            <td></td>
                             <td>{{ user.department_info?.manager ?? "" }}</td>
                             <td>{{ user.status }}</td>
                             <td>{{ viceInfoShort(user.vice_info) }}</td>
@@ -86,6 +90,8 @@
                                     <div style="width: 30%; margin-left: auto; ">
                                         <img :src="getCurrentPicture(user.company)">
                                     </div>
+   
+                                    <!-- <p>{{ user }}</p> -->
                                     <p style="margin-top: 10%;">{{ user.last_name }} {{ user.first_name }}
                                         {{ user.middle_name }}</p>
                                     <p>{{ user.job_info.name }}</p>
@@ -119,7 +125,7 @@ export default {
         const search = ref("")
         const filteredUsersList = ref([])
         const filteredUsersGrid = ref([])
-        const currentColor = ref("list")
+        const currentColor = ref("picture")
 
         const currentCompanyForFilter = ref("Все")
 
@@ -170,10 +176,14 @@ export default {
         watch(currentCompanyForFilter, () => {
             if(currentCompanyForFilter.value == "Фармтек"){
                 filteredUsersList.value = users.value.filter(user => user.company == "ФАРМТЕК")
+                filteredUsersGrid.value = users.value.filter(user => user.company == "ФАРМТЕК")
             } else if(currentCompanyForFilter.value == "Интелбио"){
                 filteredUsersList.value = users.value.filter(user => user.company == "ИНТЕЛБИО")
+                filteredUsersGrid.value = users.value.filter(user => user.company == "ИНТЕЛБИО")
             } else {
                 filteredUsersList.value = users.value.filter(user => user.company == "ИНТЕЛБИО" || user.company == "ФАРМТЕК")
+                filteredUsersGrid.value = users.value.filter(user => user.company == "ИНТЕЛБИО" || user.company == "ФАРМТЕК")
+
             }
         })
         const changeCurrentDisplayGrid = (color) => {

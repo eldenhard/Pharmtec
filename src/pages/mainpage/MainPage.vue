@@ -7,7 +7,7 @@
       <Transition name="fade" mode="out-in" appear>
         <workspace :key="receivedData">
           <br>
-          <Transition name='fade'>
+          <!-- <Transition name='fade'>
             <div v-if="receivedData == 'Applications'">
               <order :type="'Заявка на отпуск'" :idItem="'flush-collapseOne'"
                 :list_category="['Очередной', 'За свой счет', 'Декретный']" />
@@ -17,40 +17,12 @@
                 :list_category="['На самолете', 'На поезде', 'На машине']" />
               <order :type="'Заявка на служебную поездку'" :idItem="'flush-collapseFour'"
                 :list_category="['На самолете', 'На поезде', 'На машине']" />
-              <order :type="'Изменение личных данных'" :idItem="'flush-collapseFive'"
+              <order :type="'Заявка на изменение личных данных'" :idItem="'flush-collapseFive'"
                 :list_category="['Арес', 'Паспортные данные', 'Контакты']" />
-              <order :type="'Увольнение'" :idItem="'flush-collapseSix'" :list_category="['Увольнение']" />
+              <order :type="'Заявка на увольнение'" :idItem="'flush-collapseSix'" :list_category="['Увольнение']" />
             </div>
-          </Transition>
+          </Transition> -->
           <component :is="currentTabComponent" />
-          <!-- <div v-if="receivedData == 'forManagment'">
-            <for_manager />
-          </div>
-          <div v-if="receivedData == 'staff'">
-            <staff_element />
-          </div>
-          <div v-if="receivedData == 'ForAdmin'">
-            <for_admin />
-          </div>
-          <div v-if="receivedData == 'booking'">
-            <sheduleElement />
-          </div>
-          <div v-if="receivedData == 'FinReport'">
-            <fin_report />
-          </div>
-          <div v-if="receivedData == 'ApproveApplication'">
-            <check_application />
-          </div>
-          <div v-if="receivedData == 'companyStructure'">
-            <company_structure />
-          </div>
-
-          <div v-if="receivedData == 'News'">
-            <news />
-          </div>
-          <div v-if="receivedData == 'informationAboutProducts'">
-            <products_company />
-          </div> -->
         </workspace>
       </Transition>
     </div>

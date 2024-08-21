@@ -15,25 +15,19 @@
                 </ul>
                 <ul>
                     <li @click="selectTab('companyStructure', $event.target)" class="first">Структура компании</li>
-                    <li @click="selectTab('staff', $event.target)">Сотрудники</li>
-                    <li @click="selectTab('Applications', $event.target)">Заявки</li>
-                    <li @click="selectTab('FinReport', $event.target)">Финансовый отчет</li>
-                    <li @click="selectTab('createLimits', $event.target)">Статьи финансового отчета</li>
-                    <li @click="selectTab('booking', $event.target)">Бронирование переговорной</li>
+                    <li @click="selectTab('staff', $event.target)">Список сотрудников</li>
                     <li @click="selectTab('forManagment', $event.target)">Для руководителя</li>
                     <!-- <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li> -->
-                    <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
-                    <li @click="selectTab('informationAboutProducts', $event.target)">Товарные знаки</li>
-                    <li @click="navigateTo('lk')">Статус пользователя</li>
+            
                 </ul>
 
             </div>
-            <div class="sidebar_block__news">
+            <!-- <div class="sidebar_block__news">
                 <miniloader :isActiveMiniLoader="isActive" />
                 <ul>
                     <li @click="selectTab('News', $event.target)">Новости</li>
                 </ul>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -62,9 +56,7 @@ export default {
             context.emit('someEvent', data);
 
         };
-        const navigateTo = (name) => {
-            route.push(name)
-        }
+    
         onMounted(() => {
             isActive.value = true
             setTimeout(() => isActive.value = false, 1500)
@@ -73,7 +65,6 @@ export default {
         })
         return {
             selectTab,
-            navigateTo,
             isActive
         };
     }

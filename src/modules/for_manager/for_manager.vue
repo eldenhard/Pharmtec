@@ -1,6 +1,9 @@
 <template>
     <section class="air_block">
-        <p class="header_element">Заявка на регистрацию</p>
+       
+        <section  class="header_element">
+            <span class="description">Заявка на регистрацию</span>
+        </section>
         <hr>
         <form @submit.prevent="createApplicationForManager($event.target)">
             <section class="grid_row">
@@ -39,6 +42,10 @@
                     <div class="input-box">
                         <label style="background: white !important; position: absolute; z-index:1;">Руководитель</label>
                         <v-select v-model="formData.manager_pre" :options="allUsers" label="full_name" required />
+                    </div>
+                    <div class="input-box">
+                        <label>Дата приема на работу</label>
+                        <input type="date" v-model="formData.date_start_work" name="date_start_work" required>
                     </div>
                 </div>
             </section>
@@ -81,6 +88,8 @@ export default {
             manager_pre: '',
             region_pre: '',
             date_of_birth: '',
+            // дата начала работы
+            date_start_work: '',
         })
         const toast = useToast()
         const allUsers = ref([])

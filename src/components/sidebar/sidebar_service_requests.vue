@@ -15,17 +15,24 @@
                 </ul>
                 <ul>
 
+                    <li @click="selectTab('booking', $event.target)">Бронирование переговорной</li>
+                    <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
+                    <li @click="selectTab('Applications', $event.target)">Заявки</li>
                     <li @click="selectTab('ApproveApplication', $event.target)" class="first">Подтверждение заявок</li>
                     <li @click="selectTab('ApproveApplicationBookkeeping', $event.target)">Подтверждение заявок (бухгалетрия)</li>
+                    <li @click="navigateTo('lk')">Статус пользователя</li>
+                    <li @click="selectTab('createLimits', $event.target)">Статьи финансового отчета</li>
+                    <li @click="selectTab('informationAboutProducts', $event.target)">Товарные знаки</li>
+                    <li @click="selectTab('FinReport', $event.target)">Финансовый отчет</li>
                 </ul>
 
             </div>
-            <div class="sidebar_block__news">
+            <!-- <div class="sidebar_block__news">
                 <miniloader :isActiveMiniLoader="isActive" />
                 <ul>
                     <li @click="selectTab('News', $event.target)">Новости</li>
                 </ul>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -33,13 +40,17 @@
 <script>
 import { ref, onMounted, defineEmits } from 'vue';
 import miniloader from '../../ui/miniloader/miniloader.vue';
+import { useRoute, useRouter } from 'vue-router';
 export default {
     components: {
         miniloader,
     },
     setup(props, context) {
         const isActive = ref(Boolean)
-
+        const route = useRouter();
+        const navigateTo = (name) => {
+            route.push(name)
+        }
         const selectTab = (data, el) => {
             document.querySelectorAll('.sidebar_block__list li').forEach(item => {
                 item.classList.remove('activeItem');
@@ -61,7 +72,7 @@ export default {
         })
         return {
             selectTab,
-
+            navigateTo,
             isActive
         };
     }

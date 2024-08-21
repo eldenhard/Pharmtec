@@ -7,36 +7,23 @@
       <Transition name="fade" mode="out-in" appear>
         <workspace :key="receivedData">
           <br>
-
+          <Transition name='fade'>
+            <div v-if="receivedData == 'Applications'">
+              <order :type="'Заявка на отпуск'" :idItem="'flush-collapseOne'"
+                :list_category="['Очередной', 'За свой счет', 'Декретный']" />
+              <order :type="'Заявка на больничный'" :idItem="'flush-collapseTwo'"
+                :list_category="['Больничный', 'Декрет']" />
+              <order :type="'Заявка на командировку'" :idItem="'flush-collapseThree'"
+                :list_category="['На самолете', 'На поезде', 'На машине']" />
+              <order :type="'Заявка на служебную поездку'" :idItem="'flush-collapseFour'"
+                :list_category="['На самолете', 'На поезде', 'На машине']" />
+              <order :type="'Заявка на изменение личных данных'" :idItem="'flush-collapseFive'"
+                :list_category="['Арес', 'Паспортные данные', 'Контакты']" />
+              <order :type="'Заявка на увольнение'" :idItem="'flush-collapseSix'" :list_category="['Увольнение']" />
+            </div>
+          </Transition>
           <component :is="currentTabComponent" />
-          <!-- <div v-if="receivedData == 'forManagment'">
-              <for_manager />
-            </div>
-            <div v-if="receivedData == 'staff'">
-              <staff_element />
-            </div>
-            <div v-if="receivedData == 'ForAdmin'">
-              <for_admin />
-            </div>
-            <div v-if="receivedData == 'booking'">
-              <sheduleElement />
-            </div>
-            <div v-if="receivedData == 'FinReport'">
-              <fin_report />
-            </div>
-            <div v-if="receivedData == 'ApproveApplication'">
-              <check_application />
-            </div>
-            <div v-if="receivedData == 'companyStructure'">
-              <company_structure />
-            </div>
-  
-            <div v-if="receivedData == 'News'">
-              <news />
-            </div>
-            <div v-if="receivedData == 'informationAboutProducts'">
-              <products_company />
-            </div> -->
+
         </workspace>
       </Transition>
     </div>
@@ -63,7 +50,11 @@ import staff_element from '../../modules/staff_module/staff_element.vue';
 import user_status from '@/pages/lk_page/modules/UserStatus.vue'
 import { useActiveTabStore } from '../../store/ActiveTabStore'
 import products_company from '../../modules/products_company/products_company.vue';
+import create_limits from '../../modules/all_staff/create_limits/create_limits.vue';
 import sidebar_service_requests from '../../components/sidebar/sidebar_service_requests.vue';
+
+import { useRoute, useRouter } from 'vue-router';
+
 export default {
   components: {
     navbar, sidebar, workspace, Transition, order, for_manager, for_admin, news, sheduleElement, fin_report, check_application, company_structure,
@@ -76,6 +67,7 @@ export default {
       //   window.location.href = '/login'
       // }
     })
+    const route = useRouter();
     const receivedData = ref('');
     const currentTabComponent = computed(() => {
       switch (receivedData.value) {
@@ -84,10 +76,25 @@ export default {
           return check_application
         case 'ApproveApplicationBookkeeping':
           return check_application_bookkeping
-        default:
+        case 'createLimits':
+          return create_limits
+        case 'FinReport':
+          return fin_report
+        case 'booking':
+          return sheduleElement
+        case 'ApproveApplication':
           return check_application
+        case 'ForAdmin':
+          return for_admin
+        case 'informationAboutProducts':
+          return products_company
+        case 'UserStatus':
+          return user_status
+        default:
+          return order
       }
     })
+
     const handleSomeEvent = (data) => {
       console.log(data)
       receivedData.value = data;
@@ -96,7 +103,7 @@ export default {
     return {
       receivedData,
       currentTabComponent,
-      handleSomeEvent
+      handleSomeEvent,
     };
   }
 };

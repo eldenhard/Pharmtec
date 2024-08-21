@@ -185,7 +185,7 @@
               <button class="tab_button">Главная</button>
             </router-link>
           </li>
-          <li><button class="tab_button">Новости</button></li>
+          <li><button class="tab_button">О компании</button></li>
           <li>
             <router-link to="/workspace" style="outline: none !important; text-decoration: none !important;">
               <button class="tab_button">Все сотрудники</button>
@@ -193,7 +193,7 @@
           </li>
           <li>
             <router-link to="/service_requests" style="outline: none !important; text-decoration: none !important;">
-              <button class="tab_button">Служебные заявки</button>
+              <button class="tab_button">Полезные сервисы</button>
             </router-link>
           </li>
           <li><button class="tab_button">Техподдержка</button></li>

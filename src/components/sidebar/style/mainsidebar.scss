@@ -7,8 +7,8 @@
     white-space: wrap;
     height: 90vh; /* Занимает 100% высоты экрана */
     overflow-y: hidden;
-    display: grid;
-    grid-template-rows: 1fr auto;
+    // display: grid;
+    // grid-template-rows: 1fr auto;
     flex: 0 0 auto;
     // overflow-y: auto; /* Добавьте полосу прокрутки, если контент не помещается */
 
