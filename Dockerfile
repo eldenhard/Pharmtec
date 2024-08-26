@@ -18,6 +18,9 @@ RUN npm install vue-tippy@v6
 RUN npm install @vueuse/core
 RUN npm install vee-validate yup
 RUN npm install vee-validate @vee-validate/rules
+RUN npm install --save-dev typescript
+RUN npm install --save-dev @types/node
+RUN npm install --save-dev vue-tsc
 RUN npm install
 COPY ./ .
 RUN npm run build

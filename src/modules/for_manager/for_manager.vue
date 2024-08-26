@@ -23,30 +23,79 @@
                         <label>Отчество</label>
                         <input type="search" v-model="formData.middle_name" name="middle_name">
                     </div>
+
                     <div class="input-box">
-                        <label>Дата рождения</label>
-                        <input type="date" v-model="formData.date_of_birth" name="email" required>
+                        <label>Фамилия прошлого сотрудника</label>
+                        <input type="search" >
                     </div>
                     <div class="input-box">
-                        <label>Почта</label>
+                        <label>Имя прошлого сотрудника</label>
+                        <input  type="search"  >
+                    </div>
+                    <div class="input-box">
+                        <label>Отчество прошлого сотрудника</label>
+                        <input type="search" >
+                    </div>
+
+                    <div class="input-box">
+                        <label>Должность</label>
+                        <input type="search" >
+                    </div>
+                    <div class="input-box">
+                        <label>Город</label>
+                        <input type="search" >
+                    </div>
+
+                    <div class="input-box">
+                        <label style="background: white !important; position: absolute; z-index:1 ;">Регион</label>
+                        <v-select v-model="formData.region_pre" :options="allRegion" label="value" required />
+                    </div>
+
+                    <div class="input-box">
+                        <label>Дата выхода</label>
+                        <input type="date" v-model="formData.date_start_work" name="date_start_work" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label>Направление продвижения</label>
+                        <input type="search" >
+                    </div>
+
+                    <div class="input-box">
+                        <label>Электронный адрес</label>
                         <input type="email" v-model="formData.email" name="email" required>
                     </div>
+
                     <div class="input-box">
                         <label>Телефон</label>
                         <input v-mask="'+7 (###) ###-##-##'" v-model="formData.phone" name="phone" required />
                     </div>
+
+
                     <div class="input-box">
-                        <label style="background: white !important; position: absolute; z-index:1 ;">Регион</label>
-                        <v-select v-model="formData.region_pre" :options="allRegion" label="value" required />
+                        <label>Адрес для промматериалов</label>
+                        <input type="search" >
+                    </div>
+                    <div class="input-box">
+                        <label>Адрес для СДЕК</label>
+                        <input type="search" >
+                    </div>
+                    <div class="input-box">
+                        <label>Дата рождения</label>
+                        <input type="date" v-model="formData.date_of_birth" name="email" required>
                     </div>
                     <div class="input-box">
                         <label style="background: white !important; position: absolute; z-index:1;">Руководитель</label>
                         <v-select v-model="formData.manager_pre" :options="allUsers" label="full_name" required />
                     </div>
                     <div class="input-box">
-                        <label>Дата приема на работу</label>
-                        <input type="date" v-model="formData.date_start_work" name="date_start_work" required>
+                        <label>Доп. информация</label>
+                        <input type="search" >
                     </div>
+                  
+             
+                 
+               
                 </div>
             </section>
 
@@ -64,7 +113,7 @@
 
 
 
-<script>
+<script lang="ts">
 import { reactive, ref, onMounted, watch } from 'vue'
 import InputComponent from '../../ui/inputComponent/InputComponent.vue';
 import buttonComponent from '../../ui/button/buttonComponent.vue';
@@ -75,11 +124,26 @@ import { mask } from 'vue-the-mask'
 import { useLoaderStore } from '../../store/LoaderStore';
 import { refreshToken } from '@/mixins/refreshToken'
 import drop_zone_img from './modules/drop_zone_img.vue';
+import { string } from 'yup';
 export default {
     components: { InputComponent, buttonComponent, drop_zone_img },
     directives: { mask },
     setup() {
-        const formData = ref({
+        interface FormData {
+            last_name: string,
+            first_name: string,
+            middle_name: string,
+            email: string,
+            phone: string,
+            manager_pre: string | number,
+            region_pre: string,
+            date_of_birth: string,
+            // дата начала работы
+            date_start_work: string,
+            manager: string,
+            region: string,
+        }
+        const formData = ref<FormData>({
             last_name: '',
             first_name: '',
             middle_name: '',
@@ -90,6 +154,8 @@ export default {
             date_of_birth: '',
             // дата начала работы
             date_start_work: '',
+            manager: "",
+            region: "",
         })
         const toast = useToast()
         const allUsers = ref([])
