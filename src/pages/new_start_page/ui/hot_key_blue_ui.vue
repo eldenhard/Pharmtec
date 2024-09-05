@@ -47,8 +47,8 @@
   transition: background-color .3s ease; /* Плавный переход цвета фона */
 }
 .l_size{
-  width: 5vw;
-  height: 5vw;
+  width: 7vh;
+  height: 7vh;
 }
 .m_size{
   width: 4vw;
@@ -83,9 +83,10 @@
 
 .container_key p {
   text-align: center;
-  color: #4e4e4e;
+  /* color: #4e4e4e; */
   font-size: 1rem;
   padding-top: 5%;
+
 }
 
 /* Hover эффекты при наведении на .container_key */
@@ -96,5 +97,11 @@
 .container_key:hover .blue_circle {
   background: #2887BB;
 }
+@media screen and (max-width: 800px) {
+  .container_key p {
 
+  font-size: 0.8rem;
+
+}
+}
 </style>

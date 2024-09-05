@@ -49,7 +49,8 @@
 .footer_start_page {
     background: rgb(76, 192, 104);
     background: linear-gradient(66deg, rgba(76, 192, 104, 1) 0%, rgba(0, 95, 152, 1) 39%);
-    height: 16vh;
+    min-height: 16vh;
+    height: auto;
     width: 100%;
     margin-top: 6%;
     display: flex;
@@ -63,7 +64,25 @@
     justify-content: space-between;
     align-items: center;
 }
-
+@media screen and (max-width: 950px) {
+    .content{
+        display: flex;
+        flex-direction: column;
+    }
+    .copyright{
+        margin-top: 8%;
+    }
+    .social_net{
+        display: flex;
+        justify-content: space-evenly;
+        width: 55%;
+        margin: 4% 0 8% 0;
+    }
+    svg:not(.dynamic-svg-line){
+            width: 7vw;
+            height: 7vh
+        }
+}
 .email_block {
     display: flex;
     justify-content: space-around;

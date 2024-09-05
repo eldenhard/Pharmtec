@@ -1,5 +1,5 @@
 <template>
-  <div class="container_key" >
+  <div class="container_key">
     <div class="hot_key" :class="[classSize]">
       <div class="blue_circle"></div>
       <div class="ui_el">
@@ -36,8 +36,8 @@ export default {
 }
 
 .l_size {
-  width: 5vw;
-  height: 5vw;
+  width: 7vh;
+  height: 7vh;
 }
 
 .m_size {
@@ -102,5 +102,13 @@ export default {
 
 .container_key:hover .blue_circle {
   background: #259D1B;
+}
+
+@media screen and (max-width: 800px) {
+  .container_key p {
+
+    font-size: 0.8rem;
+
+  }
 }
 </style>

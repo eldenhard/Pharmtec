@@ -1,46 +1,11 @@
-// li {
-//     a {
-//         text-transform: uppercase;
-//         color: var(--colorWhite);
-//         font-weight: 600;
-//         font-size: 14px;
-//     }
-// }
 
-// nav {
-//     -webkit-box-shadow: -4px 6px 8px 0px rgba(23, 39, 51, 0.2);
-//     -moz-box-shadow: -4px 6px 8px 0px rgba(21, 37, 49, 0.2);
-//     box-shadow: -4px 6px 8px 0px rgba(27, 48, 65, 0.2);
-//     z-index: var(--zIndexNavbar);
-//     background: rgb(0,142,192);
-// background: linear-gradient(56deg, rgba(0,142,192,1) 0%, rgba(49,163,155,1) 71%);
-
-// }
-
-// .icon_block {
-//     width: 45px;
-//     height: 45px;
-//     border-radius: 50%;
-//     background: lightblue;
-// }
-// .router-link-active:not(.lk), .router-link-exact-active:not(.lk){
-//     border-bottom: white 2px solid ;
-//     &:hover{
-//         border-bottom: lightblue 2px solid ;
-//     }
-// }
-// .nav-link{
-//     font-size: 14px;
-//     // font-weight: 500;
-//     &:hover{
-//         color: lightgrey;
-//     }
-// }
 * {
   padding: 0;
   margin: 0;
 }
-
+.menu_block_phone, .user_block{
+  display: none;
+}
 .navbar {
   background: rgb(76, 192, 104);
   background-image: url(../assets/logo_company.png),
@@ -382,4 +347,230 @@
   justify-content: center;
   margin: 2% auto;
 
+}
+
+@media screen and (max-width: 950px) {
+  .menu_block_phone{
+    display: block;
+  }
+  .row_1, .row_3, .blue_text, .search_block{
+    display: none !important;
+  }
+  .navbar {
+    height: 15vh;
+    position: relative;
+  }
+  .container_block {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+    margin: 0 !important;
+
+  }
+  .row_2 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr !important;
+
+
+    /* Стили для блока логотипа */
+    .logo_block {
+      display: flex;
+      align-items: center;
+      gap: 2vw;
+      // background: red;
+
+      /* Стили для SVG-логотипов */
+      .dynamic-svg-farmtec,
+      .dynamic-svg-intelbio {
+        width: 30vw !important;
+        padding-left: 5%;
+      }
+
+    }
+
+
+  
+
+    /* Стили для блока меню */
+    .menu_block {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-right: 0 !important;
+      .mobile_block{
+        display: flex !important;
+      }
+
+
+      /* Стили для блока пользователя */
+      .user_block {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1vh !important; 
+        align-items: center;
+        
+        // background: pink; 
+
+        
+
+        /* Стили для кнопки меню */
+        .hamburger {
+          background: transparent;
+          color: white;
+          border: 1px solid white;
+          border-radius: 6px;
+          display: flex;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 8vw !important;
+          height: 4vh !important;
+          margin-top: 0.5vh !important;
+        
+          font-size: 1rem;
+          transition: background 0.3s ease-in-out;
+          &:hover {
+            background: rgba(255, 255, 255, 0.4);
+          }
+        }
+
+        /* Стили для изображения пользователя */
+        .user_pic {
+          height: 6vh !important;
+          width: 10vw !important;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+      
+      }
+    }
+  }
+
+
+
+
+  .menu_block {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 20%; /* Уменьшаем ширину блока меню, чтобы не занимал много места */
+  }
+
+  .hamburger {
+    margin-right: 2vw;
+  }
+
+  .user_pic {
+    margin-right: 0 !important;
+  }
+}
+
+
+// выезжающая шторка
+/* Оформление панели */
+#side-checkbox {
+  display: none;
+}
+.side-panel {
+  position: fixed;
+  z-index: 999999;
+  top: 0;
+  left: -100vw;
+  background: #61A60E;
+  transition: all 0.5s;   
+  width: 100vw;
+  height: 100vh;
+  box-shadow: 10px 0 20px rgba(0,0,0,0.4);
+  color: #FFF;
+  padding: 40px 20px;
+}
+.side-title {
+  font-size: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #BFE2FF;
+}
+/* Оформление кнопки на странице */
+.side-button-1-wr {
+  text-align: center; /* Контейнер для кнопки, чтобы было удобнее ее разместить */
+}
+.side-button-1 {
+  display: inline-block;
+}
+.side-button-1 .side-b {
+  width: 100%;
+  text-decoration: none;
+  position: relative;
+  font-size: 12px;
+  line-height: 20px;
+  padding: 1vh 7vw;
+  color: #FFF;
+  background: #61A60E;
+  cursor: pointer; 
+
+}
+.side-button-1 .side-b:hover,
+.side-button-1 .side-b:active,
+.side-button-1 .side-b:focus {
+  color: #FFF;
+}
+.side-button-1 .side-b:after,
+.side-button-1 .side-b:before {
+  position: absolute;
+  height: 4px;
+  left: 50%;
+  bottom: -6px;
+  content: "";
+  transition: all 280ms ease-in-out;
+  width: 0;
+}
+.side-button-1 .side-open:after,
+.side-button-1 .side-open:before {
+  background: green;
+}
+.side-button-1 .side-close:after,
+.side-button-1 .side-close:before {
+  background: red;
+}
+.side-button-1 .side-b:before {
+  top: -6px;
+}
+.side-button-1 .side-b:hover:after,
+.side-button-1 .side-b:hover:before {
+  width: 100%;
+  left: 0;
+}
+/* Переключатели кнопки 1 */
+.side-button-1 .side-close {
+  display: none;
+}
+#side-checkbox:checked + .side-panel + .side-button-1-wr .side-button-1 .side-open {
+  display: none;
+}
+#side-checkbox:checked + .side-panel + .side-button-1-wr .side-button-1 .side-close {
+  display: block;
+}
+#side-checkbox:checked + .side-panel {
+  left: 0;
+}
+/* Оформление кнопки на панеле */
+.side-button-2 {
+  font-size: 30px;
+  border-radius: 20px;
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  transform: rotate(45deg);
+  color: #BFE2FF;    
+  transition: all 280ms ease-in-out;    
+}
+.side-button-2:hover {
+  transform: rotate(45deg) scale(1.1);    
+  color: #FFF;
 }

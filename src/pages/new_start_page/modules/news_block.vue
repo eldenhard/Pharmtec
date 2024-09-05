@@ -21,6 +21,7 @@
                         stroke="#DFDFDF" />
                 </svg>
                 <div class="news_elements">
+                    
                     <div class="news_item">
                         <div class="img_block">
                             <img src="../assets/man_news.png">
