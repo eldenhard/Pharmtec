@@ -377,23 +377,7 @@
     border: none;
     box-shadow: none !important;
     left: 0;
-//     width: 100vw !important;
-//     position: absolute;
-// left: 0;
-//     border-radius: 30px;
-//     box-sizing: border-box;
-//     .hot_keys_group {
-//       margin-top: 6%;
-//       justify-items: center;
-//       display: grid;
-//       grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
-//       grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 
-//       row-gap: 3vh;
-//       flex-wrap: wrap;
-//       justify-content: center;
-//       align-items: flex-start; /* Изменено на flex-start для выравнивания элементов по верхнему краю */
-    // }
   }
   .container_block {
     width: 100%;
@@ -570,10 +554,7 @@
   transition: all 280ms ease-in-out;
   width: 0;
 }
-.side-button-1 .side-open:after,
-.side-button-1 .side-open:before {
-  background: green;
-}
+
 
 .side-button-1 .side-b:before {
   top: -6px;

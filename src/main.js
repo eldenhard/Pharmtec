@@ -1,6 +1,9 @@
 import './styles/main.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia'
+import { register } from 'swiper/element/bundle';
+register();
+
 import App from './App.vue';
 
 const pinia = createPinia()
@@ -44,6 +47,7 @@ VMdEditor.lang.use('ru-RU', ruRU);
 import VueTheMask from 'vue-the-mask'
 import VueTippy from 'vue-tippy'
 import 'tippy.js/dist/tippy.css'
+
 const app = createApp(App)
     .use(router)
     .use(pinia)

@@ -79,6 +79,10 @@ const navigateTo = (name) => {
 @media screen and (max-width: 800px) {
     .hot_keys_group {
         grid-template-columns: repeat(4, 1fr);
+        margin-top: 10% !important;
+    }
+    .l_size img{
+       width: 70%;
     }
 }
 .bi {

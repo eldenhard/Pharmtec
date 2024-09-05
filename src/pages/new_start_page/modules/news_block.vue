@@ -21,8 +21,8 @@
                         stroke="#DFDFDF" />
                 </svg>
                 <div class="news_elements">
-                    
-                    <div class="news_item">
+
+                    <div class="news_item" v-show="is_news_visible">
                         <div class="img_block">
                             <img src="../assets/man_news.png">
                         </div>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <div class="news_item">
+                    <div class="news_item" v-show="is_news_visible">
                         <div class="img_block">
                             <img src="../assets/woman_news.png">
                         </div>
@@ -55,10 +55,52 @@
                             <link_el />
                         </div>
                     </div>
-
+                    <swiper v-show="is_slider_visible" :slidesPerView="'auto'" :spaceBetween="10" :pagination="{
+                        clickable: true,
+                    }" :modules="modules" class="mySwiper">
+                      
+                      <swiper-slide>
+                            <div class="news_item" >
+                                <div class="img_block">
+                                    <img src="../assets/man_news.png">
+                                </div>
+                                <div class="description">
+                                    <p class="description_text">
+                                        Приветствуем нового сотрудника! Иванов Иван, медицинский представитель, город
+                                        Самара
+                                        ....
+                                    </p>
+                                </div>
+                                <div class="footer_item">
+                                    <p class="green_text">23.03.2024</p>
+                                    <like_el />
+                                    <link_el />
+                                </div>
+                            </div>
+                        </swiper-slide>
+                        <swiper-slide>
+                            <div class="news_item" >
+                                <div class="img_block">
+                                    <img src="../assets/woman_news.png">
+                                </div>
+                                <div class="description">
+                                    <p class="description_text">
+                                        Поздравляем с Днем рождения! Сегодня день рождения отмечает Анна Петрова, 
+                                        медицинский
+                                        представитель г. Волгоград
+                                    </p>
+                                </div>
+                                <div class="footer_item">
+                                    <p class="green_text">23.03.2024</p>
+                                    <like_el />
+                                    <link_el />
+                                </div>
+                            </div>
+                        </swiper-slide>
+                    </swiper>
                 </div>
                 <br>
-                <a class="watch_all_news">Смотреть все новости</a>
+                <a class="watch_all_news" v-show="is_news_visible">Смотреть все новости</a>
             </div>
         </div>
     </div>
@@ -68,13 +110,51 @@
 <script>
 import like_el from '../ui/like_element_ui.vue'
 import link_el from '../ui/link_element_ui.vue'
+import { Swiper, SwiperSlide } from 'swiper/vue';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { ref, onMounted, onUnmounted } from 'vue';
+// import required modules
+import { Pagination } from 'swiper/modules';
 export default {
     components: {
         like_el,
-        link_el
+        link_el,
+        Swiper,
+        SwiperSlide,
+
     },
     setup() {
-
+        const is_slider_visible = ref(false)
+        const is_news_visible = ref(true)
+        const width = ref(window.innerWidth);
+        onMounted(() => {
+            window.addEventListener('resize', resizeHandler);
+            resizeHandler()
+            document.querySelectorAll('.swiper-pagination').forEach((el) => {
+                el.style = 'display: none !important;'
+            })
+        })
+        onUnmounted(() => {
+            window.removeEventListener('resize', resizeHandler);
+        })
+        const resizeHandler = () => {
+            width.value = window.innerWidth;
+            if (width.value < 800) {
+                is_slider_visible.value = true;
+                is_news_visible.value = false;
+            } else {
+                is_slider_visible.value = false;
+                is_news_visible.value = true;
+            }
+        };
+        return {
+            modules: [Pagination],
+            is_slider_visible,
+            width,
+            is_news_visible,
+        };
     },
 }
 </script>
@@ -82,4 +162,53 @@ export default {
 
 <style scoped>
 @import '@/pages/new_start_page/style/style_body_elements.scss';
+.swiper-pagination-bullets {
+    display: none !important;
+}
+.swiper-pagination-bullet .swiper-pagination-bullet-active{
+    display: none !important;
+}
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    height: 100%;
+    margin-top: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+
+.swiper-slide {
+    width: 80%;
+}
+
+.swiper-slide:nth-child(2n) {
+    width: 80%;
+}
+
+.swiper-slide:nth-child(3n) {
+    width: 40%;
+}
+
+@media screen and (max-width: 800px) {
+    .news_item {
+        width: 85% !important;
+    }
+    .article_title{
+        font-size: 1.4rem;
+    }
+
+}
 </style>
