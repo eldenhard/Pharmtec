@@ -4,6 +4,17 @@ import ViteSassPlugin from 'vite-plugin-sass';
 import { fileURLToPath, URL } from 'url';
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true
+      },
+      output: {
+        comments: false
+      }
+    }
+  },
   plugins: [
         Vue(),
         ViteSassPlugin(),
