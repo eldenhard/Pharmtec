@@ -44,7 +44,7 @@ const router = useRouter();
 const width = ref(window.innerWidth);
 const resizeHandler = () => {
     width.value = window.innerWidth;
-    if (width.value < 500) {
+    if (width.value < 1090) {
         classSize.value = "l_size";
     } else {
         classSize.value = "m_size";

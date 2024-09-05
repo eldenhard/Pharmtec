@@ -1,9 +1,9 @@
-
 * {
   padding: 0;
   margin: 0;
 }
-.menu_block_phone, .user_block{
+.menu_block_phone,
+.user_block {
   display: none;
 }
 .navbar {
@@ -253,7 +253,7 @@
 .active_hamburger {
   background: rgba(255, 255, 255, 0.4) !important;
 }
-.user_menu{
+.user_menu {
   background: white;
   box-shadow: 2px 2px 5px grey;
   min-height: 22vh;
@@ -272,7 +272,7 @@
   min-height: 52vh;
   height: auto;
   min-width: 25vw;
-  max-width:28vw;
+  max-width: 28vw;
   position: absolute;
   z-index: 5;
   right: 8%;
@@ -293,9 +293,8 @@
   }
 }
 
-
-.active_block{
-  background: #F9F9F9;
+.active_block {
+  background: #f9f9f9;
   // background: red;
   // background: grey;
   margin: 4%;
@@ -306,26 +305,26 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  .f_line{
+  .f_line {
     display: flex;
     justify-content: space-between;
     margin-right: auto;
     align-items: center;
     vertical-align: baseline;
-    h5{
-      color: #4E4E4E
+    h5 {
+      color: #4e4e4e;
     }
-    span{
-      color: #939393
+    span {
+      color: #939393;
     }
   }
-  .description{
+  .description {
     width: 75%;
   }
-  .button_border{
+  .button_border {
     background: transparent;
-    border: 2px solid #14949C;
-    color: #4E4E4E;
+    border: 2px solid #14949c;
+    color: #4e4e4e;
     margin: 0 auto;
     cursor: pointer;
     border-radius: 10px;
@@ -334,11 +333,9 @@
     margin: 10% 2% 0 2%;
     outline: none !important;
     text-decoration: none;
-    
   }
-
 }
-  .exit_btn{
+.exit_btn {
   display: flex;
   border: none;
   background: transparent;
@@ -346,19 +343,57 @@
   align-items: center;
   justify-content: center;
   margin: 2% auto;
-
 }
 
 @media screen and (max-width: 950px) {
-  .menu_block_phone{
+  .menu_block_phone {
     display: block;
   }
-  .row_1, .row_3, .blue_text, .search_block{
+  .row_1,
+  .row_3,
+  .blue_text,
+  .search_block {
     display: none !important;
   }
   .navbar {
     height: 15vh;
     position: relative;
+  }
+  .hot_keys_group {
+    width: 100vw !important;
+    background: white;
+    margin-top: 60% !important;
+    padding:80% 10% ;
+    display: grid;
+    height: 100vh;
+    grid-template-columns: repeat(4, 1fr) !important;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    box-shadow: 1px 1px 15px black;
+  }
+  // меню с иконками для навигации
+  .mini_menu {
+    background: transparent;
+    border: none;
+    box-shadow: none !important;
+    left: 0;
+//     width: 100vw !important;
+//     position: absolute;
+// left: 0;
+//     border-radius: 30px;
+//     box-sizing: border-box;
+//     .hot_keys_group {
+//       margin-top: 6%;
+//       justify-items: center;
+//       display: grid;
+//       grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
+//       grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+
+//       row-gap: 3vh;
+//       flex-wrap: wrap;
+//       justify-content: center;
+//       align-items: flex-start; /* Изменено на flex-start для выравнивания элементов по верхнему краю */
+    // }
   }
   .container_block {
     width: 100%;
@@ -366,7 +401,6 @@
 
     position: relative;
     margin: 0 !important;
-
   }
   .row_2 {
     position: absolute;
@@ -374,7 +408,6 @@
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr !important;
-
 
     /* Стили для блока логотипа */
     .logo_block {
@@ -389,11 +422,7 @@
         width: 30vw !important;
         padding-left: 5%;
       }
-
     }
-
-
-  
 
     /* Стили для блока меню */
     .menu_block {
@@ -401,22 +430,19 @@
       justify-content: space-between;
       width: 100%;
       margin-right: 0 !important;
-      .mobile_block{
+      .mobile_block {
         display: flex !important;
       }
-
 
       /* Стили для блока пользователя */
       .user_block {
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 1vh !important; 
+        gap: 1vh !important;
         align-items: center;
-        
-        // background: pink; 
 
-        
+        // background: pink;
 
         /* Стили для кнопки меню */
         .hamburger {
@@ -430,7 +456,7 @@
           width: 8vw !important;
           height: 4vh !important;
           margin-top: 0.5vh !important;
-        
+
           font-size: 1rem;
           transition: background 0.3s ease-in-out;
           &:hover {
@@ -445,13 +471,9 @@
           border-radius: 50%;
           cursor: pointer;
         }
-      
       }
     }
   }
-
-
-
 
   .menu_block {
     display: flex;
@@ -469,30 +491,51 @@
   }
 }
 
-
 // выезжающая шторка
 /* Оформление панели */
 #side-checkbox {
   display: none;
+}
+.logo_block_mini {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  // background: red;
+
+  /* Стили для SVG-логотипов */
+  .dynamic-svg-farmtec,
+  .dynamic-svg-intelbio {
+    width: 30vw !important;
+  }
+  .dynamic-svg-line {
+    width: 1%;
+    height: 5vh;
+  }
 }
 .side-panel {
   position: fixed;
   z-index: 999999;
   top: 0;
   left: -100vw;
-  background: #61A60E;
-  transition: all 0.5s;   
+  background: rgb(76, 192, 104);
+  background-image: url(../assets/vertical_img.png),
+    linear-gradient(66deg, rgba(76, 192, 104, 1) 0%, rgba(0, 95, 152, 1) 50%);
+  background-position: right bottom, left center; /* Устанавливаем позиции для каждого изображения */
+  background-repeat: no-repeat, no-repeat; /* Запрещаем повторение изображений */
+  display: hidden;
+  padding: 0;
+  transition: all 0.5s;
   width: 100vw;
-  height: 100vh;
-  box-shadow: 10px 0 20px rgba(0,0,0,0.4);
-  color: #FFF;
+  height: 100dvh;
+  box-shadow: 10px 0 20px rgba(0, 0, 0, 0.4);
+  color: #fff;
   padding: 40px 20px;
 }
 .side-title {
   font-size: 20px;
   padding-bottom: 10px;
   margin-bottom: 20px;
-  border-bottom: 2px solid #BFE2FF;
+  // border-bottom: 2px solid #bfe2ff;
 }
 /* Оформление кнопки на странице */
 .side-button-1-wr {
@@ -508,15 +551,14 @@
   font-size: 12px;
   line-height: 20px;
   padding: 1vh 7vw;
-  color: #FFF;
-  background: #61A60E;
-  cursor: pointer; 
-
+  color: #fff;
+  background: #61a60e;
+  cursor: pointer;
 }
 .side-button-1 .side-b:hover,
 .side-button-1 .side-b:active,
 .side-button-1 .side-b:focus {
-  color: #FFF;
+  color: #fff;
 }
 .side-button-1 .side-b:after,
 .side-button-1 .side-b:before {
@@ -532,10 +574,7 @@
 .side-button-1 .side-open:before {
   background: green;
 }
-.side-button-1 .side-close:after,
-.side-button-1 .side-close:before {
-  background: red;
-}
+
 .side-button-1 .side-b:before {
   top: -6px;
 }
@@ -548,10 +587,18 @@
 .side-button-1 .side-close {
   display: none;
 }
-#side-checkbox:checked + .side-panel + .side-button-1-wr .side-button-1 .side-open {
+#side-checkbox:checked
+  + .side-panel
+  + .side-button-1-wr
+  .side-button-1
+  .side-open {
   display: none;
 }
-#side-checkbox:checked + .side-panel + .side-button-1-wr .side-button-1 .side-close {
+#side-checkbox:checked
+  + .side-panel
+  + .side-button-1-wr
+  .side-button-1
+  .side-close {
   display: block;
 }
 #side-checkbox:checked + .side-panel {
@@ -567,10 +614,77 @@
   right: 8px;
   cursor: pointer;
   transform: rotate(45deg);
-  color: #BFE2FF;    
-  transition: all 280ms ease-in-out;    
+  color: #bfe2ff;
+  transition: all 280ms ease-in-out;
 }
 .side-button-2:hover {
-  transform: rotate(45deg) scale(1.1);    
-  color: #FFF;
+  transform: rotate(45deg) scale(1.1);
+  color: #fff;
+}
+
+.btn_block {
+  flex-direction: column;
+  gap: 2vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  button {
+    height: 8vh;
+    width: 100%;
+    color: white;
+    border: none;
+    border-radius: 10px;
+  }
+  button.tab_button:first-child {
+    background: #61a60e;
+    transition: background 0.3s ease-in-out;
+
+    &:hover {
+      background: #528c0d;
+    }
+  }
+  button.tab_button:nth-child(2) {
+    background: #007481;
+    transition: background 0.3s ease-in-out;
+    &:hover {
+      background: #015b65;
+    }
+  }
+  button.tab_button:nth-child(3) {
+    background: #1a93b4;
+    transition: background 0.3s ease-in-out;
+
+    &:hover {
+      background: #177d99;
+    }
+  }
+  button.tab_button:nth-child(4) {
+    background: #0069a7;
+    transition: background 0.3s ease-in-out;
+
+    &:hover {
+      background: #01578a;
+    }
+  }
+  button.tab_button:last-child {
+    background: #a4b200;
+    transition: background 0.3s ease-in-out;
+
+    &:hover {
+      background: #95a103;
+    }
+  }
+}
+
+
+// Анимация появления блока с мини кнопками
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
