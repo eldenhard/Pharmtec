@@ -229,11 +229,11 @@
 
     </nav>
 
-    <section>
+    <section >
 
-      <input type="checkbox" id="side-checkbox" />
-      <div class="side-panel">
-        <label class="side-button-2" for="side-checkbox">+</label>
+      <input type="checkbox" id="side-checkbox" ref="element_close"/>
+      <div class="side-panel" >
+        <label class="side-button-2" for="side-checkbox" >+</label>
         <div class="side-title">
           <div class="logo_block_mini">
             <!-- Фармтек -->
@@ -321,11 +321,11 @@
           </div>
         </div>
         <div class="btn_block">
-          <button class="tab_button">Главная</button>
-          <button class="tab_button">Новости</button>
-          <button class="tab_button">Все сотрудники</button>
-          <button class="tab_button">Полезные сервисы</button>
-          <button class="tab_button">Техподдержка</button>
+          <button class="tab_button"  @click="navigateTo('main')">Главная</button>
+          <button class="tab_button"  @click="navigateTo('news')">Новости</button>
+          <button class="tab_button"  @click="navigateTo('workspace')">Все сотрудники</button>
+          <button class="tab_button"  @click="navigateTo('service_requests')">Полезные сервисы</button>
+          <button class="tab_button"  @click="navigateTo('support')">Техподдержка</button>
         </div>
       </div>
 
@@ -364,6 +364,7 @@ export default {
     const toast = useToast()
     const classSize = ref('s_size')
     const width = ref(window.innerWidth);
+    const element_close = ref("")
 
     const el_swipe = ref(null)
     
@@ -397,6 +398,8 @@ export default {
     const navigateTo = (name) => {
       isVisibleMiniMenu.value = false
       router.push(name)
+      console.log(element_close)
+      element_close.value.checked = false
     }
     // onClickOutside(miniMenuRef, event => isVisibleMiniMenu.value = false)
     // onClickOutside(userMenuRef, event => isVisibleUserMenu.value = false)
@@ -431,7 +434,7 @@ export default {
      // Следим за направлением свайпа
      watch(direction, (newDirection) => {
   if (newDirection === 'RIGHT') {
-    `isVisibleMiniMenu`.value = false // Скрываем элемент при свайпе вниз
+    isVisibleMiniMenu.value = false // Скрываем элемент при свайпе вниз
   }
 })
     // Обновляем текущее время каждую секунду
@@ -460,7 +463,8 @@ export default {
       classSize,
       el_swipe,
       isSwiping,
-       direction
+       direction,
+       element_close,
 
     };
   }
