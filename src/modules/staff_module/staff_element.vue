@@ -54,6 +54,7 @@
                         <th>Должность</th>
                         <th>Стаж</th>
                         <th>Почта</th>
+                        <th>Телефон</th>
                         <th>Департамент</th>
                         <th>Город</th>
                         <th>Руководитель</th>
@@ -71,8 +72,9 @@
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.middle_name }}</td>
                             <td>{{ user.job_info.name ?? 'Нет должности' }}</td>
-                            <td></td>
+                            <td style="white-space: nowrap;">{{ formatWorkExperience(user.work_exp) }}</td>
                             <td @click="copyEmail(user.email)" class="email">{{ user.email }}</td>
+                            <td>{{ user.phone }}</td>
                             <td></td>
                             <td></td>
                             <td>{{ user.department_info?.manager ?? "" }}</td>
@@ -197,6 +199,15 @@ export default {
                 timeout: 3000
             })
         }
+        const formatWorkExperience = (days) => {
+      const years = Math.floor(days / 365);
+      const months = Math.floor((days % 365) / 30);
+      
+      let result = '';
+      if (years > 0) result += `${years} год(а) `;
+      if (months > 0) result += `${months} месяц(а)`;
+      return result.trim();
+    };
         const viceInfoShort = (viceInfo) => {
             if (!viceInfo) return '';
 
@@ -215,7 +226,7 @@ export default {
             changeCurrentDisplayGrid,
             getCurrentPicture,
             viceInfoShort,
-
+            formatWorkExperience
 
         }
     },

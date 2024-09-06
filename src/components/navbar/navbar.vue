@@ -96,16 +96,23 @@
             <input type="search" class="search-input" placeholder="Искать сотрудника, документ, прочее">
             <i class="bi bi-search search-icon" style="color: white; "></i>
           </div>
-          <div class="menu_block">
+
+
+
+
+          
+          <div class="menu_block" v-if="is_first_menu">
             <div class="date_time">
               <p class="blue_text">{{ new Date().toLocaleDateString() }}</p>
-              <p class="blue_text"> <!-- Линия -->
+              <p class="blue_text">
                 <svg width="10" height="15" viewBox="0 0 2 65" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M1 0V65" stroke="white" />
                 </svg>
               </p>
               <p class="blue_text">{{ currentTime }}</p>
             </div>
+            
+
             <div class="user_block">
               <div class="mobile_block">
                 <button class="hamburger" :class="{ active_hamburger: isVisibleMiniMenu }"
@@ -124,10 +131,35 @@
 
                   </label>
                 </div>
-                <!-- <button type="button" class="btn btn-success">Меню</button> -->
               </div>
             </div>
           </div>
+
+
+
+          <div class="menu_block" v-if="is_second_menu">
+          <div class="date_time">
+            <p class="blue_text">{{ new Date().toLocaleDateString() }}</p>
+            <p class="blue_text"> <!-- Линия -->
+              <svg width="10" height="15" viewBox="0 0 2 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 0V65" stroke="white" />
+              </svg>
+            </p>
+            <p class="blue_text">{{ currentTime }}</p>
+          </div>
+          <div class="user_block">
+            <button class="hamburger" :class="{ active_hamburger: isVisibleMiniMenu }"
+              @click="isVisibleMiniMenu = !isVisibleMiniMenu">
+              <img src="./assets/hamburger.png" style="width: 65%;">
+            </button>
+
+            <div class="user_pic" @click="isVisibleUserMenu = !isVisibleUserMenu">
+              <img src="./assets/user.png" alt="логотип сотрудника">
+            </div>
+          </div>
+        </div>
+
+
           <Transition>
             <div class="mini_menu" ref="miniMenuRef" v-show="isVisibleMiniMenu">
              
@@ -367,17 +399,31 @@ export default {
     const element_close = ref("")
 
     const el_swipe = ref(null)
+    const is_first_menu = ref(false)
+    const is_second_menu = ref(true)
     
     const { isSwiping, direction } = useSwipe(el_swipe)
-    const resizeHandler = () => {
-      width.value = window.innerWidth;
-      if (width.value < 500) {
-        classSize.value = "l_size";
-      } else {
-        classSize.value = "s_size";
-      }
-    };
+    // const resizeHandler = () => {
+    //   width.value = window.innerWidth;
+    //   if (width.value < 500) {
+    //     classSize.value = "l_size";
+    //   } else {
+    //     classSize.value = "s_size";
+    //   }
+    // };
 
+    const resizeHandler = () => {
+            width.value = window.innerWidth;
+            if (width.value < 500) {
+                is_first_menu.value = true;
+                is_second_menu.value = false;
+                classSize.value = "l_size";
+            } else {
+              is_first_menu.value = false;
+              is_second_menu.value = true;
+                classSize.value = "s_size";
+            }
+        };
     onMounted(() => {
       window.addEventListener('resize', resizeHandler);
       // Установим начальное значение класса на основе текущей ширины
@@ -465,6 +511,8 @@ export default {
       isSwiping,
        direction,
        element_close,
+       is_first_menu,
+is_second_menu,
 
     };
   }
