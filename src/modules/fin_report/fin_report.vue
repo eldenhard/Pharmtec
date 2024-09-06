@@ -84,6 +84,9 @@ import { refreshToken } from '@/mixins/refreshToken'
 import { useBalanceItemsStore } from '@/store/BalanceItemsStore'
 import { Form, Field } from 'vee-validate'
 import early_transaction from './modules/early_transaction.vue';
+import { useLocalStorage } from '@vueuse/core';
+
+
 export default {
     components: {
         buttonComponent,
@@ -94,25 +97,26 @@ export default {
         early_transaction,
     },
     setup() {
-        const date_fin_report_ = ref("")
-        const date_transaction_ = ref("new Date()")
-        const comment_transaction_ = ref("")
-        const inputValue_ = ref(0);
-        const incomeLabel = []
-        const $loader = useLoaderStore()
-        const type_report_ = ref("")
-        const commentField_ = ref(null)
-        const expensesLabel = ref(useBalanceItemsStore().balance_items)
-        const expensesLabelLimit = ref([])
-        const response_data_fin_report_ = ref([])
-        const amountRowFin = ref(0)
-        const $toast = useToast();
-        const info_about_fin_report = ref([])
-        const isEnterData = ref(true)
-        
-        const user_id = localStorage.getItem('id')
+         // Используем хук useLocalStorage для сохранения и восстановления данных
+    const date_fin_report_ = useLocalStorage("date_fin_report", "");
+    const date_transaction_ = useLocalStorage("date_transaction", new Date().toISOString().slice(0, 10));
+    const comment_transaction_ = useLocalStorage("comment_transaction", "");
+    const inputValue_ = useLocalStorage("inputValue", 0);
+    const type_report_ = useLocalStorage("type_report", "");
 
-        let current_report_id = 0
+    const incomeLabel = [];
+    const $loader = useLoaderStore();
+    const expensesLabel = ref(useBalanceItemsStore().balance_items);
+    const expensesLabelLimit = ref([]);
+    const response_data_fin_report_ = ref([]);
+    const amountRowFin = ref(0);
+    const $toast = useToast();
+    const info_about_fin_report = ref([]);
+    const isEnterData = ref(true);
+
+    const user_id = localStorage.getItem('id');
+    const commentField_ = ref(null)
+    let current_report_id = 0;
 
         onMounted(() => {
             date_transaction_.value = new Date().toISOString().slice(0, 10)

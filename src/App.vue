@@ -66,7 +66,7 @@ export default {
       if (localStorage.getItem('accessToken')) {
         await refreshToken()
       }
-
+      router.push("/main")
       $balanceItemsStore.getAllBalanceItems()
       $current_user_id_store.setCurrentUserId()
       // Устанавливаем таймер неактивности при монтировании компонента
