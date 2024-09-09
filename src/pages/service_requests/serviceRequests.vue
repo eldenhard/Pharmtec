@@ -6,24 +6,7 @@
 
       <Transition name="fade" mode="out-in" appear>
         <workspace :key="receivedData">
-          <br>
-          <Transition name='fade'>
-            <div v-if="receivedData == 'Applications'">
-              <order :type="'Заявка на отпуск'" :idItem="'flush-collapseOne'"
-                :list_category="['Очередной', 'За свой счет', 'Декретный']" />
-              <order :type="'Заявка на больничный'" :idItem="'flush-collapseTwo'"
-                :list_category="['Больничный', 'Декрет']" />
-              <order :type="'Заявка на командировку'" :idItem="'flush-collapseThree'"
-                :list_category="['На самолете', 'На поезде', 'На машине']" />
-              <order :type="'Заявка на служебную поездку'" :idItem="'flush-collapseFour'"
-                :list_category="['На самолете', 'На поезде', 'На машине']" />
-              <order :type="'Заявка на изменение личных данных'" :idItem="'flush-collapseFive'"
-                :list_category="['Арес', 'Паспортные данные', 'Контакты']" />
-              <order :type="'Заявка на увольнение'" :idItem="'flush-collapseSix'" :list_category="['Увольнение']" />
-            </div>
-          </Transition>
-          <component :is="currentTabComponent" />
-
+          <component :is="currentTabComponent" v-if="receivedData !== 'Applications'"/>
         </workspace>
       </Transition>
     </div>

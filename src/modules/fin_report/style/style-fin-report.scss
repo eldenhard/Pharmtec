@@ -68,7 +68,12 @@ th,td{
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
   }
+.notConfirmBuh{
+  td{
 
+    background: rgb(126, 210, 235) ;
+  }
+}
   @keyframes rotation {
   0% {
       transform: rotate(0deg);

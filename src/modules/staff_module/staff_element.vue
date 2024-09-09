@@ -7,18 +7,18 @@
         <div class="filter_block">
             <div class="checkbox_block">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="currentCompanyForFilter"
-                        value="Фармтек">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                        v-model="currentCompanyForFilter" value="Фармтек">
                     <label class="form-check-label" for="inlineRadio1">Фармтек</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" v-model="currentCompanyForFilter"
-                        value="Интелбио">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                        v-model="currentCompanyForFilter" value="Интелбио">
                     <label class="form-check-label" for="inlineRadio2">Интелбио</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" v-model="currentCompanyForFilter"
-                        value="Все" >
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                        v-model="currentCompanyForFilter" value="Все">
                     <label class="form-check-label" for="inlineRadio3">Все</label>
                 </div>
             </div>
@@ -66,9 +66,10 @@
                 <tbody>
 
                     <template v-if="currentColor == 'list'">
-                        <tr v-for="user in filteredUsersList" :key="user.id" :class="{ 'table-warning': user.status && user.vice_info }">
+                        <tr v-for="user in filteredUsersList" :key="user.id"
+                            :class="{ 'table-warning': user.status && user.vice_info }">
                             <!--  v-tippy="user.status" -->
-                            <td >{{ user.last_name }}</td>
+                            <td>{{ user.last_name }}</td>
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.middle_name }}</td>
                             <td>{{ user.job_info.name ?? 'Нет должности' }}</td>
@@ -94,7 +95,7 @@
                                     <div style="width: 30%; margin-left: auto; ">
                                         <img :src="getCurrentPicture(user.company)">
                                     </div>
-   
+
                                     <!-- <p>{{ user }}</p> -->
                                     <p style="margin-top: 10%;">{{ user.last_name }} {{ user.first_name }}
                                         {{ user.middle_name }}</p>
@@ -102,6 +103,7 @@
                                     <a @click="copyEmail(user.email)" style="color: var(--blue)">Почта: {{ user.email
                                         }}</a>
                                     <p>Тел: {{ user.phone }}</p>
+
 
                                 </div>
 
@@ -121,8 +123,9 @@ import api from '@/api/user'
 import { useLoaderStore } from '@/store/LoaderStore'
 import { useToast } from "vue-toastification";
 import { refreshToken } from '@/mixins/refreshToken'
-
+import { mask } from 'vue-the-mask'
 export default {
+    directives: { mask },
     setup() {
         const users = ref([]);
         const toast = useToast();
@@ -161,12 +164,13 @@ export default {
             filteredUsersList.value = users.value.filter(user =>
                 user.last_name.toLowerCase().includes(query) ||
                 user.first_name.toLowerCase().includes(query) ||
-                ( user.department_info &&  user.department_info?.manager?.toLowerCase().includes(query)) ||
+                // ( user.department_info &&  user.department_info?.manager?.toLowerCase().includes(query)) ||
                 (user.company && user.company.toLowerCase().includes(query)) ||
                 (user.job_info && user.job_info.name.toLowerCase().includes(query)) || // Проверяем, существует ли job_info и name
                 user.email.toLowerCase().includes(query)
             );
             filteredUsersGrid.value = [...filteredUsersList.value]; // Так как логика фильтрации одинакова, можно просто скопировать результат
+            console.log("Данные из фильтра:", filteredUsersList.value)
         }
         const getCurrentPicture = (pic) => {
             if (pic == 'ФАРМТЕК') {
@@ -178,10 +182,10 @@ export default {
         // Слушатель изменения поиск, с параметром для немедленного выполнения обработчика    
         watch(search, handleSearch, { immediate: true })
         watch(currentCompanyForFilter, () => {
-            if(currentCompanyForFilter.value == "Фармтек"){
+            if (currentCompanyForFilter.value == "Фармтек") {
                 filteredUsersList.value = users.value.filter(user => user.company == "ФАРМТЕК")
                 filteredUsersGrid.value = users.value.filter(user => user.company == "ФАРМТЕК")
-            } else if(currentCompanyForFilter.value == "Интелбио"){
+            } else if (currentCompanyForFilter.value == "Интелбио") {
                 filteredUsersList.value = users.value.filter(user => user.company == "ИНТЕЛБИО")
                 filteredUsersGrid.value = users.value.filter(user => user.company == "ИНТЕЛБИО")
             } else {
@@ -199,15 +203,16 @@ export default {
                 timeout: 3000
             })
         }
+    
         const formatWorkExperience = (days) => {
-      const years = Math.floor(days / 365);
-      const months = Math.floor((days % 365) / 30);
-      
-      let result = '';
-      if (years > 0) result += `${years} год(а) `;
-      if (months > 0) result += `${months} месяц(а)`;
-      return result.trim();
-    };
+            const years = Math.floor(days / 365);
+            const months = Math.floor((days % 365) / 30);
+
+            let result = '';
+            if (years > 0) result += `${years} год(а) `;
+            if (months > 0) result += `${months} месяц(а)`;
+            return result.trim();
+        };
         const viceInfoShort = (viceInfo) => {
             if (!viceInfo) return '';
 
@@ -226,7 +231,7 @@ export default {
             changeCurrentDisplayGrid,
             getCurrentPicture,
             viceInfoShort,
-            formatWorkExperience
+            formatWorkExperience,
 
         }
     },

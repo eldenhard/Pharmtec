@@ -19,7 +19,7 @@
                     <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
                     <li @click="selectTab('Applications', $event.target)">Заявки</li>
                     <li @click="selectTab('ApproveApplication', $event.target)" class="first">Подтверждение заявок</li>
-                    <li @click="selectTab('ApproveApplicationBookkeeping', $event.target)">Подтверждение заявок (бухгалетрия)</li>
+                    <li @click="selectTab('ApproveApplicationBookkeeping', $event.target)">Подтверждение заявок (бух.)</li>
                     <li @click="navigateTo('lk')">Статус пользователя</li>
                     <li @click="selectTab('createLimits', $event.target)">Статьи финансового отчета</li>
                     <li @click="selectTab('informationAboutProducts', $event.target)">Товарные знаки</li>
