@@ -3,6 +3,9 @@ $color_cyan: #14949C;
 .news_block {
   width: 80%;
   margin: 2% auto;
+  @media screen and (max-width: 768px) {
+    margin-top: 4%;
+  }
 }
 .news_block_header p {
   color: var(--newGreyColor);
@@ -10,14 +13,43 @@ $color_cyan: #14949C;
   font-size: 2.5vh;
 }
 .news_block_content {
-  display: grid;
-  grid-template-areas:
-    "f1 f1 f2 "
-    "f3 f4 f5 "
-    "f6 f7 f8 "
-    "f9 f10 f11";
-  gap: 2vw;
-}
+    display: grid;
+    grid-template-areas:
+      "f1 f1 f2"
+      "f3 f4 f5"
+      "f6 f7 f8"
+      "f9 f10 f11";
+    gap: 2vw;
+  
+    @media (max-width: 1324px) {
+      grid-template-areas:
+        "f1 f1"
+        "f2 f3"
+        "f4 f5"
+        "f6 f7"
+        "f8 f9"
+        "f10 f11"; 
+      grid-template-columns: repeat(2, 1fr); 
+      row-gap: 3vh;
+    }
+  
+    @media (max-width: 768px) {
+      grid-template-areas:
+        "f1"
+        "f2"
+        "f3"
+        "f4"
+        "f5"
+        "f6"
+        "f7"
+        "f8"
+        "f9"
+        "f10"
+        "f11";
+      grid-template-columns: 1fr; 
+      row-gap: 2.5vh;
+    }
+  }
 .long_news {
   display: flex;
   gap: 2vw;
@@ -35,6 +67,13 @@ $color_cyan: #14949C;
     }
     .description_text {
       margin-top: 8%;
+    }
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1vw;
+    .first_section, .second_section{
+        width: 100%;
     }
   }
 }
