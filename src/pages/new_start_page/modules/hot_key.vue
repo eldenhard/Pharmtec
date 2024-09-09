@@ -2,7 +2,7 @@
     <div class="hot_keys_group">
         <hot_key_blue :figcaption="'Все сотрудники'" :classSize="classSize" @click="navigateTo('workspace')"><img
                 src="../assets/circle.png" /></hot_key_blue>
-        <hot_key_green :figcaption="'Служебные заявки'" :classSize="classSize" @click="navigateTo('service_requests')">
+        <hot_key_green :figcaption="'Полезные сервисы'" :classSize="classSize" @click="navigateTo('service_requests')">
             <img src="../assets/check2.png" alt="">
         </hot_key_green>
         <hot_key_blue :figcaption="'Финансовый отчет'" :classSize="classSize"><img src="../assets/rub3.png" alt="">

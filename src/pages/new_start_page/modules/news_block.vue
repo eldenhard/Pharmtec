@@ -100,7 +100,11 @@
                     </swiper>
                 </div>
                 <br>
-                <a class="watch_all_news" v-show="is_news_visible">Смотреть все новости</a>
+                <router-link to="/news" style="outline: none !important; text-decoration: none !important;">
+                <a class="watch_all_news" v-show="is_news_visible">
+                    Смотреть все новости
+                </a>
+            </router-link>
             </div>
         </div>
     </div>

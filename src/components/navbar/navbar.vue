@@ -92,9 +92,10 @@
             </svg>
 
           </div>
+          <!-- ПОИСКОВАЯ СТРОКА ВРЕМЕННО СКРЫТА -->
           <div class="search_block">
-            <input type="search" class="search-input" placeholder="Искать сотрудника, документ, прочее">
-            <i class="bi bi-search search-icon" style="color: white; "></i>
+            <!-- <input type="search" class="search-input" placeholder="Искать сотрудника, документ, прочее">
+            <i class="bi bi-search search-icon" style="color: white; "></i> -->
           </div>
 
 
@@ -168,7 +169,7 @@
                 <hot_key_blue :figcaption="'Все\nсотрудники'" @click="navigateTo('workspace')" :classSize="classSize">
                   <img src="@/pages/new_start_page/assets/circle.png" style="width: 70%; margin: 0 auto;" />
                 </hot_key_blue>
-                <hot_key_green :figcaption="'Служебные заявки'" @click="navigateTo('service_requests')"
+                <hot_key_green :figcaption="'Полезные сервисы'" @click="navigateTo('service_requests')"
                   :classSize="classSize"><img src="@/pages/new_start_page/assets/check2.png"
                     style="width: 70%; margin: 0 auto;" alt="">
                 </hot_key_green>

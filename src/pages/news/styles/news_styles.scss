@@ -1,0 +1,188 @@
+$color_grey: #4e4e4e;
+$color_cyan: #14949C;
+.news_block {
+  width: 80%;
+  margin: 2% auto;
+}
+.news_block_header p {
+  color: var(--newGreyColor);
+  font-weight: normal;
+  font-size: 2.5vh;
+}
+.news_block_content {
+  display: grid;
+  grid-template-areas:
+    "f1 f1 f2 "
+    "f3 f4 f5 "
+    "f6 f7 f8 "
+    "f9 f10 f11";
+  gap: 2vw;
+}
+.long_news {
+  display: flex;
+  gap: 2vw;
+  box-sizing: border-box;
+
+  .first_section {
+    width: 55%;
+  }
+  .second_section {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    .mini_text{
+        flex-grow: 1;
+    }
+    .description_text {
+      margin-top: 8%;
+    }
+  }
+}
+.news {
+  background: var(--colorForGreyElement);
+  width: 100%;
+  border-radius: 40px;
+  box-sizing: border-box;
+  padding: 4% 6%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: translate(0, -2%);
+  }
+  img{
+    border-radius: 20px;
+  }
+  .description_text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $color_grey;
+    margin-top: 4%;
+  }
+  .mini_text {
+    color: $color_grey;
+    font-size: 0.9em;
+  }
+  .footer_news {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: flex-start; 
+    > *:nth-child(1) {
+      margin-right: 2vw; 
+      
+    }
+    > *:nth-child(2) {
+      margin-right: auto; 
+      
+    }
+  }
+}
+.basic_news {
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+  .first_section {
+    height: 50%; // Задаем фиксированную высоту для блока с изображением
+    overflow: hidden; // Обрезаем все, что выходит за пределы блока
+    border-radius: 20px;
+    img {
+      width: 100%; // Ширина 100% блока
+      height: 100%; // Высота 100% блока
+    //   object-fit: contain; // Обрезаем изображение, чтобы оно заполнило блок, сохраняя пропорции
+    }
+  }
+  .second_section {
+    flex-grow: 1; // Заставляем этот блок заполнять оставшееся пространство
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; // Распределяет текст и footer
+  }
+}
+
+.long_news {
+  display: flex;
+}
+.news_date{
+    color: $color_cyan
+}
+@for $i from 1 through 11 {
+  .news:nth-child(#{$i}) {
+    grid-area: f#{$i};
+  }
+}
+
+
+
+
+// ПАГИНАЦИЯ
+nav{
+    margin:0 auto;
+    padding-top:60px;
+  }
+  .pagination.pagination-circle .page-item.active .page-link {
+      border-radius: 50%;
+  }
+  .pagination .page-item .page-link:hover {
+      -webkit-transition: all .3s linear;
+      transition: all .3s linear;
+      border-radius: .125rem;
+      background-color: #eee;
+  }
+  .pagination.pg-blue .page-item.active .page-link:hover {
+      background-color: #E7E7E7;
+  }
+  .pagination .page-item.active .page-link {
+      -webkit-transition: all .2s linear;
+      transition: all .2s linear;
+      border-radius: .125rem;
+      background-color: #a7a7a7;
+  }
+  .pagination .page-item .page-link {
+      -webkit-transition: all .3s linear;
+      transition: all .3s linear;
+      outline: 0;
+      border: 0;
+      background-color: transparent;
+      font-size: .9rem;
+
+      font-weight:bold;
+  }
+  .pagination.pagination-circle .page-item .page-link:hover {
+      border-radius: 50%;
+  }
+  .pagination.pagination-circle .page-item .page-link {
+      margin-left: 2px;
+      margin-right: 2px;
+      border-radius: 50%;
+  }
+  .pagination .page-item.active .page-link{
+      box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+  }
+  .page-link{
+    border:none!important;
+  }
+  
+.Pager4 .pagination .page-item .page-link{
+    color:#4E4E4E;
+    // border:1px solid #C0C0C0 !important;
+  }
+  .Pager4 .pagination.pagination-circle .page-item.active .page-link {
+      color:#E7E7E7;
+  }
+  .Pager4 .pagination.pagination-circle .page-item.active .page-link:hover{
+    background-color:#E7E7E7;
+  }
+  .Pager4 .pagination .page-item .page-link.prev, .Pager4 .pagination .page-item .page-link.next{
+    border:0!important;
+  }
+  .Pager4 .pagination .page-item .page-link.prev:hover, .Pager4 .pagination .page-item .page-link.next:hover{
+    background-color:initial;
+  }
+  .Pager4 .pagination .page-item .page-link:hover {
+      -webkit-transition: all .3s linear;
+      transition: all .3s linear;
+      border-radius: .125rem;
+      background-color: #eee;
+  }
+  .Pager4 .pagination.pagination-circle .page-item .page-link:hover {
+      border-radius: 50%;
+  }

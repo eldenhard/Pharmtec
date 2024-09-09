@@ -9,8 +9,9 @@
       </transition>
     </router-view>
     <loaderComponent />
-  </div>
+    <footer />
 
+  </div>
   <!-- <AutorizationPage />
   <MainPage /> -->
 </template>
@@ -24,11 +25,11 @@ import api from './api/user'
 import loaderComponent from './ui/loader/loaderComponent.vue';
 import Navbar from './components/navbar/navbar.vue';
 import { refreshToken } from './mixins/refreshToken';
-
+import footer from './pages/new_start_page/components/footer.vue';
 import { useCurrentUserId } from '@/store/CurrentUserId'
 import { useBalanceItemsStore } from '@/store/BalanceItemsStore'
 export default {
-  components: { MainPage, AutorizationPage, loaderComponent, Navbar },
+  components: { MainPage, AutorizationPage, loaderComponent, Navbar, footer },
 
   setup() {
     const route = useRoute()

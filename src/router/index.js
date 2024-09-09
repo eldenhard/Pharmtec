@@ -8,6 +8,8 @@ import startPageNew from "../pages/new_start_page/startPageNew.vue";
 import serviceRequests from "../pages/service_requests/serviceRequests.vue";
 import create_limits from "../modules/all_staff/create_limits/create_limits.vue";
 import it_support from "../pages/it_support/itSupport.vue";
+import news_page from "../pages/news/newsPage.vue";
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -23,6 +25,7 @@ const router = createRouter({
     { path: "/products", component: productspage },
     { path: "/lk", component: LkPage },
     { path: "/support", component: it_support },
+    { path: "/news", component: news_page },
   ],
 });
 
