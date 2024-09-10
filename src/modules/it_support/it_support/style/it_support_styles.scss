@@ -1,3 +1,5 @@
+$color_grey: #c9c9c9;
+$color_label: #585858;
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -7,9 +9,14 @@
   body {
     line-height: 1.5;
   }
-  
+  .form_controls{
+    border: 1px solid $color_grey;
+    padding: 1% 2% !important;
+    border-radius: 20px;
+
+  }
   .container {
-    width: 60vw;
+    width: 70vw;
     margin: 2vh auto 0;
   }
   
@@ -39,20 +46,21 @@
     outline: 0;
   }
   .form textarea, .form .textarea {
-    min-height: 150px;
+    min-height: 20vh;
   }
   .form input[type=submit]:focus {
     border: none;
     outline: 0;
   }
   .form .textarea-tall {
-    min-height: 300px;
+    min-height: 20vh;
+    border-radius: 10px;
   }
   
   .form-stacked input[type=text], .form-stacked input[type=email], .form-stacked input[type=password],
   .form-stacked textarea {
     display: block;
-    margin-bottom: 1.5rem;
+    // margin-bottom: 1.5rem;
     width: 100%;
   }
   
@@ -128,4 +136,22 @@
   }
   .note a {
     color: #338EDA;
+  }
+
+  .form_controls_body{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 4vw;
+    row-gap: 2vh;
+    label{
+      color: $color_label;
+      font-size: 14px;
+    }
+    input{
+      height: 55%;
+      background: white !important;
+    }
+    .full-width {
+      grid-column: span 2; // Элемент на 2 колонки
+    }
   }

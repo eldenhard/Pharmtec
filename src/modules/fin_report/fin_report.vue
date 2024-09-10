@@ -135,7 +135,6 @@ export default {
         }
         const validateComment = (value) => {
             if (type_report_.value.name == 'Прочие расходы (с комментариями)') {
-                console.log('123')
                 if (!value) {
                     commentField_.value.focus()
                 }

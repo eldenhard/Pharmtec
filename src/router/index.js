@@ -26,6 +26,7 @@ const router = createRouter({
     { path: "/lk", component: LkPage },
     { path: "/support", component: it_support },
     { path: "/news", component: news_page },
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: startPageNew },
   ],
 });
 

@@ -28,6 +28,7 @@ import { refreshToken } from './mixins/refreshToken';
 import footer from './pages/new_start_page/components/footer.vue';
 import { useCurrentUserId } from '@/store/CurrentUserId'
 import { useBalanceItemsStore } from '@/store/BalanceItemsStore'
+import { useGetAllUsers } from '@/store/AllUsers'
 export default {
   components: { MainPage, AutorizationPage, loaderComponent, Navbar, footer },
 
@@ -35,11 +36,10 @@ export default {
     const route = useRoute()
     const $current_user_id_store = useCurrentUserId()
     const $balanceItemsStore = useBalanceItemsStore()
+    const $allUsers = useGetAllUsers()
     // Время бездействия в миллисекундах (3 часа = 10800 секунд)
     const INACTIVITY_LIMIT = 10800 * 1000 // 3 часа в миллисекундах
-
     let inactivityTimer
-
     const router = useRouter()
 
     // Функция выхода
@@ -66,10 +66,15 @@ export default {
     onMounted(async () => {
       if (localStorage.getItem('accessToken')) {
         await refreshToken()
+      } else {
+        logout()
+        return
       }
+     
       router.push("/main")
       $balanceItemsStore.getAllBalanceItems()
       $current_user_id_store.setCurrentUserId()
+      $allUsers.getAllUsers()
       // Устанавливаем таймер неактивности при монтировании компонента
       resetInactivityTimer()
 
