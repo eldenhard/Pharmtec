@@ -108,168 +108,6 @@ a:hover, a:focus{
 }
 
 
-/**************Баннер на главной***********************/
-
-.main-banner .swiper-slide{
-    min-height: 500px;
-    background-size: cover;
-}
-.main-banner .swiper-slide .container{
-    display: flex;
-    justify-content: space-between;
-}
-.main-banner .swiper-slide .banner-block{
-    min-height: 255px;
-    background: linear-gradient(135deg, #fff 95%, transparent 5%);
-    align-self: center;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    padding: 0 125px 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: start;
-    flex-basis: 30%;
-    position: relative;
-}
-.main-banner .swiper-slide .banner-img{
-    min-height: 550px;
-    display: flex;
-    align-items: center;
-    background-image: url(../assets/banner-bcg.png);
-    background-position: center;
-    flex-basis: 45%;
-    background-repeat: no-repeat;
-}
-.main-banner .swiper-slide .banner-block::after {
-    content: '';
-    position: absolute;
-    height: 50px;
-    width: 50px;
-    background: linear-gradient(135deg, #F0F6FA 53%, transparent 5%);
-    right: 0;
-    bottom: 0;
-}
-.main-banner .swiper-slide img {
-    max-height: 450px;
-    margin: auto;
-}
-.main-banner .swiper-slide .banner-block .banner-title{
-    font-weight: bold;
-    font-size: 50px;
-    line-height: 120%;
-    color: #004369;
-}
-.main-banner .swiper-slide .banner-block .banner-text{
-    font-size: 18px;
-    line-height: 140%;
-    color: #00143B;
-}
-.main-banner .swiper-slide .banner-block .banner-text small{
-    display: block;
-    font-size: 80%;
-}
-.main-banner .swiper-slide .banner-block .banner-link{
-    font-size: 14px;
-    line-height: 140%;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    padding: 14px 20px;
-}
-.main-banner .swiper-pagination{
-    position: absolute;
-    left: 20%;
-    align-self: start;
-    flex-basis: 20%;
-    max-width: 15%;
-    transform: unset;
-    bottom: 25%;
-}
-.main-banner .swiper-pagination-bullet-active{
-    background: #BEBD00;
-}
-/****************************** Куки **************************************/
-.cookie_notice{
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    width: 450px;
-    height: 40px;
-    z-index: 100;
-    padding: 15px;
-    background-color: #fff;
-    box-shadow: 0 1px 20px #0000001a;
-    border-radius: 16px;
-    display: none;
-    justify-content: space-between;
-    align-items: center;
-}
-.cookie_notice .notification__text{
-    display: flex;
-    flex-direction: column;
-    color: #39393d;
-    margin-right: 15px;
-}
-.cookie_notice .notification__text .about-cookie{
-    font-size: 14px;
-    line-height: 20px;
-    color: #004369;
-    background: transparent;
-    border: none;
-    text-align: left;
-    padding: 0;
-}
-.cookie_notice > button{
-    padding: 10px 15px;
-}
-#aboutCookieWrapper{
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.4);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    margin: auto;
-    display: none;
-}
-#aboutCookieWrapper button{
-    padding: 10px 15px;
-}
-#aboutCookieWrapper p{
-    line-height: 24px;
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-#aboutCookieWrapper a{
-    color: #004369;
-}
-#aboutCookieWrapper a:hover{
-    opacity: .8;
-    color: #004369;
-}
-
-#aboutCookieWrapper .modal-dialog {
-    width: 600px;
-    margin: 30px auto;
-    justify-content: center;
-    display: flex;
-    align-content: center;
-    flex-direction: column;
-}
-// /****************************** ^^^ Куки ^^^ ******************************/
-// /*------------------------------Блог-----------------------------*/
-
-
-
-
-
-
 // /*----------------------------о компании на главной------------------------------*/
 .about-wrapper{
     position: relative;
@@ -702,15 +540,28 @@ a:hover, a:focus{
     top: 0;
     right: 100%;
 }
+.row{
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1* var(--bs-gutter-y));
+  margin-right: calc(-0.5* var(--bs-gutter-x));
+  margin-left: calc(-0.5* var(--bs-gutter-x)); 
+}
 .our-partner .row{
-    display: flex;
+
+  display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    // gap: 2%;
 
 
 }
 .our-partner .row:first-of-type div{
-    flex-basis: 32%;
+    flex-basis: 30%;
+    gap: 1%;
+    // flex-grow: 1;
 }
 .our-partner .row:first-of-type div p{
     font-size: 20px;
@@ -748,16 +599,26 @@ a:hover, a:focus{
     margin-bottom: 25px;
 }
 .our-partner .row:last-of-type > div{
-    flex-basis: 44%;
-    max-width: 44%;    
+    flex-basis: 42%;
+    max-width: 42%;    
     padding: 32px; 
 }
+ol, ul {
+  list-style: none;
+}
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+  unicode-bidi: isolate;
+}
 .our-partner .row:last-of-type > div:first-child{
-    border: 4px solid rgba(190, 189, 0, 0.8) !important;
-    // margin: 2%;
+  border: 4px solid #CBCA33;
+  margin-left: 1%;
+    // padding-left: 10px; /* Добавляем отступ, чтобы border не сливался с текстом */
 }
 .our-partner .row:last-of-type > div:last-child{
     border: 4px solid rgba(0, 158, 227, 0.8);
+
 }
 .our-partner .part_title{
     font-size: 20px;
