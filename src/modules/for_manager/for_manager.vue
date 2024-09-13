@@ -92,10 +92,7 @@
                         <label>Доп. информация</label>
                         <input type="search" >
                     </div>
-                  
-             
-                 
-               
+
                 </div>
             </section>
 

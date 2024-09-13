@@ -101,7 +101,7 @@
 
 
 
-          
+
           <div class="menu_block" v-if="is_first_menu">
             <div class="date_time">
               <p class="blue_text">{{ new Date().toLocaleDateString() }}</p>
@@ -112,7 +112,7 @@
               </p>
               <p class="blue_text">{{ currentTime }}</p>
             </div>
-            
+
 
             <div class="user_block">
               <div class="mobile_block">
@@ -139,33 +139,34 @@
 
 
           <div class="menu_block" v-if="is_second_menu">
-          <div class="date_time">
-            <p class="blue_text">{{ new Date().toLocaleDateString() }}</p>
-            <p class="blue_text"> <!-- Линия -->
-              <svg width="10" height="15" viewBox="0 0 2 65" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 0V65" stroke="white" />
-              </svg>
-            </p>
-            <p class="blue_text">{{ currentTime }}</p>
-          </div>
-          <div class="user_block">
-            <button class="hamburger" :class="{ active_hamburger: isVisibleMiniMenu }"
-              @click="isVisibleMiniMenu = !isVisibleMiniMenu">
-              <img src="./assets/hamburger.png" style="width: 65%;">
-            </button>
+            <div class="date_time">
+              <p class="blue_text">{{ new Date().toLocaleDateString() }}</p>
+              <p class="blue_text"> <!-- Линия -->
+                <svg width="10" height="15" viewBox="0 0 2 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 0V65" stroke="white" />
+                </svg>
+              </p>
+              <p class="blue_text">{{ currentTime }}</p>
+            </div>
+            <div class="user_block">
+              <button class="hamburger" :class="{ active_hamburger: isVisibleMiniMenu }"
+                @click="isVisibleMiniMenu = !isVisibleMiniMenu">
+                <img src="./assets/hamburger.png" style="width: 65%;">
+              </button>
 
-            <div class="user_pic" @click="isVisibleUserMenu = !isVisibleUserMenu">
-              <img src="./assets/user.png" alt="логотип сотрудника">
+              <div class="user_pic" @click="isVisibleUserMenu = !isVisibleUserMenu">
+                <img src="./assets/user.png" alt="логотип сотрудника">
+              </div>
             </div>
           </div>
-        </div>
 
 
           <Transition>
             <div class="mini_menu" ref="miniMenuRef" v-show="isVisibleMiniMenu">
-             
+
               <div class="hot_keys_group" style="position: relative;">
-                <i class="bi bi-chevron-double-up" v-show="classSize == 'l_size'" style="position: absolute; top: 2%; color: #CFCFCF" @click="isVisibleMiniMenu = false"></i>
+                <i class="bi bi-chevron-double-up" v-show="classSize == 'l_size'"
+                  style="position: absolute; top: 2%; color: #CFCFCF" @click="isVisibleMiniMenu = false"></i>
                 <hot_key_blue :figcaption="'Все\nсотрудники'" @click="navigateTo('workspace')" :classSize="classSize">
                   <img src="@/pages/new_start_page/assets/circle.png" style="width: 70%; margin: 0 auto;" />
                 </hot_key_blue>
@@ -240,7 +241,11 @@
                 <button class="tab_button">Главная</button>
               </router-link>
             </li>
-            <li><button class="tab_button" @click="page_404('О компании')">О компании</button></li>
+            <li>
+              <router-link to="/about_us" style="outline: none !important; text-decoration: none !important;">
+                <button class="tab_button">О компании</button>
+              </router-link>
+            </li>
             <li>
               <router-link to="/workspace" style="outline: none !important; text-decoration: none !important;">
                 <button class="tab_button">Все сотрудники</button>
@@ -262,11 +267,11 @@
 
     </nav>
 
-    <section >
+    <section>
 
-      <input type="checkbox" id="side-checkbox" ref="element_close"/>
-      <div class="side-panel" >
-        <label class="side-button-2" for="side-checkbox" >+</label>
+      <input type="checkbox" id="side-checkbox" ref="element_close" />
+      <div class="side-panel">
+        <label class="side-button-2" for="side-checkbox">+</label>
         <div class="side-title">
           <div class="logo_block_mini">
             <!-- Фармтек -->
@@ -354,11 +359,11 @@
           </div>
         </div>
         <div class="btn_block">
-          <button class="tab_button"  @click="navigateTo('main')">Главная</button>
-          <button class="tab_button"  @click="navigateTo('news')">Новости</button>
-          <button class="tab_button"  @click="navigateTo('workspace')">Все сотрудники</button>
-          <button class="tab_button"  @click="navigateTo('service_requests')">Полезные сервисы</button>
-          <button class="tab_button"  @click="navigateTo('support')">Техподдержка</button>
+          <button class="tab_button" @click="navigateTo('main')">Главная</button>
+          <button class="tab_button" @click="navigateTo('news')">Новости</button>
+          <button class="tab_button" @click="navigateTo('workspace')">Все сотрудники</button>
+          <button class="tab_button" @click="navigateTo('service_requests')">Полезные сервисы</button>
+          <button class="tab_button" @click="navigateTo('support')">Техподдержка</button>
         </div>
       </div>
 
@@ -402,7 +407,7 @@ export default {
     const el_swipe = ref(null)
     const is_first_menu = ref(false)
     const is_second_menu = ref(true)
-    
+
     const { isSwiping, direction } = useSwipe(el_swipe)
     // const resizeHandler = () => {
     //   width.value = window.innerWidth;
@@ -414,17 +419,17 @@ export default {
     // };
 
     const resizeHandler = () => {
-            width.value = window.innerWidth;
-            if (width.value < 500) {
-                is_first_menu.value = true;
-                is_second_menu.value = false;
-                classSize.value = "l_size";
-            } else {
-              is_first_menu.value = false;
-              is_second_menu.value = true;
-                classSize.value = "s_size";
-            }
-        };
+      width.value = window.innerWidth;
+      if (width.value < 500) {
+        is_first_menu.value = true;
+        is_second_menu.value = false;
+        classSize.value = "l_size";
+      } else {
+        is_first_menu.value = false;
+        is_second_menu.value = true;
+        classSize.value = "s_size";
+      }
+    };
     onMounted(() => {
       window.addEventListener('resize', resizeHandler);
       // Установим начальное значение класса на основе текущей ширины
@@ -478,12 +483,12 @@ export default {
 
       }
     })
-     // Следим за направлением свайпа
-     watch(direction, (newDirection) => {
-  if (newDirection === 'RIGHT') {
-    isVisibleMiniMenu.value = false // Скрываем элемент при свайпе вниз
-  }
-})
+    // Следим за направлением свайпа
+    watch(direction, (newDirection) => {
+      if (newDirection === 'RIGHT') {
+        isVisibleMiniMenu.value = false // Скрываем элемент при свайпе вниз
+      }
+    })
     // Обновляем текущее время каждую секунду
     watchEffect((onInvalidate) => {
       const intervalId = setInterval(() => {
@@ -510,10 +515,10 @@ export default {
       classSize,
       el_swipe,
       isSwiping,
-       direction,
-       element_close,
-       is_first_menu,
-is_second_menu,
+      direction,
+      element_close,
+      is_first_menu,
+      is_second_menu,
 
     };
   }

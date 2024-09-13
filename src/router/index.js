@@ -14,7 +14,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/main", component: startPageNew },
-    { path: "/about-company", component: about_company },
+    { path: "/about_us", component: about_company },
     { path: "/login", component: autorizationpage },
     {
       path: "/workspace",
