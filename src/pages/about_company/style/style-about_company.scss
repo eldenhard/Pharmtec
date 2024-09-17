@@ -778,7 +778,7 @@ h3 {
   }
 }
 @media only screen and (max-width: 680px) {
-    // ВСЯ ВЕРСТКА РАЗДЕЛА!
+  // ВСЯ ВЕРСТКА РАЗДЕЛА!
   .container {
     width: 90%;
     margin: 0 auto;
@@ -817,23 +817,22 @@ h3 {
     }
 
     .our-mission {
-        display: none;
-    //   display: flex;
-    //   flex-direction: column;
-    //   width: 80%;
-    //   margin: 0 auto;
+      display: none;
+      //   display: flex;
+      //   flex-direction: column;
+      //   width: 80%;
+      //   margin: 0 auto;
       .us-mission {
         p {
         }
       }
       .we-want {
-        
         p {
         }
       }
     }
-    .we-strive{
-        display: none;
+    .we-strive {
+      display: none;
     }
     .our-expertise-wrapper {
       width: 100%;
@@ -892,31 +891,79 @@ h3 {
         text-indent: 0;
       }
     }
-    .our-partner{
-        .our-partner-title{
-            text-align: left;
-            font-size: 1.5em;
-        }
-        .row{
-            display: flex;
-            flex-direction: column;
-            width: 92%;
-            row-gap: 2vh;
-            position: relative;
-        }
-        .row div{
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            padding-left: 0;
-            p{
-                font-size: 1.2em;
-                width: auto;
-                text-align: left;
-            }
 
-           
+    .our-partner {
+      .our-partner-title {
+        text-align: left;
+        font-size: 1.5em;
+        margin-left: 0 !important;
+        position: relative;
+        left: 0;
+      }
+      .row {
+        display: flex;
+        flex-direction: column;
+        width: 92%;
+        row-gap: 2vh;
+        position: relative;
+      }
+      .row div {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding-left: 0;
+        p {
+          font-size: 1.2em;
+          width: auto;
+          text-align: left;
         }
+      }
+      .f1,
+      .f2 {
+        width: 92%;
+        // background: red;
+        p {
+          text-align: center;
+          width: auto;
+          text-indent: 0;
+          padding-left: 10%;
+        }
+        span {
+          padding-left: 10%;
+        }
+      }
+    }
+  }
+  .price-policy {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    p {
+      font-size: 1.2em;
+      padding-top: 20%;
+    }
+    span {
+      font-size: 1em;
+    }
+    &::after {
+      content: "";
+      width: 150px;
+      height: 150px;
+      background-image: url(../assets/earth-globe.svg);
+      display: inline-block;
+      position: absolute;
+      bottom: 85%;
+      left: 50%;
+      transform: translate(-50%);
+      background-color: #f0f6fa;
+      border-radius: 50%;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin-bottom: 5%;
+    }
+    .btn {
+      width: 30%;
+      margin: 0 auto;
     }
   }
 }
