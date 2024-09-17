@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper_cont div_full">
+    <div class="wrap-content div_full">
         <div class="container">
 
 
@@ -27,11 +27,14 @@
                                                 в портфеле – 6 препаратов. Так начиналась история компании «Фармтек»</p>
                                         </div>
                                     </div>
-                                    <div class="today"><iframe width="100%" height="315"
+                                    <div class="today">
+                                        <iframe width="100%" height="315"
                                             src="https://www.youtube.com/embed/GtYQ49Egv-s" title="YouTube video player"
                                             frameborder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowfullscreen="allowfullscreen"></iframe> <span>сегодня</span>
+                                            allowfullscreen="allowfullscreen">
+                                        </iframe> 
+                                        <span>сегодня</span>
                                         <p>Сегодня «Фармтек» — это 15 лет стремительного роста и уникального опыта,
                                             представители в 56 городах страны и 53 высокоэффективных препаратов,
                                             заслуживших доверие специалистов и любовь покупателей. Продукцию «Фармтек»
@@ -78,7 +81,7 @@
                                             дерматологии и позволяют в значительной мере покрыть данный сегмент рынка.
                                             Компоненты препаратов «Фармтек» входят в Федеральные клинические
                                             рекомендации и стандарты лечения заболеваний кожи.</blockquote>
-                                        <div>
+                                        <div class="blue_block">
                                             <p><b>Мы разработаем с самыми распространенными проблемами, требующими
                                                     длительного и сложного лечения.</b> Это основные причины обращения к
                                                 врачу-дерматологу:</p>
@@ -90,7 +93,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div>
+                                        <div class="white_block">
                                             <p><b>Мы сосредоточены не только на дерматологических, но и на
                                                     психосоциальных проблемах,</b> которые становятся источником стресса
                                                 и затрудненной социальной адаптации:</p>

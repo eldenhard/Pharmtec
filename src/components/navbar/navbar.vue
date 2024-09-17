@@ -420,7 +420,7 @@ export default {
 
     const resizeHandler = () => {
       width.value = window.innerWidth;
-      if (width.value < 500) {
+      if (width.value < 800) {
         is_first_menu.value = true;
         is_second_menu.value = false;
         classSize.value = "l_size";
