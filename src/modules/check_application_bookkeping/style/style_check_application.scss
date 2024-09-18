@@ -3,7 +3,40 @@
     тега label */
     position: relative;
   }
-  
+  .search_block{
+    display: flex;
+    justify-content: flex-start;
+    gap: 2vw;
+    align-items: flex-end;
+  }
+  .datepicker-icon {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px;
+    font-size: 24px; /* размер иконки */
+  }
+  .date_check{
+    font-size: 14px;
+    color: rgb(138, 138, 138);
+   
+  }
+  /* Стили для попапа с календарем */
+  .datepicker-popup {
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    right: 35%;
+    top: 42%;
+  }
+    @media screen and (max-width: 1550px) {
+      .datepicker-popup {
+        right: 31%;
+        top: 45%;
+      }
+    } 
   input, select {
     background: #fff;
     padding: 2% 4%;

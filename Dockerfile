@@ -22,6 +22,7 @@ RUN npm install --save-dev typescript
 RUN npm install --save-dev @types/node
 RUN npm install --save-dev vue-tsc
 RUN npm install swiper
+RUN npm install v-calendar@next @popperjs/core
 RUN npm install
 COPY ./ .
 RUN npm run build

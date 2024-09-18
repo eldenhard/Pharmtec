@@ -48,12 +48,15 @@ import VueTheMask from 'vue-the-mask'
 import VueTippy from 'vue-tippy'
 import 'tippy.js/dist/tippy.css'
 
+import VCalendar from 'v-calendar';
+import 'v-calendar/style.css';
 const app = createApp(App)
     .use(router)
     .use(pinia)
     .use(axiosPlugin)
     .use(VMdEditor)
     .use(VueTheMask)
+    .use(VCalendar, {})
     .use(VueTippy, {
       directive: 'tippy', // => v-tippy
       component: 'tippy', // => <tippy/>
@@ -64,6 +67,7 @@ const app = createApp(App)
         allowHTML: true,
       }, // => Global default options * see all props
       }
+    
     )
     .use(Toast, {
         position: "top-right",
