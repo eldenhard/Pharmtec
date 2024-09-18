@@ -1,10 +1,11 @@
 <template>
   <div class="air_block">
-    <h4 class="air_block_header">Подтверждение заявок (бухгалетрия)</h4>
+    <h4 class="air_block_header">Подтверждение заявок (бухгалтерия)</h4>
     <div class="air_block_body">
       <div class="search_block">
-        <label for="" style="width: 30%"
-          >Сотрудники сотрудники
+        <!-- Выбор сотрудника -->
+        <label for="" style="width: 30%">
+          Сотрудники
           <v-select
             :options="all_users"
             label="full_name"
@@ -13,18 +14,56 @@
             <template #no-options> Сотрудники не найдены </template>
           </v-select>
         </label>
+
+        <!-- Календарь -->
         <div class="datepicker-icon" @click="toggleDatePicker">
-            <i class="bi bi-calendar-week"></i>
-            <span class="date_check">&nbsp;{{  new Date(range.start).getDate() }}.{{ new Date(range.start).getMonth()  }}.{{  new Date(range.start).getFullYear() }} — 
-                {{  new Date(range.end).getDate() }}.{{ new Date(range.end).getMonth()  }}.{{  new Date(range.end).getFullYear() }}
-            </span>
+          <i class="bi bi-calendar-week"></i>
+          <span class="date_check" v-if="range.start">
+            &nbsp;{{ formatDate(range.start) }} — {{ formatDate(range.end) }}
+          </span>
+          <button
+            v-if="range.start"
+            class="btn btn-sm btn-danger"
+            @click="resetDate"
+          >
+            Сбросить
+          </button>
+        </div>
+        <div v-if="isDatePickerVisible" ref="calendar" class="datepicker-popup">
+          <VDatePicker v-model.range="range" mode="date" />
         </div>
 
-        <div v-if="isDatePickerVisible" class="datepicker-popup">
-          <VDatePicker v-model.range="range" mode="date"/>
+        <!-- Выбор всех записей -->
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="flexCheckChecked"
+            v-model="checked_all_rows"
+            @change="selectAllRows"
+          />
+          <label class="form-check-label" for="flexCheckChecked">
+            Выбрать все записи
+            <span v-show="checked_all_rows" class="date_check">
+              (Выбрано: {{ filteredTransactions.length }})
+            </span>
+          </label>
         </div>
+
+        <!-- Кнопка сохранения всех записей -->
+        <button
+          type="button"
+          class="btn btn-dark"
+          v-show="checked_all_rows"
+          @click="saveAllEntries"
+        >
+          Сохранить все записи
+        </button>
       </div>
-      <br>
+
+      <br />
+
+      <!-- Таблица с транзакциями -->
       <table class="table table-bordered table-hover table-sm">
         <thead>
           <tr>
@@ -41,13 +80,9 @@
         <tbody>
           <template v-for="(item, index) in filteredTransactions">
             <tr v-for="j in item.transactions" :key="j.id">
-              <template
-                v-if="j.is_confirmed == true && !j.is_accounting_confirmed"
-              >
-                <td>{{ j.on_date.split("-").reverse().join(".") }}</td>
-                <td>
-                  {{ item.author.first_name }} {{ item.author.last_name }}
-                </td>
+              <template v-if="j.is_confirmed && !j.is_accounting_confirmed">
+                <td>{{ formatDate(j.on_date) }}</td>
+                <td>{{ item.author.first_name }} {{ item.author.last_name }}</td>
                 <td>{{ j.balance_sheet_item_info.name }}</td>
                 <td>{{ j.amount }}</td>
                 <td>{{ j.staff_comment }}</td>
@@ -56,16 +91,12 @@
                     <button
                       class="btn btn-secondary dropdown-toggle"
                       type="button"
-                      id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
                       Действие
                     </button>
-                    <ul
-                      class="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton1"
-                    >
+                    <ul class="dropdown-menu">
                       <li>
                         <a
                           class="dropdown-item"
@@ -84,9 +115,7 @@
                       </li>
                     </ul>
                   </div>
-                  <span v-if="j.status_confirm_application">{{
-                    j.status_confirm_application
-                  }}</span>
+                  <span v-if="j.status_confirm_application">{{j.status_confirm_application }}</span>
                 </td>
                 <td
                   :class="{
@@ -103,13 +132,7 @@
                   />
                 </td>
                 <td>
-                  <button
-                    type="button"
-                    class="btn btn-dark"
-                    @click="confirmFinEntry(j, index)"
-                  >
-                    Сохранить
-                  </button>
+                  <button type="button" class="btn btn-dark" @click="confirmFinEntry(j, index)"> Сохранить </button>
                 </td>
               </template>
             </tr>
@@ -147,17 +170,14 @@ export default {
     const allTransactions = ref([]);
     const users = useGetAllUsers();
     const all_users = ref([]);
-    const range = ref({
-      start: new Date(2020, 0, 6),
-      end: new Date(2020, 0, 10),
-    });
+    const range = ref({});
     const isDatePickerVisible = ref(false);
-    const target = ref(null)
-
-  
+    const target = ref(null);
+    const checked_all_rows = ref(false);
+    const calendar = ref(null);
     // Функция для переключения видимости DatePicker
     const toggleDatePicker = () => {
-    isDatePickerVisible.value = !isDatePickerVisible.value;
+      isDatePickerVisible.value = !isDatePickerVisible.value;
     };
     onMounted(async () => {
       try {
@@ -167,6 +187,7 @@ export default {
         // let response = await api.getStaffByManagerUsers();
         // allStaffByManager.value = response.data;
         useLoaderStore().setLoader(false);
+        onClickOutside(calendar, closeDatePicker);
       } catch (err) {
         console.log(err);
         useLoaderStore().setLoader(false);
@@ -174,20 +195,57 @@ export default {
           timeout: 3000,
         });
       }
-    });
+    })
+   
+
+    const closeDatePicker = () => {
+      isDatePickerVisible.value = false;
+    };
+    const resetDate = () => {
+      range.value = {};
+    };
+
     const filteredTransactions = computed(() => {
-      if (!currentUser_.value) {
-        return allTransactions.value;
+      let transactions = allTransactions.value;
+
+      if (currentUser_.value) {
+        transactions = transactions.filter((item) =>
+          [item.author.first_name, item.author.last_name]
+            .join(" ")
+            .includes(
+              [
+                currentUser_.value.first_name,
+                currentUser_.value.last_name,
+              ].join(" ")
+            )
+        );
       }
-      return allTransactions.value.filter((item) => {
-        const fullName = [item.author.last_name, item.author.first_name].join(
-          " "
+
+      if (range.value.start && range.value.end) {
+        const start = new Date(range.value.start).getTime();
+        const end = new Date(range.value.end).getTime();
+
+        transactions = transactions.filter((item) =>
+          item.transactions.some((t) => {
+            const transactionDate = new Date(t.on_date).getTime();
+            return transactionDate >= start && transactionDate <= end;
+          })
         );
-        return fullName.includes(
-          currentUser_.value.last_name + " " + currentUser_.value.first_name
-        );
-      });
+      }
+
+      return transactions;
     });
+
+    const formatDate = (date) => {
+      const d = new Date(date);
+      return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+    };
+
+    const saveAllEntries = () => {
+      console.log("Все записи:", filteredTransactions.value);
+    };
+
+
 
     const formatedUsers = computed(() => {
       return allStaffByManager.value
@@ -285,20 +343,20 @@ export default {
       }
     }
     return {
-      allStaffByManager,
-      response_data_transaction_by_user_,
-      currentUser_,
-      getFinancialReports,
-      formatedUsers,
-      filteredTransactions,
       all_users,
-      allTransactions,
-      getValidationRules,
-      confirmFinEntry,
+      currentUser_,
       range,
       isDatePickerVisible,
       toggleDatePicker,
-      target,
+      closeDatePicker,
+      resetDate,
+      checked_all_rows,
+      filteredTransactions,
+      formatDate,
+      saveAllEntries,
+      confirmFinEntry,
+      calendar,
+      getValidationRules,
     };
   },
 };

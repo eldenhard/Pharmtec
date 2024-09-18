@@ -10,9 +10,11 @@
     align-items: flex-end;
   }
   .datepicker-icon {
+    display: flex;
+    align-items: flex-end;
     cursor: pointer;
     display: inline-block;
-    padding: 5px;
+    // padding: 5px;
     font-size: 24px; /* размер иконки */
   }
   .date_check{
@@ -37,7 +39,7 @@
         top: 45%;
       }
     } 
-  input, select {
+  input:not([type=checkbox]), select {
     background: #fff;
     padding: 2% 4%;
     /* закруглим края у поля ввода */
