@@ -45,7 +45,7 @@
           <label class="form-check-label" for="flexCheckChecked">
             Выбрать все записи
             <span v-show="checked_all_rows" class="date_check">
-              (Выбрано: {{ filteredTransactions.length }})
+              (Выбрано: {{ checking_data.length }})
             </span>
           </label>
         </div>
@@ -175,6 +175,7 @@ export default {
     const target = ref(null);
     const checked_all_rows = ref(false);
     const calendar = ref(null);
+    const checking_data = ref([]);
     // Функция для переключения видимости DatePicker
     const toggleDatePicker = () => {
       isDatePickerVisible.value = !isDatePickerVisible.value;
@@ -241,8 +242,20 @@ export default {
       return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
     };
 
+    watch(checked_all_rows, () => {
+      saveAllEntries()
+    })
+
     const saveAllEntries = () => {
-      console.log("Все записи:", filteredTransactions.value);
+      checking_data.value = []
+      filteredTransactions.value.forEach((item) => {
+        item.transactions.forEach((t) => {
+          if(t.is_confirmed && !t.is_accounting_confirmed){
+            checking_data.value.push(t)
+          }
+        });
+      })
+      console.log("Все записи:", checking_data.value);
     };
 
 
@@ -331,7 +344,7 @@ export default {
           // "is_confirmed": item.is_confirmed
         };
         console.log("Параметры запроса:", queryParams);
-        await api_fin.editFinancialEntry(item.id, queryParams);
+        // await api_fin.editFinancialEntry(item.id, queryParams);
         toast.success(`Действие по заявке сохранено`, {
           timeout: 2500,
         });
@@ -356,6 +369,7 @@ export default {
       saveAllEntries,
       confirmFinEntry,
       calendar,
+      checking_data,
       getValidationRules,
     };
   },
