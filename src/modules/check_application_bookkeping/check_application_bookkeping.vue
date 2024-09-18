@@ -57,7 +57,7 @@
           v-show="checked_all_rows"
           @click="saveAllEntries"
         >
-          Сохранить все записи
+          Подтвердить все записи
         </button>
       </div>
 
