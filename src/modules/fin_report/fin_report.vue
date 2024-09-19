@@ -98,7 +98,8 @@ export default {
     },
     setup() {
          // Используем хук useLocalStorage для сохранения и восстановления данных
-    const date_fin_report_ = useLocalStorage("date_fin_report", "");
+    const date_fin_report_ = ref("");
+    // useLocalStorage("date_fin_report", "")
     const date_transaction_ = useLocalStorage("date_transaction", new Date().toISOString().slice(0, 10));
     const comment_transaction_ = useLocalStorage("comment_transaction", "");
     const inputValue_ = useLocalStorage("inputValue", 0);
@@ -206,6 +207,7 @@ export default {
                         new Set(expensesLabel.value.map(transaction => transaction.name)),
                         name => expensesLabel.value.find(transaction => transaction.name === name)
                     )
+                    
                     expensesLabelLimit.value = uniqueTransactions.sort((a, b) => a.name.localeCompare(b.name))
                     response_data_fin_report_.value = transactions
                     current_report_id = response.data[0].id
@@ -215,6 +217,7 @@ export default {
                     response_data_fin_report_.value = [],
                         expensesLabelLimit.value = expensesLabel.value.sort((a, b) => a.name.localeCompare(b.name))
                 }
+
                 $toast.success("Данные загружены", { timeout: 3000 })
                 $loader.setLoader(false)
             } catch (err) {

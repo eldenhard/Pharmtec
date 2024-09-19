@@ -24,6 +24,7 @@
           <button
             v-if="range.start"
             class="btn btn-sm btn-danger"
+            style="margin-left: 10px"
             @click="resetDate"
           >
             Сбросить
@@ -53,7 +54,7 @@
         <!-- Кнопка сохранения всех записей -->
         <button
           type="button"
-          class="btn btn-dark"
+          class="btn btn-success"
           v-show="checked_all_rows"
           @click="saveAllEntries"
         >
@@ -62,83 +63,94 @@
       </div>
 
       <br />
-
-      <!-- Таблица с транзакциями -->
-      <table class="table table-bordered table-hover table-sm">
-        <thead>
-          <tr>
-            <th>Дата</th>
-            <th>ФИО</th>
-            <th>Наименование</th>
-            <th>Сумма</th>
-            <th>Комментарий сотрудника</th>
-            <th>Подтверждение</th>
-            <th>Комментарий</th>
-            <th>Сохранение</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-for="(item, index) in filteredTransactions">
-            <tr v-for="j in item.transactions" :key="j.id">
-              <template v-if="j.is_confirmed && !j.is_accounting_confirmed">
-                <td>{{ formatDate(j.on_date) }}</td>
-                <td>{{ item.author.first_name }} {{ item.author.last_name }}</td>
-                <td>{{ j.balance_sheet_item_info.name }}</td>
-                <td>{{ j.amount }}</td>
-                <td>{{ j.staff_comment }}</td>
-                <td>
-                  <div class="dropdown" v-if="!j.status_confirm_application">
-                    <button
-                      class="btn btn-secondary dropdown-toggle"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Действие
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="#"
-                          @click="j.status_confirm_application = 'Принято'"
-                          >Принять</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="#"
-                          @click="j.status_confirm_application = 'Отклонено'"
-                          >Отклонить</a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                  <span v-if="j.status_confirm_application">{{j.status_confirm_application }}</span>
-                </td>
-                <td
-                  :class="{
-                    warning: j.status_confirm_application == 'Отклонено',
-                  }"
-                >
-                  <Field
-                    v-model="j.comment_bookkeeping"
-                    :name="`comment_${index}`"
-                    :rules="getValidationRules(j)"
-                    as="input"
-                    type="text"
-                    class="form-control"
-                  />
-                </td>
-                <td>
-                  <button type="button" class="btn btn-dark" @click="confirmFinEntry(j, index)"> Сохранить </button>
-                </td>
-              </template>
+      <div style="max-width: 100%; overflow: auto">
+        <!-- Таблица с транзакциями -->
+        <table class="table table-bordered table-hover table-sm">
+          <thead>
+            <tr>
+              <th>Дата</th>
+              <th>ФИО</th>
+              <th>Наименование</th>
+              <th>Сумма</th>
+              <th>Комментарий сотрудника</th>
+              <th>Подтверждение</th>
+              <th>Комментарий</th>
+              <th>Сохранение</th>
             </tr>
-          </template>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <template v-for="(item, index) in filteredTransactions">
+              <tr v-for="j in item.transactions" :key="j.id">
+                <template v-if="j.is_confirmed && !j.is_accounting_confirmed">
+                  <td>{{ formatDate(j.on_date) }}</td>
+                  <td>
+                    {{ item.author.first_name }} {{ item.author.last_name }}
+                  </td>
+                  <td>{{ j.balance_sheet_item_info.name }}</td>
+                  <td>{{ j.amount }}</td>
+                  <td>{{ j.staff_comment }}</td>
+                  <td>
+                    <div class="dropdown" v-if="!j.status_confirm_application">
+                      <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Действие
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="#"
+                            @click="j.status_confirm_application = 'Принято'"
+                            >Принять</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="#"
+                            @click="j.status_confirm_application = 'Отклонено'"
+                            >Отклонить</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                    <span v-if="j.status_confirm_application">{{
+                      j.status_confirm_application
+                    }}</span>
+                  </td>
+                  <td
+                    :class="{
+                      warning: j.status_confirm_application == 'Отклонено',
+                    }"
+                  >
+                    <Field
+                      v-model="j.comment_bookkeeping"
+                      :name="`comment_${index}`"
+                      :rules="getValidationRules(j)"
+                      as="input"
+                      type="text"
+                      class="form-control"
+                    />
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-dark"
+                      @click="confirmFinEntry(j, index)"
+                    >
+                      Сохранить
+                    </button>
+                  </td>
+                </template>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -196,19 +208,25 @@ export default {
           timeout: 3000,
         });
       }
-    })
-   
-
+    });
+    watch(currentUser_, () => {
+      checked_all_rows.value = false;
+    });
+    watch(range, () => {
+      checked_all_rows.value = false;
+    });
     const closeDatePicker = () => {
       isDatePickerVisible.value = false;
     };
     const resetDate = () => {
       range.value = {};
+      checked_all_rows.value = false;
     };
 
     const filteredTransactions = computed(() => {
       let transactions = allTransactions.value;
 
+      // Фильтрация по автору, если указан
       if (currentUser_.value) {
         transactions = transactions.filter((item) =>
           [item.author.first_name, item.author.last_name]
@@ -222,16 +240,23 @@ export default {
         );
       }
 
+      // Фильтрация по диапазону дат, если указан
       if (range.value.start && range.value.end) {
         const start = new Date(range.value.start).getTime();
         const end = new Date(range.value.end).getTime();
 
-        transactions = transactions.filter((item) =>
-          item.transactions.some((t) => {
-            const transactionDate = new Date(t.on_date).getTime();
-            return transactionDate >= start && transactionDate <= end;
+        transactions = transactions
+          .map((item) => {
+            // Фильтруем транзакции внутри item
+            const filteredTransactions = item.transactions.filter((t) => {
+              const transactionDate = new Date(t.on_date).getTime();
+              return transactionDate >= start && transactionDate <= end;
+            });
+
+            // Возвращаем новый объект с отфильтрованными транзакциями
+            return { ...item, transactions: filteredTransactions };
           })
-        );
+          .filter((item) => item.transactions.length > 0); // Убираем элементы без транзакций
       }
 
       return transactions;
@@ -243,22 +268,15 @@ export default {
     };
 
     watch(checked_all_rows, () => {
-      saveAllEntries()
-    })
-
-    const saveAllEntries = () => {
-      checking_data.value = []
+      checking_data.value = [];
       filteredTransactions.value.forEach((item) => {
         item.transactions.forEach((t) => {
-          if(t.is_confirmed && !t.is_accounting_confirmed){
-            checking_data.value.push(t)
+          if (t.is_confirmed && !t.is_accounting_confirmed) {
+            checking_data.value.push(t);
           }
         });
-      })
-      console.log("Все записи:", checking_data.value);
-    };
-
-
+      });
+    });
 
     const formatedUsers = computed(() => {
       return allStaffByManager.value
@@ -313,7 +331,32 @@ export default {
         : yup.string().nullable();
     }
 
-    async function confirmFinEntry(item, index) {
+    const saveAllEntries = async () => {
+      useLoaderStore().setLoader(true);
+      try {
+        checked_all_rows.value = [];
+        let promises = checking_data.value.map((item) =>
+          api_fin.editFinancialEntry(item.id, {
+            is_accounting_confirmed: true,
+          })
+        );
+        await Promise.all(promises);
+        await getFinancialReports();
+
+        toast.success(`Данные сохранены`, {
+          timeout: 2500,
+        });
+      } catch (err) {
+        toast.error(`Данные не сохранены\n${err}`, {
+          timeout: 2500,
+        });
+        useLoaderStore().setLoader(false);
+      } finally {
+        useLoaderStore().setLoader(false);
+      }
+    };
+
+    async function confirmFinEntry(item, index = 1) {
       try {
         if (
           item.status_confirm_application === "Отклонено" &&
@@ -324,14 +367,13 @@ export default {
           });
           return;
         }
-        if (item.status_confirm_application === "Согласовано") {
+        if (item.status_confirm_application === "Принято") {
           item.is_accounting_confirmed = true;
         } else {
           item.is_accounting_confirmed = false;
         }
 
-        console.log("item", item);
-        // Логика сохранения транзакции
+        // // Логика сохранения транзакции
         const queryParams = {
           // "balance_sheet_item": item?.balance_sheet_item_info.id,
           // "on_date": item.on_date,
@@ -344,7 +386,7 @@ export default {
           // "is_confirmed": item.is_confirmed
         };
         console.log("Параметры запроса:", queryParams);
-        // await api_fin.editFinancialEntry(item.id, queryParams);
+        await api_fin.editFinancialEntry(item.id, queryParams);
         toast.success(`Действие по заявке сохранено`, {
           timeout: 2500,
         });
