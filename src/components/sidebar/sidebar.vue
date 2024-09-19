@@ -17,6 +17,7 @@
                     <li @click="selectTab('companyStructure', $event.target)" class="first">Структура компании</li>
                     <li @click="selectTab('staff', $event.target)">Список сотрудников</li>
                     <li @click="selectTab('forManagment', $event.target)">Для руководителя</li>
+                    <li @click="selectTab('confirmApplicationRegistration', $event.target)">Подтверждение регистрации</li>
                     <!-- <li @click="selectTab('ApproveApplication', $event.target)">Подтверждение заявок</li> -->
             
                 </ul>

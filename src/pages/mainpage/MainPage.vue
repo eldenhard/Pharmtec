@@ -49,6 +49,7 @@ import user_status from '@/pages/lk_page/modules/UserStatus.vue'
 import { useActiveTabStore } from '../../store/ActiveTabStore'
 import products_company from '../../modules/products_company/products_company.vue';
 import create_limits from '../../modules/all_staff/create_limits/create_limits.vue';
+import confirmApplicationRegistration from '../../modules/confirmApplicationRegistration/confirmApplicationRegistration.vue'
 export default {
   components: {
     navbar, sidebar, workspace, Transition, order, for_manager, for_admin, news, sheduleElement, fin_report, check_application, company_structure,
@@ -84,6 +85,8 @@ export default {
           return products_company
         case 'UserStatus':
           return user_status
+        case 'confirmApplicationRegistration':
+          return confirmApplicationRegistration
         default:
           return order
       }
