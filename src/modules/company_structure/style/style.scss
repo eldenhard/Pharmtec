@@ -61,3 +61,9 @@
     gap: .5vw;
     color: #2e2e2e;
 }
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.4s ease-in;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active для Vue 2 */ {
+    opacity: 0;
+  }
