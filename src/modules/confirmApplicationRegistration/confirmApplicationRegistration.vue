@@ -15,6 +15,7 @@
           role="tab"
           aria-controls="pills-home"
           aria-selected="true"
+          @click="selectedTab = 'Кадровая служба'"
         >
           Кадровая служба
         </button>
@@ -29,6 +30,7 @@
           role="tab"
           aria-controls="pills-profile"
           aria-selected="false"
+          @click="selectedTab = 'Бухгалтерия'"
         >
           Бухгалтерия
         </button>
@@ -41,7 +43,7 @@
         role="tabpanel"
         aria-labelledby="pills-home-tab"
       >
-        1
+        <confirmPersonalService :typeConfirm="selectedTab" />
       </div>
       <div
         class="tab-pane fade"
@@ -49,15 +51,24 @@
         role="tabpanel"
         aria-labelledby="pills-profile-tab"
       >
-        2
+        <confirmPersonalService :typeConfirm="selectedTab" />
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
-    background: black !important;
-}
 
+<script setup>
+import { ref } from 'vue'
+import confirmAccounting from "./components/confirmAccounting.vue";
+import confirmPersonalService from "./components/confirmPersonalService.vue";
+
+// Переменная для отслеживания выбранной вкладки
+const selectedTab = ref("Кадровая служба");
+</script>
+<style scoped>
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background: black !important;
+}
 </style>

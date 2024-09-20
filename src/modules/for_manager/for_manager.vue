@@ -266,7 +266,7 @@ export default {
       try {
         // let response = await apiInvite.createNewInvite(formDataToSubmit);
         let response = await apiInvite.createNewInvite(formDataToSubmit);
-        await apiInvite.confirmNewInvite(response.data.id);
+        // await apiInvite.confirmNewInvite(response.data.id);
         useLoaderStore().setLoader(false);
 
         toast.success(
