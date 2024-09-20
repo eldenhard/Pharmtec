@@ -41,12 +41,11 @@
 
                     <div class="news_item" v-show="is_news_visible">
                         <div class="img_block">
-                            <img src="../assets/woman_news.png">
+                            <img src="../assets/news2.jpg">
                         </div>
                         <div class="description">
                             <p class="description_text">
-                                Поздравляем с Днем рождения! Сегодня день рождения отмечает Анна Петрова,  медицинский
-                                представитель г. Волгоград
+                                Вывод на рынок нового продукта БАД КЛАВИО
                             </p>
                         </div>
                         <div class="footer_item">
@@ -81,13 +80,11 @@
                         <swiper-slide>
                             <div class="news_item" >
                                 <div class="img_block">
-                                    <img src="../assets/woman_news.png">
+                                    <img src="../assets/news2.jpg">
                                 </div>
                                 <div class="description">
                                     <p class="description_text">
-                                        Поздравляем с Днем рождения! Сегодня день рождения отмечает Анна Петрова, 
-                                        медицинский
-                                        представитель г. Волгоград
+                                        Вывод на рынок нового продукта БАД КЛАВИО
                                     </p>
                                 </div>
                                 <div class="footer_item">
