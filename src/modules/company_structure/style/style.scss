@@ -1,0 +1,41 @@
+.company_structure{
+    width: 90%;
+    margin: 0 auto;
+    h4{
+        margin: 2% 0;
+        color: #4e4e4e;
+       
+    }
+    .company_structure_content{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 2vh;
+    }
+    .list_item{
+        background: #f9f9f9;
+        border-radius: 15px;
+        padding: 4% 6%;
+        display: flex;
+        cursor: pointer;
+        flex-direction: column;
+        dv
+        .header, .description{
+            color: #4e4e4e;
+            font-family: "Golos Text", sans-serif;
+        }
+        .header{
+            font-weight: 600;
+            font-size: .85em;
+        }
+        .description{
+            font-weight: 400;
+            font-size: .82em;
+              flex: 1;
+        }
+        .test{
+            display: flex;
+            justify-content: flex-end;
+           
+        }
+    }
+}

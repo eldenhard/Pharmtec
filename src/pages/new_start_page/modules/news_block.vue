@@ -28,12 +28,12 @@
                         </div>
                         <div class="description">
                             <p class="description_text">
-                                Приветствуем нового сотрудника! Иванов Иван, медицинский представитель, город Самара
+                                Приветствуем нового сотрудника! Клименко Дмитрий Анатольевич, руководитель направления правового обеспечения, г. Нижний Новгород
                                 ....
                             </p>
                         </div>
                         <div class="footer_item">
-                            <p class="green_text">23.03.2024</p>
+                            <p class="green_text">20.09.2024 г </p>
                             <like_el />
                             <link_el />
                         </div>
@@ -45,11 +45,11 @@
                         </div>
                         <div class="description">
                             <p class="description_text">
-                                Вывод на рынок нового продукта БАД КЛАВИО
+                                ООО «ФАРМТЕК» выпустил на рынок НОВИНКУ: БАД КЛАВИО
                             </p>
                         </div>
                         <div class="footer_item">
-                            <p class="green_text">23.03.2024</p>
+                            <p class="green_text">20.09.2024 г </p>
                             <like_el />
                             <link_el />
                         </div>
@@ -65,13 +65,12 @@
                                 </div>
                                 <div class="description">
                                     <p class="description_text">
-                                        Приветствуем нового сотрудника! Иванов Иван, медицинский представитель, город
-                                        Самара
+                                        Приветствуем нового сотрудника! Клименко Дмитрий Анатольевич, руководитель направления правового обеспечения , г. Нижний Новгород
                                         ....
                                     </p>
                                 </div>
                                 <div class="footer_item">
-                                    <p class="green_text">23.03.2024</p>
+                                    <p class="green_text">20.09.2024 г </p>
                                     <like_el />
                                     <link_el />
                                 </div>
@@ -84,11 +83,11 @@
                                 </div>
                                 <div class="description">
                                     <p class="description_text">
-                                        Вывод на рынок нового продукта БАД КЛАВИО
+                                        ООО «ФАРМТЕК» выпустил на рынок НОВИНКУ: БАД КЛАВИО
                                     </p>
                                 </div>
                                 <div class="footer_item">
-                                    <p class="green_text">23.03.2024</p>
+                                    <p class="green_text">20.09.2024 г </p>
                                     <like_el />
                                     <link_el />
                                 </div>
