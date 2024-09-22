@@ -7,7 +7,7 @@
     <form @submit.prevent="createApplicationForManager()">
       <section class="grid_row">
         <div>
-          <drop_zone_img v-model="formData.photo" />
+          <drop_zone_img v-model="formData.photo" required />
         </div>
         <div class="first_line">
           <div class="input-box">
@@ -16,6 +16,7 @@
               type="search"
               v-model="formData.last_name"
               name="last_name"
+              required
             />
           </div>
           <div class="input-box">
@@ -24,6 +25,7 @@
               v-model="formData.first_name"
               type="search"
               name="first_name"
+              required
             />
           </div>
           <div class="input-box">
@@ -32,6 +34,7 @@
               type="search"
               v-model="formData.middle_name"
               name="middle_name"
+              required
             />
           </div>
           <!-- ////////////////////////// -->
@@ -48,17 +51,26 @@
             <input type="search" v-model="formData.middle_name_pre" />
           </div>
           <!-- /////////////////// -->
+
           <div class="input-box">
-            <label>Должность</label>
+            <label
+              style="
+                background: white !important;
+                position: absolute;
+                z-index: 1;
+              "
+              >Должность</label
+            >
             <v-select
-              v-model="formData.job_pre"
               :options="all_job"
               label="name"
+              v-model="formData.job_pre"
             />
           </div>
+
           <div class="input-box">
             <label>Город</label>
-            <input type="search" v-model="formData.city" />
+            <input type="search" v-model="formData.city" required />
           </div>
 
           <div class="input-box">
@@ -74,6 +86,7 @@
               v-model="formData.region_pre"
               :options="allRegion"
               label="value"
+              required
             />
           </div>
 
@@ -83,17 +96,27 @@
               type="date"
               v-model="formData.on_date"
               name="date_start_work"
+              required
             />
           </div>
 
           <div class="input-box">
             <label>Направление продвижения</label>
-            <input type="search" v-model="formData.promotion_direction" />
+            <input
+              type="search"
+              v-model="formData.promotion_direction"
+              required
+            />
           </div>
 
           <div class="input-box">
             <label>Электронный адрес</label>
-            <input type="email" v-model="formData.email" name="email" />
+            <input
+              type="email"
+              v-model="formData.email"
+              name="email"
+              required
+            />
           </div>
 
           <div class="input-box">
@@ -102,20 +125,26 @@
               v-mask="'+7 (###) ###-##-##'"
               v-model="formData.phone"
               name="phone"
+              required
             />
           </div>
 
           <div class="input-box">
             <label>Адрес для промматериалов</label>
-            <input type="search" v-model="formData.address_1" />
+            <input type="search" v-model="formData.address_1" required />
           </div>
           <div class="input-box">
             <label>Адрес для СДЕК</label>
-            <input type="search" v-model="formData.address_2" />
+            <input type="search" v-model="formData.address_2" required />
           </div>
           <div class="input-box">
             <label>Дата рождения</label>
-            <input type="date" v-model="formData.date_of_birth" name="email" />
+            <input
+              type="date"
+              v-model="formData.date_of_birth"
+              name="email"
+              required
+            />
           </div>
           <div class="input-box">
             <label
@@ -130,11 +159,12 @@
               v-model="formData.manager_pre"
               :options="allUsers"
               label="full_name"
+              required
             />
           </div>
           <div class="input-box">
             <label>Доп. информация</label>
-            <input type="search" v-model="formData.comment_1" />
+            <input type="search" v-model="formData.comment_1" required />
           </div>
         </div>
       </section>
@@ -227,7 +257,6 @@ export default {
     const allUsers = ref([]);
     const allRegion = reactive(
       [
-        { value: 1 },
         { value: "Дальний Восток" },
         { value: "Смоленск +" },
         { value: "Центр" },
@@ -240,12 +269,39 @@ export default {
     );
 
     const createApplicationForManager = async () => {
-        useLoaderStore().setLoader(true);
+      const allowedDomains = ["@pharmtec.ru", "@intelbio.ru"];
+      const email = formData.value.email;
+
+      if (!formData.value.manager_pre) {
+        toast.warning("Поле руководитель обязательно для заполнения", {
+          timeout: 3000,
+        });
+        return;
+      }
+      if (!formData.value.region_pre) {
+        toast.warning("Поле регион обязательно для заполнения", {
+          timeout: 3000,
+        });
+        return;
+      }
+      if (!formData.value.job_pre) {
+        toast.warning("Поле должность обязательно для заполнения", {
+          timeout: 3000,
+        });
+        return;
+      }
+      if (formData.value.email) {
+        if (!allowedDomains.some((domain) => email.endsWith(domain))) {
+          toast.error("Email должен заканчиваться на @pharmtec.ru или @intelbio.ru", {timeout: 3000});
+          return;
+        } 
+      }
+      useLoaderStore().setLoader(true);
       formData.value.manager = formData.value.manager_pre.id;
-    //   formData.value.region = 1
-    //   formData.value.region = formData.valu?.region_pre?.value ?? null;
+      //   formData.value.region = 1
+      //   formData.value.region = formData.valu?.region_pre?.value ?? null;
       formData.value.job = formData.value.job_pre.id;
-      formData.value.prev_eployee_fio = `${formData.value.last_name_pre} ${formData.value.first_name_pre} ${formData.value.middle_name_pre}`
+      formData.value.prev_eployee_fio = `${formData.value.last_name_pre} ${formData.value.first_name_pre} ${formData.value.middle_name_pre}`;
       const formDataToSubmit = new FormData();
 
       // Проверка и добавление каждого поля
@@ -284,7 +340,6 @@ export default {
           timeout: 3000,
         });
         useLoaderStore().setLoader(false);
-
       }
     };
 
