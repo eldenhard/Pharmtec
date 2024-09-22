@@ -76,4 +76,5 @@ export default {
   font-size: 2rem;
   /* Изменяем курсор для иконки */
 }
+
 </style>

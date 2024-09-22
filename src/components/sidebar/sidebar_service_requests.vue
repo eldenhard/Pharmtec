@@ -16,7 +16,7 @@
                 <ul>
 
                     <li @click="selectTab('booking', $event.target)">Бронирование переговорной</li>
-                    <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li>
+                    <!-- <li @click="selectTab('ForAdmin', $event.target)">Для администратора</li> -->
                     <li @click="selectTab('Applications', $event.target)">Заявки</li>
                     <li @click="selectTab('ApproveApplication', $event.target)" class="first">Подтверждение заявок</li>
                     <li @click="selectTab('ApproveApplicationBookkeeping', $event.target)">Подтверждение заявок (бух.)</li>
