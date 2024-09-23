@@ -155,3 +155,19 @@ $color_label: #585858;
       grid-column: span 2; // Элемент на 2 колонки
     }
   }
+
+  @media screen and (max-width: 950px) {
+    .container{
+      width: 100vw;
+      min-height: 100vh;
+      height: auto;
+      overflow: hidden;
+      margin-bottom: 10%;
+      .form_controls_body{
+        grid-template-columns: repeat(1, 1fr);
+        .full-width {
+          grid-column: span 1;
+        }
+      }
+    }
+  }

@@ -67,3 +67,13 @@
   .fade-enter, .fade-leave-to /* .fade-leave-active для Vue 2 */ {
     opacity: 0;
   }
+
+@media screen and (max-width: 800px) {
+      .company_structure{
+        .company_structure_content{
+            .list_item{
+                width: 90vw;
+            }
+        }
+      }  
+}

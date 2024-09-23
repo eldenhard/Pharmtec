@@ -10,7 +10,7 @@
     </router-view>
     <loaderComponent />
 
-    <div class="footer_start_page">
+    <div class="footer_start_page"  v-if="route.path !== '/login'" >
         <div class="content">
             <div class="copyright">
                 <p>© ООО «Фармтек», {{ new Date().getFullYear() }}</p>
@@ -96,12 +96,12 @@ export default {
     // Функция выхода
     const logout = () => {
       // Очистка токенов
-      localStorage.removeItem('accessToken')
-      localStorage.removeItem('refreshToken')
-      localStorage.removeItem('id')
+      // localStorage.removeItem('accessToken')
+      // localStorage.removeItem('refreshToken')
+      // localStorage.removeItem('id')
 
-      // Перенаправление на страницу входа
-      router.push('/login')
+      // // Перенаправление на страницу входа
+      // router.push('/login')
     }
 
     // Функция сброса таймера

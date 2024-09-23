@@ -2,7 +2,7 @@
     <div>
         <div class="sidebar_block">
             <div class="sidebar_block__list">
-                <ul style="margin: -5% 0 0 -5%;" class="mobile_settings">
+                <!-- <ul style="margin: -5% 0 0 -5%;" class="mobile_settings">
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#0069A7"
                             class="bi bi-gear-fill" viewBox="0 0 16 16">
@@ -12,7 +12,7 @@
 
                     </li>
 
-                </ul>
+                </ul> -->
                 <ul>
                     <li @click="selectTab('companyStructure', $event.target)" class="first">Структура компании</li>
                     <li @click="selectTab('staff', $event.target)">Список сотрудников</li>
