@@ -141,7 +141,7 @@
             <label>Дата рождения</label>
             <input
               type="date"
-              v-model="formData.date_of_birth"
+              v-model="formData.birth_date"
               name="email"
               required
             />
@@ -208,7 +208,7 @@ export default {
       phone: string;
       manager_pre: string | any;
       region_pre: string | any;
-      date_of_birth: string;
+      birth_date: string;
       manager: string | any;
       region: string | any;
       job: string;
@@ -242,7 +242,7 @@ export default {
       job_pre: "",
       manager_pre: "",
       region_pre: "",
-      date_of_birth: "",
+      birth_date: "",
       // дата начала работы
       photo: "",
       manager: "",
